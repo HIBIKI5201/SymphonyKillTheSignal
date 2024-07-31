@@ -81,18 +81,18 @@ public class StorySystem : MonoBehaviour
             case StoryTextList.TextKind.move:
 
                 //対象のAnimatorにPlayメソッドを送る予定
-                Debug.Log(characterList[textList[textNumber].characterType].gameObject.name);
-                
+                Animators[textList[textNumber].characterType].Play(textList[textNumber].text);
+
                 break;
 
 
             case StoryTextList.TextKind.effect:
 
                 //未完成
-               
+
                 break;
         }
-        
+
         //次のテキストにする
         if (textList.Count - 1 > textNumber)
         {
