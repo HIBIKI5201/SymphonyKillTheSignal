@@ -6,17 +6,18 @@ using UnityEngine;
 public class StorySystem : MonoBehaviour
 {
     [Header("プロパティ")]
-    [SerializeField, Tooltip("テキストスピード")]
-    float _textSpeed = 1;
+    [Tooltip("テキストスピード")]
+    public float _textSpeed = 1;
 
     [HideInInspector]
-    public bool _nextTextUpdating;
+    bool _nextTextUpdating;
 
     MainUI _mainUI;
 
     [Header("オブジェクト")]
     public List<StoryCharacterList> _characterList = new()
     {
+        new StoryCharacterList {characterName = "System"},
         new StoryCharacterList { characterName = "Symphony" },
     };
 
@@ -28,11 +29,12 @@ public class StorySystem : MonoBehaviour
     readonly Dictionary<int, Animator> _animators = new();
 
     int _currentTextNumber;
+    bool _textUpdatingCanselTrigger;
 
     private void Start()
     {
+        _nextTextUpdating = false;
         _mainUI = FindAnyObjectByType<MainUI>();
-
         //CharacterNamesをリセットする
         _characterNames.Clear();
         foreach (var character in _characterList)
@@ -55,10 +57,22 @@ public class StorySystem : MonoBehaviour
             else { Debug.LogWarning($"characterListの{character.characterName}にオブジェクトをアサインしてください"); }
         }
 
-        _currentTextNumber = 1;
+        _currentTextNumber = -1;
     }
 
-    public IEnumerator WaitNextText()
+    public void NextTextTrigger()
+    {
+        if (!_nextTextUpdating)
+        {
+            StartCoroutine(WaitNextText());
+        }
+        else
+        {
+            TextUpdateCansel();
+        }
+    }
+
+    IEnumerator WaitNextText()
     {
         _nextTextUpdating = true;
 
@@ -67,7 +81,12 @@ public class StorySystem : MonoBehaviour
         {
             _currentTextNumber++;
         }
-        else { Debug.LogWarning("テキストは終了しました"); }
+        else 
+        {
+            Debug.LogWarning("テキストは終了しました");
+            _nextTextUpdating = false;
+            yield break;
+        }
 
         //textListのkindに応じて動きを変える
         switch (_textList[_currentTextNumber].kind)
@@ -95,14 +114,19 @@ public class StorySystem : MonoBehaviour
                     float x = 0;
                     do
                     {
-                        x += _textList[_currentTextNumber].text.Length / _textSpeed * Time.deltaTime;
+                        x += _textSpeed * Time.deltaTime;
 
                         _mainUI.TextBoxUpdate(
                             _characterNames[_textList[_currentTextNumber].characterType],
                             _textList[_currentTextNumber].text.Substring(0, Mathf.Min((int)x, _textList[_currentTextNumber].text.Length)));
-
+                        if (_textUpdatingCanselTrigger)
+                        {
+                            _mainUI.TextBoxUpdate(_characterNames[_textList[_currentTextNumber].characterType], _textList[_currentTextNumber].text);
+                            _textUpdatingCanselTrigger = false;
+                            break;
+                        }
                         yield return new WaitForEndOfFrame();
-                    } while (x >= _textList[_currentTextNumber].text.Length);
+                    } while (x < _textList[_currentTextNumber].text.Length);
 
                     
                 }
@@ -112,5 +136,10 @@ public class StorySystem : MonoBehaviour
                 _nextTextUpdating = false;
                 break;
         }
+    }
+
+    public void TextUpdateCansel()
+    {
+        _textUpdatingCanselTrigger = true;
     }
 }

@@ -10,6 +10,8 @@ public class MainUI : MonoBehaviour
     Label _nameLabel;
     Label _textLabel;
 
+    SliderInt _textBoxSpeedSlider;
+
     StorySystem _storySystem;
 
     private void Start()
@@ -17,21 +19,28 @@ public class MainUI : MonoBehaviour
         _mainUIDocument = GetComponent<UIDocument>();
         _root = _mainUIDocument.rootVisualElement;
 
+        _storySystem = FindAnyObjectByType<StorySystem>();
+
         _button = _root.Q<Button>("Button");
         _button.clicked += ButtonClicked;
 
         _nameLabel = _root.Q<Label>("NameBox");
         _textLabel = _root.Q<Label>("TextBox");
 
-        _storySystem = FindAnyObjectByType<StorySystem>();
+        _textBoxSpeedSlider = _root.Q<SliderInt>("TextBoxSpeedSlider");
+        if (_textBoxSpeedSlider != null)
+        {
+            _storySystem._textSpeed = _textBoxSpeedSlider.value;
+            _textBoxSpeedSlider.RegisterValueChangedCallback(evt =>
+            {
+                _storySystem._textSpeed = evt.newValue;
+            });
+        }
     }
 
     void ButtonClicked()
     {
-        if (!_storySystem._nextTextUpdating)
-        {
-            StartCoroutine(_storySystem.WaitNextText());
-        }
+        _storySystem.NextTextTrigger();
     }
 
     public void TextBoxUpdate(string name, string text)
