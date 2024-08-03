@@ -32,7 +32,7 @@ public class StorySystem : MonoBehaviour
 
     int _currentTextNumber;
     bool _textUpdatingCanselTrigger;
-    bool _canselButtonActive;
+    bool _canselActive = true;
 
     private void Start()
     {
@@ -75,22 +75,23 @@ public class StorySystem : MonoBehaviour
     public void NextTextTrigger()
     {
         Debug.Log("test");
+
+        if (_canselActive)
+        {
         StartCoroutine(WaitNextText());
+            StartCoroutine(NextTimer(0.1f));
+        }
     }
 
     IEnumerator WaitNextText()
     {
         if (_nextTextUpdating && _textList[_currentTextNumber].kind == StoryTextList.TextKind.text)
         {
-            if (_canselButtonActive)
-            {
-                _textUpdatingCanselTrigger = true;
-            }
+            _textUpdatingCanselTrigger = true;
             yield break;
         }
 
         _nextTextUpdating = true;
-        _canselButtonActive = false;
 
         //次のテキストにする
         if (_textList.Count - 1 > _currentTextNumber)
@@ -128,10 +129,10 @@ public class StorySystem : MonoBehaviour
                 {
                     //textSpeedの時間に応じてテキストを表示する
                     float x = 0;
-                    float timer = 0;
                     do
                     {
                         x += _textSpeed * Time.deltaTime;
+
                         _mainUI.TextBoxUpdate(
                             _characterNames[_textList[_currentTextNumber].characterType],
                             _textList[_currentTextNumber].text.Substring(0, Mathf.Min((int)x, _textList[_currentTextNumber].text.Length)));
@@ -140,11 +141,6 @@ public class StorySystem : MonoBehaviour
                             _mainUI.TextBoxUpdate(_characterNames[_textList[_currentTextNumber].characterType], _textList[_currentTextNumber].text);
                             _textUpdatingCanselTrigger = false;
                             break;
-                        }
-                        timer += Time.deltaTime;
-                        if (timer > 0.25f)
-                        {
-                            _canselButtonActive = true;
                         }
                         yield return new WaitForEndOfFrame();
                     } while (x < _textList[_currentTextNumber].text.Length);
@@ -157,5 +153,12 @@ public class StorySystem : MonoBehaviour
                 _nextTextUpdating = false;
                 break;
         }
+    }
+
+    IEnumerator NextTimer(float time)
+    {
+        _canselActive = false;
+        yield return new WaitForSeconds(time);
+        _canselActive = true;
     }
 }
