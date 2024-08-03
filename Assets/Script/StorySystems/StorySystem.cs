@@ -12,7 +12,9 @@ public class StorySystem : MonoBehaviour
     [HideInInspector]
     bool _nextTextUpdating;
 
+    //コンポーネント
     MainUI _mainUI;
+    SymphonyKillTheSignal _inputSystem;
 
     [Header("オブジェクト")]
     public List<StoryCharacterList> _characterList = new()
@@ -30,11 +32,14 @@ public class StorySystem : MonoBehaviour
 
     int _currentTextNumber;
     bool _textUpdatingCanselTrigger;
+    bool _canselButtonActive;
 
     private void Start()
     {
         _nextTextUpdating = false;
         _mainUI = FindAnyObjectByType<MainUI>();
+        _inputSystem = new();
+        _inputSystem.Enable();
         //CharacterNamesをリセットする
         _characterNames.Clear();
         foreach (var character in _characterList)
@@ -52,36 +57,47 @@ public class StorySystem : MonoBehaviour
                 {
                     _animators.Add(Array.IndexOf(_characterList.ToArray(), character), animetor);
                 }
-                else { Debug.LogWarning($"{character.gameObject.name}にAnimatorをアタッチしてください"); }
+                else Debug.LogWarning($"{character.gameObject.name}にAnimatorをアタッチしてください");
             }
-            else { Debug.LogWarning($"characterListの{character.characterName}にオブジェクトをアサインしてください"); }
+            else Debug.LogWarning($"characterListの{character.characterName}にオブジェクトをアサインしてください");
         }
 
         _currentTextNumber = -1;
     }
 
+    void Update()
+    {
+        if (_inputSystem.Player.NextPage.triggered)
+            NextTextTrigger();
+
+    }
+
     public void NextTextTrigger()
     {
-        if (!_nextTextUpdating)
-        {
-            StartCoroutine(WaitNextText());
-        }
-        else
-        {
-            TextUpdateCansel();
-        }
+        Debug.Log("test");
+        StartCoroutine(WaitNextText());
     }
 
     IEnumerator WaitNextText()
     {
+        if (_nextTextUpdating && _textList[_currentTextNumber].kind == StoryTextList.TextKind.text)
+        {
+            if (_canselButtonActive)
+            {
+                _textUpdatingCanselTrigger = true;
+            }
+            yield break;
+        }
+
         _nextTextUpdating = true;
+        _canselButtonActive = false;
 
         //次のテキストにする
         if (_textList.Count - 1 > _currentTextNumber)
         {
             _currentTextNumber++;
         }
-        else 
+        else
         {
             Debug.LogWarning("テキストは終了しました");
             _nextTextUpdating = false;
@@ -112,10 +128,10 @@ public class StorySystem : MonoBehaviour
                 {
                     //textSpeedの時間に応じてテキストを表示する
                     float x = 0;
+                    float timer = 0;
                     do
                     {
                         x += _textSpeed * Time.deltaTime;
-
                         _mainUI.TextBoxUpdate(
                             _characterNames[_textList[_currentTextNumber].characterType],
                             _textList[_currentTextNumber].text.Substring(0, Mathf.Min((int)x, _textList[_currentTextNumber].text.Length)));
@@ -125,21 +141,21 @@ public class StorySystem : MonoBehaviour
                             _textUpdatingCanselTrigger = false;
                             break;
                         }
+                        timer += Time.deltaTime;
+                        if (timer > 0.25f)
+                        {
+                            _canselButtonActive = true;
+                        }
                         yield return new WaitForEndOfFrame();
                     } while (x < _textList[_currentTextNumber].text.Length);
 
-                    
+
                 }
-                else { Debug.LogWarning("mainUIを作成してください"); }
+                else Debug.LogWarning("mainUIを作成してください");
 
 
                 _nextTextUpdating = false;
                 break;
         }
-    }
-
-    public void TextUpdateCansel()
-    {
-        _textUpdatingCanselTrigger = true;
     }
 }
