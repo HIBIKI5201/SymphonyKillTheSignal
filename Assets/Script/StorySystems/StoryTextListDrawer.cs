@@ -14,30 +14,35 @@ public class StoryTextListDrawer : PropertyDrawer
         SerializedProperty kindProp = property.FindPropertyRelative("kind");
         SerializedProperty textProp = property.FindPropertyRelative("text");
 
+        // Draw CharacterType Popup
         position.height = EditorGUIUtility.singleLineHeight;
-
         StorySystem storySystem = (StorySystem)property.serializedObject.targetObject;
 
-        if (storySystem != null && storySystem.characterList != null)
+        if (storySystem != null && storySystem._characterList != null)
         {
-            string[] options = storySystem.characterList.Select(c => c.characterName).ToArray();
+            string[] options = storySystem._characterList.Select(c => c.characterName).ToArray();
             characterTypeProp.intValue = EditorGUI.Popup(position, "Character Type", characterTypeProp.intValue, options);
         }
 
         position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
+        // Draw Kind Property
         EditorGUI.PropertyField(position, kindProp, new GUIContent("Kind"));
 
         position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
-        EditorGUI.PropertyField(position, textProp, new GUIContent("Text"));
+        // Draw Text Property as TextArea
+        // Adjust height for TextArea
+        var textAreaHeight = Mathf.Max(30, EditorGUI.GetPropertyHeight(textProp));
+        Rect textRect = new Rect(position.x, position.y, position.width, textAreaHeight);
+        EditorGUI.PropertyField(textRect, textProp, new GUIContent("Text"), true); // Set 'true' to make it a TextArea
 
         EditorGUI.EndProperty();
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        return EditorGUIUtility.singleLineHeight * 3 + EditorGUIUtility.standardVerticalSpacing;
+        return EditorGUIUtility.singleLineHeight * 2 + EditorGUIUtility.standardVerticalSpacing + 75; // Adjusted height to fit TextArea
     }
 }
 #endif

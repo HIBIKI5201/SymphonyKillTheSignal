@@ -1,103 +1,116 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class StorySystem : MonoBehaviour
 {
-    [SerializeField]
-    Text textBox;
+    [Header("プロパティ")]
+    [SerializeField, Tooltip("テキストスピード")]
+    float _textSpeed = 1;
+
+    [HideInInspector]
+    public bool _nextTextUpdating;
+
+    MainUI _mainUI;
 
     [Header("オブジェクト")]
-    public List<StoryCharacterList> characterList = new()
+    public List<StoryCharacterList> _characterList = new()
     {
-        new StoryCharacterList { characterName = "effect"},
         new StoryCharacterList { characterName = "Symphony" },
     };
 
+    [Header("テキスト")]
     [SerializeField]
-    List<StoryTextList> textList = new();
+    List<StoryTextList> _textList = new();
 
-    readonly Dictionary<int, string> CharacterNames = new();
-    readonly Dictionary<int, Animator> Animators = new();
+    readonly Dictionary<int, string> _characterNames = new();
+    readonly Dictionary<int, Animator> _animators = new();
 
-    int textNumber;
+    int _currentTextNumber;
 
     private void Start()
     {
+        _mainUI = FindAnyObjectByType<MainUI>();
+
         //CharacterNamesをリセットする
-        CharacterNames.Clear();
-        foreach (var character in characterList)
+        _characterNames.Clear();
+        foreach (var character in _characterList)
         {
-            CharacterNames.Add(Array.IndexOf(characterList.ToArray(), character), character.characterName);
+            _characterNames.Add(Array.IndexOf(_characterList.ToArray(), character), character.characterName);
         }
 
         //Animatorsをリセットする
-        Animators.Clear();
-        foreach (var character in characterList)
+        _animators.Clear();
+        foreach (var character in _characterList)
         {
             if (character.gameObject)
             {
                 if (character.gameObject.TryGetComponent<Animator>(out Animator animetor))
                 {
-                    Animators.Add(Array.IndexOf(characterList.ToArray(), character), animetor);
+                    _animators.Add(Array.IndexOf(_characterList.ToArray(), character), animetor);
                 }
                 else { Debug.LogWarning($"{character.gameObject.name}にAnimatorをアタッチしてください"); }
             }
-            else { Debug.LogWarning($"{character}にオブジェクトをアサインしてください"); }
+            else { Debug.LogWarning($"characterListの{character.characterName}にオブジェクトをアサインしてください"); }
         }
+
+        _currentTextNumber = 1;
     }
 
-    public void NextText()
+    public IEnumerator WaitNextText()
     {
-        // 喋っているキャラクターの名前を取得
-        Debug.Log(CharacterNames[textList[textNumber].characterType]);
+        _nextTextUpdating = true;
+
+        //次のテキストにする
+        if (_textList.Count - 1 > _currentTextNumber)
+        {
+            _currentTextNumber++;
+        }
+        else { Debug.LogWarning("テキストは終了しました"); }
 
         //textListのkindに応じて動きを変える
-        switch (textList[textNumber].kind)
+        switch (_textList[_currentTextNumber].kind)
         {
-            case StoryTextList.TextKind.text:
-
-                //|を書くと改行する
-                string[] texts = textList[textNumber].text.Split('|');
-                string text = "";
-
-                foreach (var oneText in texts)
-                {
-                    text += oneText;
-                    text += "\n";
-                }
-
-                Debug.Log(text);
-                if (textBox)
-                {
-                    textBox.text = text;
-                }
-                else { Debug.LogWarning("テキストボックスをアサインしてください"); }
-
-                break;
-
-
             case StoryTextList.TextKind.move:
 
                 //対象のAnimatorにPlayメソッドを送る予定
-                Animators[textList[textNumber].characterType].Play(textList[textNumber].text);
+                if (_characterList[_textList[_currentTextNumber].characterType].gameObject)
+                {
+                    if (_animators[_textList[_currentTextNumber].characterType] != null)
+                    {
+                        _animators[_textList[_currentTextNumber].characterType].Play(_textList[_currentTextNumber].text);
+                    }
+                    else { Debug.LogWarning($"{_characterList[_textList[_currentTextNumber].characterType].gameObject.name}にAnimatorをアタッチしてください"); }
+                }
+                else { Debug.LogWarning($"characterListの{_characterList[_textList[_currentTextNumber].characterType].characterName}にオブジェクトをアサインしてください"); }
 
+                StartCoroutine(WaitNextText());
                 break;
 
+            case StoryTextList.TextKind.text:
+                if (_mainUI != null)
+                {
+                    //textSpeedの時間に応じてテキストを表示する
+                    float x = 0;
+                    do
+                    {
+                        x += _textList[_currentTextNumber].text.Length / _textSpeed * Time.deltaTime;
 
-            case StoryTextList.TextKind.effect:
+                        _mainUI.TextBoxUpdate(
+                            _characterNames[_textList[_currentTextNumber].characterType],
+                            _textList[_currentTextNumber].text.Substring(0, Mathf.Min((int)x, _textList[_currentTextNumber].text.Length)));
 
-                //未完成
+                        yield return new WaitForEndOfFrame();
+                    } while (x >= _textList[_currentTextNumber].text.Length);
 
+                    
+                }
+                else { Debug.LogWarning("mainUIを作成してください"); }
+
+
+                _nextTextUpdating = false;
                 break;
         }
-
-        //次のテキストにする
-        if (textList.Count - 1 > textNumber)
-        {
-            textNumber++;
-        }
-        else { Debug.LogWarning("テキストは終了しました"); }
     }
 }

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/MainUI.uss?fileID=7433441132597879392&amp;guid=030672bf8791f77439b2e02cd045061b&amp;type=3#MainUI" />
+    <ui:VisualElement style="background-color: rgba(0, 0, 0, 0); top: 300px; align-items: center; justify-content: center; align-self: center; width: 500px; height: 500px;">
+        <ui:Button text="Button" display-tooltip-when-elided="true" name="Button" style="font-size: 40px;" />
+    </ui:VisualElement>
+    <ui:VisualElement style="background-color: rgba(0, 0, 0, 0.71); position: absolute; bottom: 0; width: 80%; height: 30%; align-self: center;">
+        <ui:Label tabindex="-1" text="name" display-tooltip-when-elided="true" name="NameBox" class="textBox" style="font-size: 60px; text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.78); margin-left: 8px; margin-right: 8px; margin-top: 8px; margin-bottom: 8px; top: 0; left: 30px; -unity-font-style: bold;" />
+        <ui:Label tabindex="-1" text="text" display-tooltip-when-elided="true" name="TextBox" class="textBox" style="width: 90%; height: 60%; align-items: stretch; align-self: center; white-space: normal; text-overflow: clip; font-size: 50px;" />
+    </ui:VisualElement>
+</ui:UXML>
