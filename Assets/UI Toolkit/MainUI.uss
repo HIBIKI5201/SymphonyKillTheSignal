@@ -4,5 +4,6 @@
     font-size: 60px;
     color: rgb(255, 255, 255);
     -unity-text-outline-color: rgb(0, 0, 0);
-    -unity-text-outline-width: 1px;
+    -unity-text-outline-width: 0;
+    -unity-font-definition: url('project://database/Assets/font/font_1_kokugl_1.15_rls%20SDF.asset?fileID=11400000&guid=cc23368cab45b9c4db4a46b782948ac9&type=2#font_1_kokugl_1.15_rls SDF');
 }

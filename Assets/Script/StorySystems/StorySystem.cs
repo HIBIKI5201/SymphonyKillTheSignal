@@ -69,7 +69,6 @@ public class StorySystem : MonoBehaviour
     {
         if (_inputSystem.Player.NextPage.triggered)
             NextTextTrigger();
-
     }
 
     public void NextTextTrigger()

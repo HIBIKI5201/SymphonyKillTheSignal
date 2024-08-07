@@ -94,7 +94,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 86346341284c77d429246ffe34d0fd36, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -524,34 +524,28 @@ MonoBehaviour:
   _textList:
   - characterType: 0
     kind: 0
-    text: aaaa
+    text: "\u305D\u3093\u306A\u4E8B\u3063\u3066\u30FB\u30FB\u30FB"
   - characterType: 0
     kind: 0
-    text: iiiiiiiiiiiiiiiiii
+    text: "\u6575\u3092\u78BA\u8A8D\n\u4E09\u6642\u65B9\u5411"
   - characterType: 0
     kind: 0
-    text: uuuuuuuuuuuuuuuuuu
+    text: "\u7A7A\u306B\u76EE\u304C\u3042\u308C\u3070\u3001\u6050\u308C\u308B\u3082\u306E\u306F\u306A\u3044"
   - characterType: 0
     kind: 0
-    text: aaaaaaaaaaaaaaaaaaaaaaaaaaa
+    text: "\u30B3\u30F3\u30BF\u30AF\u30C8\uFF01APC\u3092\u78BA\u8A8D\uFF01"
   - characterType: 0
     kind: 0
-    text: 'aaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-      aaaaaaaaaaaaaaaaaaaaaaaaaaa'
+    text: "\u6575\u306E\u524D\u7DDA\u6307\u63EE\u6240\u3092\u7834\u58CA\u3059\u308B\u3002\n\u8A2D\u7F6E\u7206\u85AC\u3092\u6E96\u5099\u3057\u308D\u3002"
   - characterType: 0
     kind: 0
-    text: 'aaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-      aaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-      aaaaaaaaaaaaaaaaaaaaaaaaaaa'
+    text: "\u65B9\u4F4D330\u3001\u8DDD\u96E21600\u30E1\u30FC\u30C8\u30EB\n\u652F\u63F4\u7832\u6483\u3092\u958B\u59CB\n\u5404\u54E1\u306F\u885D\u6483\u306B\u5099\u3048\u3088"
   - characterType: 1
     kind: 1
     text: Jump
   - characterType: 0
     kind: 0
-    text: "Jump\u3059\u308B\u3088"
+    text: "\u30B8\u30E3\u30F3\u30D7\u3059\u308B\u3088"
 --- !u!4 &1450439098
 Transform:
   m_ObjectHideFlags: 0
