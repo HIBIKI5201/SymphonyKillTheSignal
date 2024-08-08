@@ -2,19 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class StorySystem : MonoBehaviour
 {
     [Header("プロパティ")]
     [Tooltip("テキストスピード")]
     public float _textSpeed = 1;
+    [SerializeField, Tooltip("アンハイライトカラー")]
+    Color _unHighLightColor = Color.white;
 
     [HideInInspector]
     bool _nextTextUpdating;
 
     //コンポーネント
     MainUI _mainUI;
-    SymphonyKillTheSignal _inputSystem;
 
     [Header("オブジェクト")]
     public List<StoryCharacterList> _characterList = new()
@@ -27,8 +29,21 @@ public class StorySystem : MonoBehaviour
     [SerializeField]
     List<StoryTextList> _textList = new();
 
-    readonly Dictionary<int, string> _characterNames = new();
-    readonly Dictionary<int, Animator> _animators = new();
+    public struct CharacterPropaty
+    {
+        public string name;
+        public Animator animator;
+        public SpriteRenderer spriteRenderer;
+
+        public CharacterPropaty(string name, Animator animator, SpriteRenderer sprite)
+        {
+            this.name = name;
+            this.animator = animator;
+            this.spriteRenderer = sprite;
+        }
+    }
+
+    readonly Dictionary<int, CharacterPropaty> _characterPropaties = new();
 
     int _currentTextNumber;
     bool _textUpdatingCanselTrigger;
@@ -38,46 +53,48 @@ public class StorySystem : MonoBehaviour
     {
         _nextTextUpdating = false;
         _mainUI = FindAnyObjectByType<MainUI>();
-        _inputSystem = new();
-        _inputSystem.Enable();
         //CharacterNamesをリセットする
-        _characterNames.Clear();
+        _characterPropaties.Clear();
         foreach (var character in _characterList)
         {
-            _characterNames.Add(Array.IndexOf(_characterList.ToArray(), character), character.characterName);
-        }
-
-        //Animatorsをリセットする
-        _animators.Clear();
-        foreach (var character in _characterList)
-        {
+            string characterName = character.characterName;
+            Animator animator = null;
+            SpriteRenderer spriteRenderer = null;
             if (character.gameObject)
             {
-                if (character.gameObject.TryGetComponent<Animator>(out Animator animetor))
+                if (character.gameObject.TryGetComponent<Animator>(out Animator anim))
                 {
-                    _animators.Add(Array.IndexOf(_characterList.ToArray(), character), animetor);
+                    animator = anim;
                 }
                 else Debug.LogWarning($"{character.gameObject.name}にAnimatorをアタッチしてください");
+
+                if (character.gameObject.TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
+                {
+                    spriteRenderer = sr;
+                }
+                else Debug.Log($"{character.gameObject.name}にはSpriteRendererがアタッチされていませんでした");
             }
             else Debug.LogWarning($"characterListの{character.characterName}にオブジェクトをアサインしてください");
-        }
 
+
+            _characterPropaties.Add(Array.IndexOf(_characterList.ToArray(), character), new CharacterPropaty(characterName, animator, spriteRenderer));
+        }
         _currentTextNumber = -1;
     }
 
-    void Update()
+    public void NextPageButton(InputAction.CallbackContext context)
     {
-        if (_inputSystem.Player.NextPage.triggered)
+        if (context.phase == InputActionPhase.Started)
+        {
             NextTextTrigger();
+        }
     }
 
     public void NextTextTrigger()
     {
-        Debug.Log("test");
-
         if (_canselActive)
         {
-        StartCoroutine(WaitNextText());
+            StartCoroutine(WaitNextText());
             StartCoroutine(NextTimer(0.1f));
         }
     }
@@ -109,12 +126,12 @@ public class StorySystem : MonoBehaviour
         {
             case StoryTextList.TextKind.move:
 
-                //対象のAnimatorにPlayメソッドを送る予定
+                //対象のAnimatorにPlayメソッドを送る
                 if (_characterList[_textList[_currentTextNumber].characterType].gameObject)
                 {
-                    if (_animators[_textList[_currentTextNumber].characterType] != null)
+                    if (_characterPropaties[_textList[_currentTextNumber].characterType].animator != null)
                     {
-                        _animators[_textList[_currentTextNumber].characterType].Play(_textList[_currentTextNumber].text);
+                        _characterPropaties[_textList[_currentTextNumber].characterType].animator.Play(_textList[_currentTextNumber].text);
                     }
                     else { Debug.LogWarning($"{_characterList[_textList[_currentTextNumber].characterType].gameObject.name}にAnimatorをアタッチしてください"); }
                 }
@@ -126,6 +143,8 @@ public class StorySystem : MonoBehaviour
             case StoryTextList.TextKind.text:
                 if (_mainUI != null)
                 {
+                    //喋っているキャラのみをハイライトする
+                    CharacterHighLight(_textList[_currentTextNumber].characterType);
                     //textSpeedの時間に応じてテキストを表示する
                     float x = 0;
                     do
@@ -133,11 +152,11 @@ public class StorySystem : MonoBehaviour
                         x += _textSpeed * Time.deltaTime;
 
                         _mainUI.TextBoxUpdate(
-                            _characterNames[_textList[_currentTextNumber].characterType],
+                            _characterPropaties[_textList[_currentTextNumber].characterType].name,
                             _textList[_currentTextNumber].text.Substring(0, Mathf.Min((int)x, _textList[_currentTextNumber].text.Length)));
                         if (_textUpdatingCanselTrigger)
                         {
-                            _mainUI.TextBoxUpdate(_characterNames[_textList[_currentTextNumber].characterType], _textList[_currentTextNumber].text);
+                            _mainUI.TextBoxUpdate(_characterPropaties[_textList[_currentTextNumber].characterType].name, _textList[_currentTextNumber].text);
                             _textUpdatingCanselTrigger = false;
                             break;
                         }
@@ -147,7 +166,6 @@ public class StorySystem : MonoBehaviour
 
                 }
                 else Debug.LogWarning("mainUIを作成してください");
-
 
                 _nextTextUpdating = false;
                 break;
@@ -159,5 +177,14 @@ public class StorySystem : MonoBehaviour
         _canselActive = false;
         yield return new WaitForSeconds(time);
         _canselActive = true;
+    }
+
+    void CharacterHighLight(int number)
+    {
+        for (int i = 0; i < _characterPropaties.Count; i++)
+        {
+            if (_characterPropaties[i].spriteRenderer != null)
+                _characterPropaties[i].spriteRenderer.color = i != number ? _unHighLightColor : Color.white;
+        }
     }
 }

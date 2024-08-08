@@ -47,7 +47,7 @@ public class MainUI : MonoBehaviour
     {
         if (_textLabel != null && _nameLabel != null)
         {
-            _nameLabel.text = name;
+            _nameLabel.text = name != _storySystem._characterList[0].characterName ? name : "";
             _textLabel.text = text;
         }
         else { Debug.LogWarning("TextBox‚à‚µ‚­‚ÍNameBox‚Æ‚¢‚¤Label‚ª‚Ý‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½"); }
