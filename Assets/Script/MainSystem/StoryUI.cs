@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MainUI : MonoBehaviour
+public class StoryUI : MonoBehaviour
 {
     UIDocument _mainUIDocument;
     VisualElement _root;

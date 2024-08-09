@@ -12,11 +12,11 @@ public class StorySystem : MonoBehaviour
     [SerializeField, Tooltip("アンハイライトカラー")]
     Color _unHighLightColor = Color.white;
 
-    [HideInInspector]
+    //[HideInInspector]
     bool _nextTextUpdating;
 
     //コンポーネント
-    MainUI _mainUI;
+    StoryUI _mainUI;
 
     [Header("オブジェクト")]
     public List<StoryCharacterList> _characterList = new()
@@ -28,6 +28,11 @@ public class StorySystem : MonoBehaviour
     [Header("テキスト")]
     [SerializeField]
     List<StoryTextList> _textList = new();
+
+    [Header("サウンド")]
+    AudioSource _audioSource;
+    [SerializeField]
+    List<AudioClip> audioClips = new();
 
     public struct CharacterPropaty
     {
@@ -48,11 +53,12 @@ public class StorySystem : MonoBehaviour
     int _currentTextNumber;
     bool _textUpdatingCanselTrigger;
     bool _canselActive = true;
+    Coroutine _nextTimerCoroutine;
 
     private void Start()
     {
         _nextTextUpdating = false;
-        _mainUI = FindAnyObjectByType<MainUI>();
+        _mainUI = FindAnyObjectByType<StoryUI>();
         //CharacterNamesをリセットする
         _characterPropaties.Clear();
         foreach (var character in _characterList)
@@ -80,6 +86,14 @@ public class StorySystem : MonoBehaviour
             _characterPropaties.Add(Array.IndexOf(_characterList.ToArray(), character), new CharacterPropaty(characterName, animator, spriteRenderer));
         }
         _currentTextNumber = -1;
+
+        if (TryGetComponent<AudioSource>(out AudioSource audioSource))
+        {
+            _audioSource = audioSource;
+        }
+        else Debug.LogWarning($"{gameObject}にAudioSourceがアタッチされていません");
+
+        NextTextTrigger();
     }
 
     public void NextPageButton(InputAction.CallbackContext context)
@@ -94,13 +108,20 @@ public class StorySystem : MonoBehaviour
     {
         if (_canselActive)
         {
-            StartCoroutine(WaitNextText());
-            StartCoroutine(NextTimer(0.1f));
+            StartCoroutine(NextText());
         }
     }
 
-    IEnumerator WaitNextText()
+    IEnumerator NextTimer(float time)
     {
+        _canselActive = false;
+        yield return new WaitForSeconds(time);
+        _canselActive = true;
+    }
+
+    IEnumerator NextText()
+    {
+        //
         if (_nextTextUpdating && _textList[_currentTextNumber].kind == StoryTextList.TextKind.text)
         {
             _textUpdatingCanselTrigger = true;
@@ -121,28 +142,42 @@ public class StorySystem : MonoBehaviour
             yield break;
         }
 
+        string[] texts = _textList[_currentTextNumber].text.Split('\n');
+
         //textListのkindに応じて動きを変える
         switch (_textList[_currentTextNumber].kind)
         {
             case StoryTextList.TextKind.move:
-
+                //動いているキャラのみをハイライトする
+                CharacterHighLight(_textList[_currentTextNumber].characterType);
                 //対象のAnimatorにPlayメソッドを送る
                 if (_characterList[_textList[_currentTextNumber].characterType].gameObject)
                 {
                     if (_characterPropaties[_textList[_currentTextNumber].characterType].animator != null)
                     {
-                        _characterPropaties[_textList[_currentTextNumber].characterType].animator.Play(_textList[_currentTextNumber].text);
+                        _characterPropaties[_textList[_currentTextNumber].characterType].animator.Play(texts[0]);
                     }
                     else { Debug.LogWarning($"{_characterList[_textList[_currentTextNumber].characterType].gameObject.name}にAnimatorをアタッチしてください"); }
                 }
                 else { Debug.LogWarning($"characterListの{_characterList[_textList[_currentTextNumber].characterType].characterName}にオブジェクトをアサインしてください"); }
-
-                StartCoroutine(WaitNextText());
+                //アニメーションの待機時間を計算
+                int waitTime = 1;
+                if (texts.Length > 1)
+                {
+                    waitTime = int.Parse(texts[1]);
+                }
+                //アニメーション中はクリックを無効
+                StopCoroutine(_nextTimerCoroutine);
+                StartCoroutine(NextTimer(waitTime));
+                yield return new WaitForSeconds(waitTime);
+                StartCoroutine(NextText());
                 break;
 
             case StoryTextList.TextKind.text:
                 if (_mainUI != null)
                 {
+                    //連打防止のためのタイマー
+                    _nextTimerCoroutine = StartCoroutine(NextTimer(0.1f));
                     //喋っているキャラのみをハイライトする
                     CharacterHighLight(_textList[_currentTextNumber].characterType);
                     //textSpeedの時間に応じてテキストを表示する
@@ -169,14 +204,24 @@ public class StorySystem : MonoBehaviour
 
                 _nextTextUpdating = false;
                 break;
-        }
-    }
 
-    IEnumerator NextTimer(float time)
-    {
-        _canselActive = false;
-        yield return new WaitForSeconds(time);
-        _canselActive = true;
+            case StoryTextList.TextKind.sound:
+
+                switch (int.Parse(texts[1]))
+                {
+                    case 0:
+                        _audioSource.PlayOneShot(audioClips[int.Parse(texts[0])]);
+                        break;
+
+                    case 1:
+                        _audioSource.Stop();
+                        _audioSource.clip = audioClips[int.Parse(texts[0])];
+                        _audioSource.Play();
+                        break;
+                }
+
+                break;
+        }
     }
 
     void CharacterHighLight(int number)
