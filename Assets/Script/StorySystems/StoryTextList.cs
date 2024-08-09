@@ -8,6 +8,7 @@ public class StoryTextList
     {
         text,
         move,
+        sound,
     }
 
     public int characterType;
