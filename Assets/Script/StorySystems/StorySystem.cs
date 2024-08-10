@@ -52,7 +52,7 @@ public class StorySystem : MonoBehaviour
 
     int _currentTextNumber;
     bool _textUpdatingCanselTrigger;
-    bool _canselActive = true;
+    public bool _canselActive;
     Coroutine _nextTimerCoroutine;
 
     private void Start()
@@ -66,6 +66,7 @@ public class StorySystem : MonoBehaviour
             string characterName = character.characterName;
             Animator animator = null;
             SpriteRenderer spriteRenderer = null;
+            //各キャラクターからAnimatorとSpriteRendererを取得する
             if (character.gameObject)
             {
                 if (character.gameObject.TryGetComponent<Animator>(out Animator anim))
@@ -81,19 +82,19 @@ public class StorySystem : MonoBehaviour
                 else Debug.Log($"{character.gameObject.name}にはSpriteRendererがアタッチされていませんでした");
             }
             else Debug.LogWarning($"characterListの{character.characterName}にオブジェクトをアサインしてください");
-
-
+            //取得したコンポーネントをリストに格納する
             _characterPropaties.Add(Array.IndexOf(_characterList.ToArray(), character), new CharacterPropaty(characterName, animator, spriteRenderer));
         }
+        //最初が0番目のテキストになるように初期値を設定
         _currentTextNumber = -1;
-
+        //AudioSourceを取得する
         if (TryGetComponent<AudioSource>(out AudioSource audioSource))
         {
             _audioSource = audioSource;
         }
         else Debug.LogWarning($"{gameObject}にAudioSourceがアタッチされていません");
 
-        NextTextTrigger();
+        _canselActive = false;
     }
 
     public void NextPageButton(InputAction.CallbackContext context)
@@ -121,15 +122,13 @@ public class StorySystem : MonoBehaviour
 
     IEnumerator NextText()
     {
-        //
+        //テキスト更新中にボタンが押された場合にテキストを最後まで表示するトリガーを起動する
         if (_nextTextUpdating && _textList[_currentTextNumber].kind == StoryTextList.TextKind.text)
         {
             _textUpdatingCanselTrigger = true;
             yield break;
         }
-
         _nextTextUpdating = true;
-
         //次のテキストにする
         if (_textList.Count - 1 > _currentTextNumber)
         {
@@ -141,9 +140,8 @@ public class StorySystem : MonoBehaviour
             _nextTextUpdating = false;
             yield break;
         }
-
+        //改行ごとに文字を分ける
         string[] texts = _textList[_currentTextNumber].text.Split('\n');
-
         //textListのkindに応じて動きを変える
         switch (_textList[_currentTextNumber].kind)
         {
@@ -166,7 +164,7 @@ public class StorySystem : MonoBehaviour
                 {
                     waitTime = int.Parse(texts[1]);
                 }
-                //アニメーション中はクリックを無効
+                //アニメーション中はテキスト更新を無効
                 StopCoroutine(_nextTimerCoroutine);
                 StartCoroutine(NextTimer(waitTime));
                 yield return new WaitForSeconds(waitTime);
