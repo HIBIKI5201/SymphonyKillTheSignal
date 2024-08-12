@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainSystem : MonoBehaviour
@@ -13,9 +12,9 @@ public class MainSystem : MonoBehaviour
     AudioSource _soundEffectSource;
     AudioSource _BGMSource;
     [SerializeField]
-    List<AudioClip> soundEffects = new();
+    SoundDataBase soundEffects = new();
     [SerializeField]
-    List<AudioClip> BGMs = new();
+    SoundDataBase BGMs = new();
     private void Awake()
     {
         //SingletonÇÃÇÊÇ§Ç…Ç∑ÇÈèàóù
@@ -50,12 +49,12 @@ public class MainSystem : MonoBehaviour
         switch (number)
         {
             case 0:
-                _soundEffectSource.PlayOneShot(soundEffects[soundNumber]);
+                _soundEffectSource.PlayOneShot(soundEffects.dataList[soundNumber]);
                 break;
 
             case 1:
                 _BGMSource.Stop();
-                _BGMSource.clip = BGMs[soundNumber];
+                _BGMSource.clip = BGMs.dataList[soundNumber];
                 _BGMSource.Play();
                 break;
         }
