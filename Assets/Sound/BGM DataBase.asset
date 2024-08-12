@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 004f1e4553aa7c54da8a9ec460b8aac1, type: 3}
   m_Name: BGM DataBase
   m_EditorClassIdentifier: 
-  dataList: []
+  dataList:
+  - {fileID: 0}

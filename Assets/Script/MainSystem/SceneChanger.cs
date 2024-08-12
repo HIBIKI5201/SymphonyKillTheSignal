@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,15 +13,16 @@ public class SceneChanger : MonoBehaviour
         Story,
     }
 
-    static Dictionary<SceneKind, string> _sceneNames = new Dictionary<SceneKind, string>()
+    static readonly Dictionary<SceneKind, string> _sceneNames = new()
     {
         { SceneKind.Title , "none"},
         { SceneKind.Home , "none"},
         { SceneKind.Story , "StoryScene"},
     };
 
-    public static void ChangeScene(SceneKind sceneKind)
+    public static AsyncOperation ChangeScene(SceneKind sceneKind)
     {
-        SceneManager.LoadScene(_sceneNames[sceneKind]);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_sceneNames[sceneKind]);
+        return asyncLoad;
     }
 }

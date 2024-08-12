@@ -34,7 +34,7 @@ public class StoryTextListDrawer : PropertyDrawer
         // Draw Text Property as TextArea
         // Adjust height for TextArea
         var textAreaHeight = Mathf.Max(30, EditorGUI.GetPropertyHeight(textProp));
-        Rect textRect = new Rect(position.x, position.y, position.width, textAreaHeight);
+        Rect textRect = new(position.x, position.y, position.width, textAreaHeight);
         EditorGUI.PropertyField(textRect, textProp, new GUIContent("Text"), true); // Set 'true' to make it a TextArea
 
         EditorGUI.EndProperty();

@@ -19,16 +19,13 @@ public class StorySystem : MonoBehaviour
     MainSystem _mainSystem;
     StoryUI _mainUI;
 
-    [Header("オブジェクト")]
-    public List<StoryCharacterList> _characterList = new()
-    {
-        new StoryCharacterList {characterName = "System"},
-        new StoryCharacterList { characterName = "Symphony" },
-    };
-
     [Header("テキスト")]
     [SerializeField]
-    List<StoryTextList> _textList = new();
+    List<StoryTextDataBase> _textDataBase = new();
+
+    [HideInInspector]
+    public List<StoryCharacterList> _characterList = new();
+    List<StoryTextList> _textList;
 
 
     public struct CharacterPropaty
@@ -49,69 +46,112 @@ public class StorySystem : MonoBehaviour
 
     int _currentTextNumber;
     bool _textUpdatingCanselTrigger;
-    public bool _canselActive;
+    public bool _textUpdateActive;
     Coroutine _nextTimerCoroutine;
 
     private void Start()
     {
-        _mainSystem = FindAnyObjectByType<MainSystem>();
+        //メンバーの初期設定
         _nextTextUpdating = false;
+        //UIのPresenterを取得
         _mainUI = FindAnyObjectByType<StoryUI>();
-        //CharacterNamesをリセットする
-        _characterPropaties.Clear();
-        foreach (var character in _characterList)
+        //最初が0番目のテキストになるように初期値を設定
+        _currentTextNumber = -1;
+    }
+
+    public void SetClass(int textNumber)
+    {
+        //メインシステムを取得
+        _mainSystem = FindAnyObjectByType<MainSystem>();
+        //データベースからインスタンスに情報を参照
+        StoryTextDataBase storyTextData = _textDataBase[textNumber];
+        //Characterをデータから値渡し
+        _characterList.Clear();
+        foreach (StoryCharacterList character in storyTextData._characterList)
         {
-            string characterName = character.characterName;
+            if (character.characterName == "System")
+            {
+                _characterList.Add(new StoryCharacterList { gameObject = this.gameObject, characterName = "" });
+                continue;
+            }
+            _characterList.Add(new StoryCharacterList(character));
+        }
+        //Textをデータから参照
+        _textList = new List<StoryTextList> (storyTextData._textList);
+        //CharacterPropatiesをリセットする
+        _characterPropaties.Clear();
+        foreach (var characterData in _characterList)
+        {
+            string characterName = characterData.characterName;
+            GameObject character = null;
+            //データからゲームオブジェクトを生成
+            if (characterData.characterName != "System")
+            {
+                character = Instantiate(characterData.gameObject);
+                character.transform.SetParent(gameObject.transform);
+            }
             Animator animator = null;
             SpriteRenderer spriteRenderer = null;
             //各キャラクターからAnimatorとSpriteRendererを取得する
-            if (character.gameObject)
+            if (character)
             {
-                if (character.gameObject.TryGetComponent<Animator>(out Animator anim))
+                if (character.TryGetComponent<Animator>(out Animator anim))
                 {
                     animator = anim;
                 }
-                else Debug.LogWarning($"{character.gameObject.name}にAnimatorをアタッチしてください");
+                else Debug.LogWarning($"{character.name}にAnimatorをアタッチしてください");
 
-                if (character.gameObject.TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
+                if (character.TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
                 {
                     spriteRenderer = sr;
                 }
-                else Debug.Log($"{character.gameObject.name}にはSpriteRendererがアタッチされていませんでした");
+                else Debug.Log($"{character.name}にはSpriteRendererがアタッチされていませんでした");
             }
-            else Debug.LogWarning($"characterListの{character.characterName}にオブジェクトをアサインしてください");
+            else Debug.LogWarning($"characterListの{characterData.characterName}にオブジェクトをアサインしてください");
             //取得したコンポーネントをリストに格納する
-            _characterPropaties.Add(Array.IndexOf(_characterList.ToArray(), character), new CharacterPropaty(characterName, animator, spriteRenderer));
+            _characterPropaties.Add(Array.IndexOf(_characterList.ToArray(), characterData), new CharacterPropaty(characterName, animator, spriteRenderer));
         }
-        //最初が0番目のテキストになるように初期値を設定
-        _currentTextNumber = -1;
-
-        _canselActive = false;
+        //最初のテキストを呼び出す
+        _textUpdateActive = true;
+        NextTextTrigger();
     }
-
+    /// <summary>
+    /// テキストボックスが押された時に実行されるイベント
+    /// </summary>
+    /// <param name="context"></param>
     public void NextPageButton(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Started && _textList != null)
         {
             NextTextTrigger();
         }
     }
-
+    /// <summary>
+    /// 次のテキストを呼び出す
+    /// </summary>
     public void NextTextTrigger()
     {
-        if (_canselActive)
+        //キ
+        if (_textUpdateActive)
         {
             StartCoroutine(NextText());
         }
     }
-
+    /// <summary>
+    /// 次のテキストを呼び出せるまでのタイマーを起動するメソッド
+    /// </summary>
+    /// <param name="time">タイマーのセット時間</param>
+    /// <returns></returns>
     IEnumerator NextTimer(float time)
     {
-        _canselActive = false;
+        _textUpdateActive = false;
         yield return new WaitForSeconds(time);
-        _canselActive = true;
+        _textUpdateActive = true;
     }
-
+    /// <summary>
+    /// 次のテキストを呼び出す処理
+    /// </summary>
+    /// <returns></returns>
     IEnumerator NextText()
     {
         //テキスト更新中にボタンが押された場合にテキストを最後まで表示するトリガーを起動する
@@ -126,6 +166,7 @@ public class StorySystem : MonoBehaviour
         {
             _currentTextNumber++;
         }
+        //次のテキストがない場合は処理を終わる
         else
         {
             Debug.LogWarning("テキストは終了しました");
@@ -157,7 +198,10 @@ public class StorySystem : MonoBehaviour
                     waitTime = int.Parse(texts[1]);
                 }
                 //アニメーション中はテキスト更新を無効
-                StopCoroutine(_nextTimerCoroutine);
+                if (_nextTimerCoroutine != null)
+                {
+                    StopCoroutine(_nextTimerCoroutine);
+                }
                 _nextTimerCoroutine = StartCoroutine(NextTimer(waitTime));
                 yield return new WaitForSeconds(waitTime);
                 StartCoroutine(NextText());
@@ -173,12 +217,12 @@ public class StorySystem : MonoBehaviour
                     //textSpeedの時間に応じてテキストを表示する
                     float x = 0;
                     do
-                    {
+                    {   
                         x += _textSpeed * Time.deltaTime;
-
                         _mainUI.TextBoxUpdate(
                             _characterPropaties[_textList[_currentTextNumber].characterType].name,
                             _textList[_currentTextNumber].text.Substring(0, Mathf.Min((int)x, _textList[_currentTextNumber].text.Length)));
+                        //もしCanselTriggerがあれば途中で更新を止める
                         if (_textUpdatingCanselTrigger)
                         {
                             _mainUI.TextBoxUpdate(_characterPropaties[_textList[_currentTextNumber].characterType].name, _textList[_currentTextNumber].text);
@@ -187,15 +231,14 @@ public class StorySystem : MonoBehaviour
                         }
                         yield return new WaitForEndOfFrame();
                     } while (x < _textList[_currentTextNumber].text.Length);
-
-
                 }
                 else Debug.LogWarning("mainUIを作成してください");
-
+                //テキスト更新の処理を終わる
                 _nextTextUpdating = false;
                 break;
 
             case StoryTextList.TextKind.sound:
+                //文字列を数値化してSoundPlayメソッドを送る
                 if (int.TryParse(texts[0], out int num) && int.TryParse(texts[1], out int soundNum))
                 {
                     _mainSystem.SoundPlay(num, soundNum);

@@ -5,7 +5,6 @@ public class MainSystem : MonoBehaviour
 {
     static MainSystem _selfInstance;
 
-    StorySystem _storySystem;
     ScreenEffectUI _screenEffect;
     PauseUI _pauseUI;
 
@@ -25,7 +24,6 @@ public class MainSystem : MonoBehaviour
         }
         else
         {
-            Debug.Log("u");
             Destroy(gameObject);
         }
     }
@@ -72,11 +70,13 @@ public class MainSystem : MonoBehaviour
 
     IEnumerator StoryScene()
     {
-        SceneChanger.ChangeScene(SceneChanger.SceneKind.Story);
+        AsyncOperation asyncLoad = SceneChanger.ChangeScene(SceneChanger.SceneKind.Story);
+        while(!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        StorySystem _storySystem = FindAnyObjectByType<StorySystem>();
+        _storySystem.SetClass(0);
         _screenEffect.ScreenEffect();
-        yield return new WaitForSeconds(2);
-        _storySystem = FindAnyObjectByType<StorySystem>();
-        _storySystem._canselActive = true;
-        _storySystem.NextTextTrigger();
     }
 }
