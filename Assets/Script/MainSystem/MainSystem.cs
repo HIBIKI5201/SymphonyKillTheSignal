@@ -4,7 +4,7 @@ using UnityEngine;
 public class MainSystem : MonoBehaviour
 {
     static MainSystem _selfInstance;
-    StoryManager _storyManager;
+    public StoryManager _storyManager;
 
     ScreenEffectUI _screenEffect;
     PauseUI _pauseUI;

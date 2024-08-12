@@ -60,7 +60,7 @@ public class StorySystem : MonoBehaviour
         //メインシステムを取得
         _mainSystem = FindAnyObjectByType<MainSystem>();
         //Characterをデータベースから値渡し
-        _characterList = new();
+        _characterList.Clear();
         foreach (StoryCharacterList character in storyTextData._characterList)
         {
             if (character.characterName == "System")
