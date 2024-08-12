@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainSystem : MonoBehaviour
 {
-    MainSystem _selfInstance;
+    static MainSystem _selfInstance;
 
     StorySystem _storySystem;
     ScreenEffectUI _screenEffect;
@@ -26,7 +26,8 @@ public class MainSystem : MonoBehaviour
         }
         else
         {
-            Destroy(this.gameObject);
+            Debug.Log("u");
+            Destroy(gameObject);
         }
     }
 
@@ -40,6 +41,7 @@ public class MainSystem : MonoBehaviour
         _soundEffectSource = GetComponentInChildren<AudioSource>();
         _BGMSource = GetComponent<AudioSource>();
 
+        //テスト用
         StartCoroutine(StoryScene());
     }
 
@@ -61,10 +63,10 @@ public class MainSystem : MonoBehaviour
 
     IEnumerator StoryScene()
     {
-        _storySystem = FindAnyObjectByType<StorySystem>();
-
+        SceneChanger.ChangeScene(SceneChanger.SceneKind.Story);
         _screenEffect.ScreenEffect();
         yield return new WaitForSeconds(2);
+        _storySystem = FindAnyObjectByType<StorySystem>();
         _storySystem._canselActive = true;
         _storySystem.NextTextTrigger();
     }
