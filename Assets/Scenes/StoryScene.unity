@@ -180,6 +180,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a6483eb57ae79488932877f994ceab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &48404182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 48404183}
+  - component: {fileID: 48404184}
+  m_Layer: 0
+  m_Name: StoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &48404183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48404182}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.550494, y: -0.14293677, z: 0.029293709}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1349390926}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &48404184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48404182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d63042f9c6213e4893d28c765758d86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textDataBase:
+  - {fileID: 11400000, guid: f966f6c2393644a4bbabd0b90588a1a9, type: 2}
 --- !u!1 &165735300
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +641,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 48404183}
   - {fileID: 42133260}
   - {fileID: 1800660408}
   - {fileID: 861250433}
@@ -612,6 +659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f1470086c556c41b49e71cd8486eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _storyManager: {fileID: 0}
   soundEffects: {fileID: 11400000, guid: 884747cdc0f1f6f47befb1dd3b1f5374, type: 2}
   BGMs: {fileID: 11400000, guid: a105febb680f6144b8f1f566dbff4f84, type: 2}
 --- !u!82 &1349390928
@@ -744,8 +792,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unHighLightColor: {r: 0.699, g: 0.699, b: 0.699, a: 1}
-  _textDataBase:
-  - {fileID: 11400000, guid: f966f6c2393644a4bbabd0b90588a1a9, type: 2}
   _characterList:
   - gameObject: {fileID: 1450439096}
     characterName: System

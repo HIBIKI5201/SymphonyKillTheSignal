@@ -43,7 +43,6 @@ public class StoryUI : MonoBehaviour
 
     void ButtonClicked()
     {
-        Debug.Log("a");
         _storySystem.NextTextTrigger();
     }
 
