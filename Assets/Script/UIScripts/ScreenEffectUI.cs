@@ -14,6 +14,7 @@ public class ScreenEffectUI : MonoBehaviour
         _root = _screenEffectUIDocument.rootVisualElement;
 
         _fade = _root.Q<VisualElement>("Fade");
+        _fade.pickingMode = PickingMode.Ignore;
     }
 
     void Update()
@@ -23,8 +24,6 @@ public class ScreenEffectUI : MonoBehaviour
 
     public void ScreenEffect()
     {
-        DOTween.To(() => new Color(0, 0, 0, 1), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 0), 3).SetEase(Ease.Linear)
-            .OnStart(() => _screenEffectUIDocument.enabled = true)
-            .OnComplete(() => _screenEffectUIDocument.enabled = false);
+        DOTween.To(() => new Color(0, 0, 0, 1), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 0), 3).SetEase(Ease.Linear);
     }
 }
