@@ -4,6 +4,7 @@ using UnityEngine;
 public class MainSystem : MonoBehaviour
 {
     static MainSystem _selfInstance;
+    StoryManager _storyManager;
 
     ScreenEffectUI _screenEffect;
     PauseUI _pauseUI;
@@ -33,7 +34,8 @@ public class MainSystem : MonoBehaviour
         //UI ToolKit‚ðŽæ“¾
         _screenEffect = GetComponentInChildren<ScreenEffectUI>();
         _pauseUI = GetComponentInChildren<PauseUI>();
-
+        //StoryManager‚ðŽæ“¾
+        _storyManager = GetComponentInChildren<StoryManager>();
         //AudioSource‚ðŽæ“¾‚·‚é
         _soundEffectSource = GetComponentInChildren<AudioSource>();
         _BGMSource = GetComponent<AudioSource>();
@@ -71,12 +73,11 @@ public class MainSystem : MonoBehaviour
     IEnumerator StoryScene()
     {
         AsyncOperation asyncLoad = SceneChanger.ChangeScene(SceneChanger.SceneKind.Story);
-        while(!asyncLoad.isDone)
+        while (!asyncLoad.isDone)
         {
             yield return null;
         }
-        StorySystem _storySystem = FindAnyObjectByType<StorySystem>();
-        _storySystem.SetClass(0);
+        _storyManager.StoryStart();
         _screenEffect.ScreenEffect();
     }
 }

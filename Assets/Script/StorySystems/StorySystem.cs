@@ -19,10 +19,6 @@ public class StorySystem : MonoBehaviour
     MainSystem _mainSystem;
     StoryUI _mainUI;
 
-    [Header("テキスト")]
-    [SerializeField]
-    List<StoryTextDataBase> _textDataBase = new();
-
     [HideInInspector]
     public List<StoryCharacterList> _characterList = new();
     List<StoryTextList> _textList;
@@ -59,14 +55,12 @@ public class StorySystem : MonoBehaviour
         _currentTextNumber = -1;
     }
 
-    public void SetClass(int textNumber)
+    public void SetClass(StoryTextDataBase storyTextData)
     {
         //メインシステムを取得
         _mainSystem = FindAnyObjectByType<MainSystem>();
-        //データベースからインスタンスに情報を参照
-        StoryTextDataBase storyTextData = _textDataBase[textNumber];
-        //Characterをデータから値渡し
-        _characterList.Clear();
+        //Characterをデータベースから値渡し
+        _characterList = new();
         foreach (StoryCharacterList character in storyTextData._characterList)
         {
             if (character.characterName == "System")
@@ -76,7 +70,7 @@ public class StorySystem : MonoBehaviour
             }
             _characterList.Add(new StoryCharacterList(character));
         }
-        //Textをデータから参照
+        //Textをデータベースから参照
         _textList = new List<StoryTextList> (storyTextData._textList);
         //CharacterPropatiesをリセットする
         _characterPropaties.Clear();
@@ -113,7 +107,6 @@ public class StorySystem : MonoBehaviour
         }
         //最初のテキストを呼び出す
         _textUpdateActive = true;
-        NextTextTrigger();
     }
     /// <summary>
     /// テキストボックスが押された時に実行されるイベント
