@@ -29,12 +29,6 @@ public class MainSystem : MonoBehaviour
         StartCoroutine(StoryScene());
     }
 
-
-    void Update()
-    {
-        
-    }
-
     IEnumerator StoryScene()
     {
         _storySystem = FindAnyObjectByType<StorySystem>();

@@ -275,11 +275,11 @@ Transform:
   m_GameObject: {fileID: 436005657}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.00000037252897, w: 1}
-  m_LocalPosition: {x: -4.75, y: -0.999995, z: 0}
+  m_LocalPosition: {x: -4.75, y: -1, z: 0}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1450439098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &436005659
 Animator:
@@ -551,12 +551,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019757885}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3, y: 0, z: 0}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1450439098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1113284369
 GameObject:
@@ -629,7 +629,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1321823702}
   m_Layer: 0
-  m_Name: Systems
+  m_Name: Commons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -651,7 +651,6 @@ Transform:
   - {fileID: 519420032}
   - {fileID: 165735303}
   - {fileID: 1113284372}
-  - {fileID: 1450439098}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1349390925
@@ -732,7 +731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa25dd2450657784e9a93326a8fa18bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textSpeed: 15
   _unHighLightColor: {r: 0.699, g: 0.699, b: 0.699, a: 1}
   _characterList:
   - gameObject: {fileID: 1450439096}
@@ -784,13 +782,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450439096}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 436005658}
+  - {fileID: 1019757888}
   - {fileID: 1868805167}
-  m_Father: {fileID: 1321823702}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1450439099
 Animator:
@@ -839,18 +839,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 36ed9216-956d-4c65-9bfd-07a571af366e
-    m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: be6e4c21-4eaa-49ca-ae25-0ce2264b7815
-    m_ActionName: 'Player/Look[/Mouse/delta,/Pen/delta]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5de9ac6c-00be-4a47-b123-3fe09c9a5c5c
-    m_ActionName: 'Player/Fire[/Mouse/leftButton]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1450439097}
@@ -1019,6 +1007,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1800660408}
   - component: {fileID: 1800660407}
+  - component: {fileID: 1800660409}
   m_Layer: 5
   m_Name: PauseUI
   m_TagString: Untagged
@@ -1057,6 +1046,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1349390926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1800660409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800660406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54922c4936a07f24a867d0c83fcb8d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1868805166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,7 +1074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1868805167
 Transform:
   m_ObjectHideFlags: 0
@@ -1147,7 +1148,6 @@ SpriteRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 436005658}
-  - {fileID: 1019757888}
   - {fileID: 1349390926}
   - {fileID: 1321823702}
+  - {fileID: 1450439098}

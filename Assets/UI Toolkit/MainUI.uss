@@ -5,5 +5,14 @@
     color: rgb(255, 255, 255);
     -unity-text-outline-color: rgb(0, 0, 0);
     -unity-text-outline-width: 0;
-    -unity-font-definition: url('project://database/Assets/font/font_1_kokugl_1.15_rls%20SDF.asset?fileID=11400000&guid=cc23368cab45b9c4db4a46b782948ac9&type=2#font_1_kokugl_1.15_rls SDF');
+    -unity-font-definition: url("project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#font_1_kokugl_1.15_rls");
+}
+
+.button {
+    width: 150px;
+    height: 70px;
+    align-items: flex-start;
+    background-color: rgb(178, 178, 178);
+    -unity-font-definition: url("project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#font_1_kokugl_1.15_rls");
+    font-size: 40px;
 }

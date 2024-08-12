@@ -8,7 +8,7 @@ public class StorySystem : MonoBehaviour
 {
     [Header("プロパティ")]
     [Tooltip("テキストスピード")]
-    public float _textSpeed = 1;
+    public static float _textSpeed = 15;
     [SerializeField, Tooltip("アンハイライトカラー")]
     Color _unHighLightColor = Color.white;
 

@@ -1,3 +1,4 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Button text="メニュー" style="width: 150px; height: 70px; align-items: flex-start; background-color: rgb(178, 178, 178); -unity-font-definition: url(&quot;project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#font_1_kokugl_1.15_rls&quot;); font-size: 40px;" />
+    <Style src="project://database/Assets/UI%20Toolkit/MainUI.uss?fileID=7433441132597879392&amp;guid=030672bf8791f77439b2e02cd045061b&amp;type=3#MainUI" />
+    <engine:Button text="メニュー" name="PauseButton" class="button" />
 </engine:UXML>
