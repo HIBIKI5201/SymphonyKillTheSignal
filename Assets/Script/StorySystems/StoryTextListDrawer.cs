@@ -16,7 +16,7 @@ public class StoryTextListDrawer : PropertyDrawer
 
         // Draw CharacterType Popup
         position.height = EditorGUIUtility.singleLineHeight;
-        StorySystem storySystem = (StorySystem)property.serializedObject.targetObject;
+        StoryTextDataBase storySystem = (StoryTextDataBase)property.serializedObject.targetObject;
 
         if (storySystem != null && storySystem._characterList != null)
         {
