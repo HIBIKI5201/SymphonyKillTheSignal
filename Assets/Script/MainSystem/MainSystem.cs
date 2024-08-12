@@ -12,9 +12,9 @@ public class MainSystem : MonoBehaviour
     AudioSource _soundEffectSource;
     AudioSource _BGMSource;
     [SerializeField]
-    SoundDataBase soundEffects = new();
+    SoundDataBase soundEffects;
     [SerializeField]
-    SoundDataBase BGMs = new();
+    SoundDataBase BGMs;
     private void Awake()
     {
         //Singletonのようにする処理
@@ -49,13 +49,23 @@ public class MainSystem : MonoBehaviour
         switch (number)
         {
             case 0:
-                _soundEffectSource.PlayOneShot(soundEffects.dataList[soundNumber]);
+                if (soundEffects.dataList.Count > soundNumber)
+                {
+                    _soundEffectSource.PlayOneShot(soundEffects.dataList[soundNumber]);
+                }
                 break;
 
             case 1:
-                _BGMSource.Stop();
-                _BGMSource.clip = BGMs.dataList[soundNumber];
-                _BGMSource.Play();
+                if (soundEffects.dataList.Count > soundNumber)
+                {
+                    _BGMSource.Stop();
+                    _BGMSource.clip = BGMs.dataList[soundNumber];
+                    _BGMSource.Play();
+                }
+                break;
+
+            default:
+                Debug.LogWarning("SoundPlayメソッドの範囲外です");
                 break;
         }
     }

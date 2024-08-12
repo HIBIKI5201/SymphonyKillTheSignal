@@ -200,6 +200,7 @@ public class StorySystem : MonoBehaviour
                 {
                     _mainSystem.SoundPlay(num, soundNum);
                 }
+                else Debug.LogWarning("Sound‚Ìw’è‚ª“KØ‚Å‚Í‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
                 break;
         }
     }
