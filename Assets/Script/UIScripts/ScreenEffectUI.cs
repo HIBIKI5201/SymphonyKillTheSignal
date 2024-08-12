@@ -24,6 +24,6 @@ public class ScreenEffectUI : MonoBehaviour
 
     public void ScreenEffect()
     {
-        DOTween.To(() => new Color(0, 0, 0, 1), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 0), 3).SetEase(Ease.Linear);
+        DOTween.To(() => new Color(0, 0, 0, 1), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 0), 1).SetEase(Ease.Linear);
     }
 }

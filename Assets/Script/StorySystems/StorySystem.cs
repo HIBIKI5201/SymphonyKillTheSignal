@@ -12,10 +12,11 @@ public class StorySystem : MonoBehaviour
     [SerializeField, Tooltip("アンハイライトカラー")]
     Color _unHighLightColor = Color.white;
 
-    //[HideInInspector]
+    [HideInInspector]
     bool _nextTextUpdating;
 
-    //コンポーネント
+    //クラス
+    MainSystem _mainSystem;
     StoryUI _mainUI;
 
     [Header("オブジェクト")]
@@ -29,10 +30,6 @@ public class StorySystem : MonoBehaviour
     [SerializeField]
     List<StoryTextList> _textList = new();
 
-    [Header("サウンド")]
-    AudioSource _audioSource;
-    [SerializeField]
-    List<AudioClip> audioClips = new();
 
     public struct CharacterPropaty
     {
@@ -57,6 +54,7 @@ public class StorySystem : MonoBehaviour
 
     private void Start()
     {
+        _mainSystem = FindAnyObjectByType<MainSystem>();
         _nextTextUpdating = false;
         _mainUI = FindAnyObjectByType<StoryUI>();
         //CharacterNamesをリセットする
@@ -87,12 +85,6 @@ public class StorySystem : MonoBehaviour
         }
         //最初が0番目のテキストになるように初期値を設定
         _currentTextNumber = -1;
-        //AudioSourceを取得する
-        if (TryGetComponent<AudioSource>(out AudioSource audioSource))
-        {
-            _audioSource = audioSource;
-        }
-        else Debug.LogWarning($"{gameObject}にAudioSourceがアタッチされていません");
 
         _canselActive = false;
     }
@@ -166,7 +158,7 @@ public class StorySystem : MonoBehaviour
                 }
                 //アニメーション中はテキスト更新を無効
                 StopCoroutine(_nextTimerCoroutine);
-                StartCoroutine(NextTimer(waitTime));
+                _nextTimerCoroutine = StartCoroutine(NextTimer(waitTime));
                 yield return new WaitForSeconds(waitTime);
                 StartCoroutine(NextText());
                 break;
@@ -204,20 +196,10 @@ public class StorySystem : MonoBehaviour
                 break;
 
             case StoryTextList.TextKind.sound:
-
-                switch (int.Parse(texts[1]))
+                if (int.TryParse(texts[0], out int num) && int.TryParse(texts[1], out int soundNum))
                 {
-                    case 0:
-                        _audioSource.PlayOneShot(audioClips[int.Parse(texts[0])]);
-                        break;
-
-                    case 1:
-                        _audioSource.Stop();
-                        _audioSource.clip = audioClips[int.Parse(texts[0])];
-                        _audioSource.Play();
-                        break;
+                    _mainSystem.SoundPlay(num, soundNum);
                 }
-
                 break;
         }
     }
