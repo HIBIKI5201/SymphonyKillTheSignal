@@ -6,6 +6,7 @@ public class StoryCharacterList
 {
     public GameObject gameObject;
     public string characterName;
+    public Vector2 pos;
 
     public StoryCharacterList()
     {
@@ -15,5 +16,6 @@ public class StoryCharacterList
     {
         gameObject = other.gameObject;
         characterName = other.characterName;
+        pos = other.pos;
     }
 }

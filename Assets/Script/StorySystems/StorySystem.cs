@@ -63,26 +63,32 @@ public class StorySystem : MonoBehaviour
         _characterList.Clear();
         foreach (StoryCharacterList character in storyTextData._characterList)
         {
+            //Systemのみ例外処理
             if (character.characterName == "System")
             {
-                _characterList.Add(new StoryCharacterList { gameObject = this.gameObject, characterName = "" });
+                _characterList.Add(new StoryCharacterList { gameObject = this.gameObject, characterName = "", pos = Vector2.zero});
                 continue;
             }
+            //データをコピー
             _characterList.Add(new StoryCharacterList(character));
         }
         //Textをデータベースから参照
         _textList = new List<StoryTextList> (storyTextData._textList);
         //CharacterPropatiesをリセットする
         _characterPropaties.Clear();
+        //キャラクターを生成
         foreach (var characterData in _characterList)
         {
             string characterName = characterData.characterName;
             GameObject character = null;
-            //データからゲームオブジェクトを生成
             if (characterData.characterName != "System")
             {
+                //データからゲームオブジェクトを生成
                 character = Instantiate(characterData.gameObject);
+                //StorySystemの子オブジェクトにする
                 character.transform.SetParent(gameObject.transform);
+                //初期位置をセット
+                character.transform.position = characterData.pos;
             }
             Animator animator = null;
             CharacterRendererManager spriteRenderer = null;
@@ -124,7 +130,6 @@ public class StorySystem : MonoBehaviour
     /// </summary>
     public void NextTextTrigger()
     {
-        //キ
         if (_textUpdateActive)
         {
             StartCoroutine(NextText());
@@ -239,7 +244,10 @@ public class StorySystem : MonoBehaviour
                 break;
         }
     }
-
+    /// <summary>
+    /// 喋っているキャラだけをハイライトし、それ以外を暗くする
+    /// </summary>
+    /// <param name="number">喋っているキャラの番号</param>
     void CharacterHighLight(int number)
     {
         for (int i = 0; i < _characterPropaties.Count; i++)
