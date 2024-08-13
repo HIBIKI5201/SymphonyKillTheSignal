@@ -4,6 +4,7 @@ using UnityEngine;
 public class MainSystem : MonoBehaviour
 {
     static MainSystem _selfInstance;
+    [HideInInspector]
     public StoryManager _storyManager;
 
     ScreenEffectUI _screenEffect;

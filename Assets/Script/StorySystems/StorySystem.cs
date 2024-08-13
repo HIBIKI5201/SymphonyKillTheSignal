@@ -28,13 +28,13 @@ public class StorySystem : MonoBehaviour
     {
         public string name;
         public Animator animator;
-        public SpriteRenderer spriteRenderer;
+        public CharacterRendererManager characterRendererManager;
 
-        public CharacterPropaty(string name, Animator animator, SpriteRenderer sprite)
+        public CharacterPropaty(string name, Animator animator, CharacterRendererManager sprite)
         {
             this.name = name;
             this.animator = animator;
-            this.spriteRenderer = sprite;
+            this.characterRendererManager = sprite;
         }
     }
 
@@ -85,7 +85,7 @@ public class StorySystem : MonoBehaviour
                 character.transform.SetParent(gameObject.transform);
             }
             Animator animator = null;
-            SpriteRenderer spriteRenderer = null;
+            CharacterRendererManager spriteRenderer = null;
             //各キャラクターからAnimatorとSpriteRendererを取得する
             if (character)
             {
@@ -95,11 +95,11 @@ public class StorySystem : MonoBehaviour
                 }
                 else Debug.LogWarning($"{character.name}にAnimatorをアタッチしてください");
 
-                if (character.TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
+                if (character.TryGetComponent<CharacterRendererManager>(out CharacterRendererManager crm))
                 {
-                    spriteRenderer = sr;
+                    spriteRenderer = crm;
                 }
-                else Debug.Log($"{character.name}にはSpriteRendererがアタッチされていませんでした");
+                else Debug.Log($"{character.name}にはCharacterRenererManagerがアタッチされていませんでした");
             }
             else Debug.LogWarning($"characterListの{characterData.characterName}にオブジェクトをアサインしてください");
             //取得したコンポーネントをリストに格納する
@@ -153,7 +153,6 @@ public class StorySystem : MonoBehaviour
             _textUpdatingCanselTrigger = true;
             yield break;
         }
-        _nextTextUpdating = true;
         //次のテキストにする
         if (_textList.Count - 1 > _currentTextNumber)
         {
@@ -163,9 +162,9 @@ public class StorySystem : MonoBehaviour
         else
         {
             Debug.LogWarning("テキストは終了しました");
-            _nextTextUpdating = false;
             yield break;
         }
+        _nextTextUpdating = true;
         //改行ごとに文字を分ける
         string[] texts = _textList[_currentTextNumber].text.Split('\n');
         //textListのkindに応じて動きを変える
@@ -185,10 +184,10 @@ public class StorySystem : MonoBehaviour
                 }
                 else { Debug.LogWarning($"characterListの{_characterList[_textList[_currentTextNumber].characterType].characterName}にオブジェクトをアサインしてください"); }
                 //アニメーションの待機時間を計算
-                int waitTime = 1;
+                float waitTime = 1;
                 if (texts.Length > 1)
                 {
-                    waitTime = int.Parse(texts[1]);
+                    waitTime = float.Parse(texts[1]);
                 }
                 //アニメーション中はテキスト更新を無効
                 if (_nextTimerCoroutine != null)
@@ -245,8 +244,8 @@ public class StorySystem : MonoBehaviour
     {
         for (int i = 0; i < _characterPropaties.Count; i++)
         {
-            if (_characterPropaties[i].spriteRenderer != null)
-                _characterPropaties[i].spriteRenderer.color = i != number ? _unHighLightColor : Color.white;
+            if (_characterPropaties[i].characterRendererManager != null)
+                _characterPropaties[i].characterRendererManager.ChangeColor(i != number ? _unHighLightColor : Color.white);
         }
     }
 }
