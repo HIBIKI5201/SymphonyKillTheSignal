@@ -15,10 +15,10 @@ MonoBehaviour:
   _characterList:
   - gameObject: {fileID: 0}
     characterName: System
+    pos: {x: 0, y: 0}
   - gameObject: {fileID: 1410510812534861152, guid: e7153644fd91dc246a05f38a217b27d5, type: 3}
     characterName: Symphony
-  - gameObject: {fileID: 8374671878195970336, guid: 3e111da695fb96b47ad91631900327a8, type: 3}
-    characterName: Triad
+    pos: {x: -3, y: -2}
   _textList:
   - characterType: 0
     kind: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
   - characterType: 1
     kind: 0
     text: "\u30C6\u30B9\u30C8\u3060\u3088"
-  - characterType: 2
+  - characterType: 1
     kind: 0
     text: "\u30C6\u30B9\u30C8\u3060"
   - characterType: 0
