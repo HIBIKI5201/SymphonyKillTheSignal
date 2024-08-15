@@ -84,12 +84,14 @@ public class MainSystem : MonoBehaviour
 
     IEnumerator StoryScene()
     {
+        _screenEffect.ScreenFadeOut();
+        yield return new WaitForSeconds(1);
         AsyncOperation asyncLoad = SceneChanger.ChangeScene(SceneChanger.SceneKind.Story);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
         _storyManager.StoryStart();
-        _screenEffect.ScreenEffect();
+        _screenEffect.ScreenFadeIn();
     }
 }
