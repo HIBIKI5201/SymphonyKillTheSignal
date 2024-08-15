@@ -19,7 +19,11 @@ public class SceneChanger : MonoBehaviour
         { SceneKind.Home , "HomeScene"},
         { SceneKind.Story , "StoryScene"},
     };
-
+    /// <summary>
+    /// シーンをロードし、AsyncOperationを戻り値とする
+    /// </summary>
+    /// <param name="sceneKind">シーンの種類</param>
+    /// <returns>AsyncOperationクラス</returns>
     public static AsyncOperation ChangeScene(SceneKind sceneKind)
     {
         return SceneManager.LoadSceneAsync(_sceneNames[sceneKind]);

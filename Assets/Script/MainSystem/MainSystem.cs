@@ -47,17 +47,17 @@ public class MainSystem : MonoBehaviour
         //続きからボタンかつセーブデータがある場合
         if (Continue)
         {
-            StartCoroutine(StoryScene());
+            StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
         }
         else
         {
-            StartCoroutine(StoryScene());
+            StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
         }
     }
 
     public void BackToHome()
     {
-        StartCoroutine(HomeScene());
+        StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
     }
 
 
@@ -87,28 +87,25 @@ public class MainSystem : MonoBehaviour
         }
     }
 
-    IEnumerator StoryScene()
+    IEnumerator SceneChange(SceneChanger.SceneKind sceneKind)
     {
+        //フェードアウト演出
         _screenEffect.ScreenFadeOut();
         yield return new WaitForSeconds(1);
-        AsyncOperation asyncLoad = SceneChanger.ChangeScene(SceneChanger.SceneKind.Story);
+        //シーンをロードしてロード終了まで待つ
+        AsyncOperation asyncLoad = SceneChanger.ChangeScene(sceneKind);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
+        //ロードしたシーンに応じて動きを変える
+        switch(sceneKind)
+        {
+            case SceneChanger.SceneKind.Story:
         _storyManager.StoryStart();
-        _screenEffect.ScreenFadeIn();
-    }
-
-    IEnumerator HomeScene()
-    {
-        _screenEffect.ScreenFadeOut();
-        yield return new WaitForSeconds(1);
-        AsyncOperation asyncLoad = SceneChanger.ChangeScene(SceneChanger.SceneKind.Home);
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
+                break;
         }
+        //フェードイン演出
         _screenEffect.ScreenFadeIn();
     }
 }
