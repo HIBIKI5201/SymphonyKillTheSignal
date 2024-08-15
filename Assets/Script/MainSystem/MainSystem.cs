@@ -109,8 +109,6 @@ public class MainSystem : MonoBehaviour
         {
             yield return null;
         }
-        Debug.Log("a");
         _screenEffect.ScreenFadeIn();
-        Debug.Log("b");
     }
 }
