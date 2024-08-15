@@ -15,14 +15,13 @@ public class SceneChanger : MonoBehaviour
 
     static readonly Dictionary<SceneKind, string> _sceneNames = new()
     {
-        { SceneKind.Title , "none"},
-        { SceneKind.Home , "none"},
+        { SceneKind.Title , "TitleScene"},
+        { SceneKind.Home , "HomeScene"},
         { SceneKind.Story , "StoryScene"},
     };
 
     public static AsyncOperation ChangeScene(SceneKind sceneKind)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_sceneNames[sceneKind]);
-        return asyncLoad;
+        return SceneManager.LoadSceneAsync(_sceneNames[sceneKind]);
     }
 }

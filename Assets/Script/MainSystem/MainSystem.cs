@@ -55,6 +55,11 @@ public class MainSystem : MonoBehaviour
         }
     }
 
+    public void BackToHome()
+    {
+        StartCoroutine(HomeScene());
+    }
+
 
     public void SoundPlay(int number, int soundNumber)
     {
@@ -93,5 +98,19 @@ public class MainSystem : MonoBehaviour
         }
         _storyManager.StoryStart();
         _screenEffect.ScreenFadeIn();
+    }
+
+    IEnumerator HomeScene()
+    {
+        _screenEffect.ScreenFadeOut();
+        yield return new WaitForSeconds(1);
+        AsyncOperation asyncLoad = SceneChanger.ChangeScene(SceneChanger.SceneKind.Home);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        Debug.Log("a");
+        _screenEffect.ScreenFadeIn();
+        Debug.Log("b");
     }
 }

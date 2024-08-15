@@ -167,6 +167,7 @@ public class StorySystem : MonoBehaviour
         else
         {
             Debug.LogWarning("テキストは終了しました");
+            _mainSystem.BackToHome();
             yield break;
         }
         _nextTextUpdating = true;
