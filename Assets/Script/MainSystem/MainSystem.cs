@@ -40,10 +40,21 @@ public class MainSystem : MonoBehaviour
         //AudioSourceを取得する
         _soundEffectSource = GetComponentInChildren<AudioSource>();
         _BGMSource = GetComponent<AudioSource>();
-
-        //テスト用
-        StartCoroutine(StoryScene());
     }
+
+    public void GameStart(bool Continue)
+    {
+        //続きからボタンかつセーブデータがある場合
+        if (Continue)
+        {
+            StartCoroutine(StoryScene());
+        }
+        else
+        {
+            StartCoroutine(StoryScene());
+        }
+    }
+
 
     public void SoundPlay(int number, int soundNumber)
     {
