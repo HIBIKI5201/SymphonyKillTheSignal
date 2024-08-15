@@ -1,0 +1,11 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MainUI.uss?fileID=7433441132597879392&amp;guid=030672bf8791f77439b2e02cd045061b&amp;type=3#MainUI" />
+    <Style src="project://database/Assets/UI%20Toolkit/TitleUI.uss?fileID=7433441132597879392&amp;guid=2fd435c00491bc34cbb5e65e94baed3d&amp;type=3#TitleUI" />
+    <Style src="project://database/Assets/HomeUI.uss?fileID=7433441132597879392&amp;guid=6ce4a178eea1e034e9170cd740f3f5cf&amp;type=3#HomeUI" />
+    <engine:VisualElement style="width: 1000px; height: 150px; left: auto; top: auto; right: auto; position: absolute; bottom: 140px; align-items: center; align-self: center; justify-content: space-around; flex-direction: row; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+        <engine:Button text="Button" class="homeButton" />
+        <engine:Button text="Button" class="homeButton" />
+        <engine:Button text="Button" class="homeButton" />
+        <engine:Button text="Button" class="homeButton" />
+    </engine:VisualElement>
+</engine:UXML>

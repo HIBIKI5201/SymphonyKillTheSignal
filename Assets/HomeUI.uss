@@ -1,0 +1,17 @@
+.homeButton {
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-size: 40px;
+    background-color: rgb(193, 193, 193);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    -unity-font-definition: url("project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#font_1_kokugl_1.15_rls");
+}

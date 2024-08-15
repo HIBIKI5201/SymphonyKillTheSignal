@@ -4,8 +4,8 @@
     <engine:VisualElement name="BackGround" style="flex-grow: 1; position: absolute;" />
     <engine:VisualElement name="Buttons" style="width: 200px; height: 500px; bottom: auto; right: 300px; top: 500px; left: auto; align-items: center; align-self: flex-end;">
         <engine:Button text="はじめる" name="Start" class="titleButton" />
-        <engine:Button text="続きから" name="Continue" class="titleButton" style="width: 180px; height: 80px;" />
-        <engine:Button text="オプション" name="Option" class="titleButton" style="width: 180px; height: 80px;" />
+        <engine:Button text="続きから" name="Continue" class="titleButton" />
+        <engine:Button text="オプション" name="Option" class="titleButton" />
         <engine:Button text="クレジット" name="Credit" class="titleButton" style="height: 80px; width: 180px;" />
     </engine:VisualElement>
 </engine:UXML>
