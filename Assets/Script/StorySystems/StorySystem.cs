@@ -66,14 +66,14 @@ public class StorySystem : MonoBehaviour
             //Systemのみ例外処理
             if (character.characterName == "System")
             {
-                _characterList.Add(new StoryCharacterList { gameObject = this.gameObject, characterName = "", pos = Vector2.zero});
+                _characterList.Add(new StoryCharacterList { gameObject = this.gameObject, characterName = "", pos = Vector2.zero });
                 continue;
             }
             //データをコピー
             _characterList.Add(new StoryCharacterList(character));
         }
         //Textをデータベースから参照
-        _textList = new List<StoryTextList> (storyTextData._textList);
+        _textList = new List<StoryTextList>(storyTextData._textList);
         //CharacterPropatiesをリセットする
         _characterPropaties.Clear();
         //キャラクターを生成
@@ -163,11 +163,12 @@ public class StorySystem : MonoBehaviour
         {
             _currentTextNumber++;
         }
-        //次のテキストがない場合は処理を終わる
+        //次のテキストがない場合はホームに帰る
         else
         {
-            Debug.LogWarning("テキストは終了しました");
             _mainSystem.BackToHome();
+            //連打防止
+            if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
             _textUpdateActive = false;
             yield break;
         }
@@ -197,10 +198,7 @@ public class StorySystem : MonoBehaviour
                     waitTime = float.Parse(texts[1]);
                 }
                 //アニメーション中はテキスト更新を無効
-                if (_nextTimerCoroutine != null)
-                {
-                    StopCoroutine(_nextTimerCoroutine);
-                }
+                if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
                 _nextTimerCoroutine = StartCoroutine(NextTimer(waitTime));
                 yield return new WaitForSeconds(waitTime);
                 StartCoroutine(NextText());
@@ -216,7 +214,7 @@ public class StorySystem : MonoBehaviour
                     //textSpeedの時間に応じてテキストを表示する
                     float x = 0;
                     do
-                    {   
+                    {
                         x += _textSpeed * Time.deltaTime;
                         _mainUI.TextBoxUpdate(
                             _characterPropaties[_textList[_currentTextNumber].characterType].name,

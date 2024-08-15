@@ -57,7 +57,7 @@ public class MainSystem : MonoBehaviour
 
     public void BackToHome()
     {
-        StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
+        StartCoroutine(SceneChange(SceneChanger.SceneKind.Home));
     }
 
 
