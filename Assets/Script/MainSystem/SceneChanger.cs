@@ -1,12 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-    public enum SceneKind 
+    static public SceneKind CurrentScene = SceneKind.Title;
+    public enum SceneKind
     {
         Title,
         Home,
@@ -26,6 +25,7 @@ public class SceneChanger : MonoBehaviour
     /// <returns>AsyncOperationƒNƒ‰ƒX</returns>
     public static AsyncOperation ChangeScene(SceneKind sceneKind)
     {
+        CurrentScene = sceneKind;
         return SceneManager.LoadSceneAsync(_sceneNames[sceneKind]);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SaveDataManager : MonoBehaviour
 {
-    public static SaveData _mainSaveData;
+    public static SaveData? _mainSaveData;
 
     [Serializable]
     public struct SaveData
@@ -20,10 +20,11 @@ public class SaveDataManager : MonoBehaviour
         }
     }
 
-    public static void Save(SaveData saveData)
+    public static void Save()
     {
+        Debug.Log(_mainSaveData);
         // インスタンス変数を JSON にシリアル化する
-        string json = JsonUtility.ToJson(saveData);
+        string json = JsonUtility.ToJson(_mainSaveData);
         // PlayerPrefs に保存する
         PlayerPrefs.SetString("SaveData", json);
     }
@@ -36,8 +37,8 @@ public class SaveDataManager : MonoBehaviour
         {
             // デシリアライズする
             SaveData saveData = JsonUtility.FromJson<SaveData>(json);
-            // 画面に表示する
             Debug.Log(saveData);
+            //データを返す
             return saveData;
         }
         else

@@ -40,21 +40,27 @@ public class MainSystem : MonoBehaviour
         //AudioSourceを取得する
         _soundEffectSource = GetComponentInChildren<AudioSource>();
         _BGMSource = GetComponent<AudioSource>();
+        //ポーズUIを非表示
+        if (SceneChanger.CurrentScene == SceneChanger.SceneKind.Title)
+        {
+            _pauseUI.enabled = false;
+        }
+        //セーブデータを確認
+        SaveDataManager._mainSaveData = SaveDataManager.Load();
     }
 
     public void GameStart(bool Continue)
     {
-        SaveDataManager.SaveData? saveData =　SaveDataManager.Load();
         //続きからボタンかつセーブデータがある場合
-        if (Continue && saveData.HasValue)
+        if (Continue && SaveDataManager._mainSaveData.HasValue)
         {
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
-            SaveDataManager._mainSaveData = saveData.Value;
         }
         else
         {
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Home));
-            SaveDataManager.Save(new SaveDataManager.SaveData(0, 0));
+            SaveDataManager._mainSaveData = new(0, 0);
+            SaveDataManager.Save();
         }
     }
 
@@ -102,10 +108,14 @@ public class MainSystem : MonoBehaviour
             yield return null;
         }
         //ロードしたシーンに応じて動きを変える
-        switch(sceneKind)
+        switch (sceneKind)
         {
             case SceneChanger.SceneKind.Story:
-        _storyManager.StoryStart();
+                _pauseUI.enabled = true;
+                _storyManager.StoryStart();
+                break;
+            case SceneChanger.SceneKind.Home:
+                _pauseUI.enabled = true;
                 break;
         }
         //フェードイン演出
