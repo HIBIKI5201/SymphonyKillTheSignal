@@ -128,6 +128,10 @@ public class StorySystem : SystemBase
         {
             NextTextTrigger();
         }
+        else
+        {
+            Debug.Log(_textList);
+        }
         Debug.Log("clicked");
     }
 

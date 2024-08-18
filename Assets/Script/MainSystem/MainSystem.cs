@@ -121,16 +121,12 @@ public class MainSystem : MonoBehaviour
                 _pauseUI.HidePause();
                 break;
         }
-        //フェードイン演出
         yield return new WaitForSeconds(0.8f);
-        _screenEffect.ScreenFadeIn(1);
         //最初のテキストを呼び出す
-        switch (sceneKind)
-        {
-            case SceneChanger.SceneKind.Story:
-                _storyManager.StartStory();
-                break;
-        }
+        if (sceneKind == SceneChanger.SceneKind.Story) _storyManager.StartStory();
+        //フェードイン演出
+        _screenEffect.ScreenFadeIn(1.5f);
+        yield return new WaitForSeconds(1.5f);
         //ボタンロックを解除
         _screenEffect.ButtonUnactiveElement(false);
     }
