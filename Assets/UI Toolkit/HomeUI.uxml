@@ -9,7 +9,7 @@
         <engine:Button text="キャンプ" name="CampButton" class="homeButton" />
         <engine:Button text="インベントリ" name="ItemButton" class="homeButton" />
     </engine:VisualElement>
-    <engine:VisualElement name="MovementWindow" style="width: 45%; height: 40%; background-color: rgba(53, 53, 53, 0.75); position: absolute; translate: 0 0; align-self: center; bottom: 30%; padding-top: 15px; padding-right: 50px; padding-bottom: 15px; padding-left: 50px; align-items: center; justify-content: space-around; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; display: flex; opacity: 1;">
+    <engine:VisualElement name="MovementWindow" style="width: 45%; height: 40%; background-color: rgba(53, 53, 53, 0.75); position: absolute; translate: 0 0; align-self: center; bottom: 30%; padding-top: 15px; padding-right: 50px; padding-bottom: 15px; padding-left: 50px; align-items: center; justify-content: space-around; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; display: none; opacity: 1;">
         <engine:SliderInt label="歩く時間" value="1" high-value="10" low-value="1" name="Movement-Slider" direction="Horizontal" style="width: 80%; height: 20%; font-size: 75%; -unity-font-definition: url(&quot;project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#font_1_kokugl_1.15_rls&quot;); -unity-text-align: middle-center; color: rgb(255, 255, 255);" />
         <engine:VisualElement style="align-items: center; justify-content: flex-start; height: 40%;">
             <engine:VisualElement style="height: 40%; width: 100%; flex-direction: row; align-self: center; align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#font_1_kokugl_1.15_rls&quot;); font-size: 50px; -unity-font-style: bold; color: rgb(255, 255, 255);">
@@ -25,6 +25,6 @@
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:Button text="Button" name="Movement-Button" class="titleButton" style="margin-bottom: 10px; margin-top: 10px;" />
+        <engine:Button text="Button" name="Movement-Button" class="titleButton" style="margin-bottom: 10px; margin-top: 10px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px;" />
     </engine:VisualElement>
 </engine:UXML>

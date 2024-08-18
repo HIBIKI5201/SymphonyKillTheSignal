@@ -21,6 +21,10 @@
     border-top-color: rgb(151, 151, 151);
     border-bottom-color: rgb(151, 151, 151);
     flex-grow: 1;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .homeButton:hover {
