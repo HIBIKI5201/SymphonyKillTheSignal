@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class HomeSystem : SystemBase
 {
-    MainSystem _mainSystem;
+    HomeUI _homeUI;
 
     public override void Initialize()
     {
-        _mainSystem = FindAnyObjectByType<MainSystem>();
+        _homeUI = GetComponentInChildren<HomeUI>();
+        _homeUI.UIAwake(this);
     }
 }

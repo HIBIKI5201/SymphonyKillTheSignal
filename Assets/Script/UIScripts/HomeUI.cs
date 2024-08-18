@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public class HomeUI : MonoBehaviour
 {
-    MainSystem _mainSystem;
+    HomeSystem _homeSystem;
 
     UIDocument _homeUI;
     VisualElement _root;
@@ -28,14 +28,9 @@ public class HomeUI : MonoBehaviour
 
     private void Start()
     {
-        //システムを取得
-        _mainSystem = FindAnyObjectByType<MainSystem>();
         //UIDocumentの取得
         _homeUI = GetComponent<UIDocument>();
         _root = _homeUI.rootVisualElement;
-        //ButtonUnactiveElementの取得
-        _buttonUnactiveElement = _root.Q<VisualElement>("ButtonUnactiveElement");
-        _buttonUnactiveElement.style.display = DisplayStyle.None;
         //メインボタン系の取得
         _movementButton = _root.Q<Button>("MovementButton");
         _movementButton.clicked += OnClickMovementButton;
@@ -73,6 +68,12 @@ public class HomeUI : MonoBehaviour
             {_itemButton, null},
         };
     }
+
+    public void UIAwake(HomeSystem homeSystem)
+    {
+        //システムを取得
+        _homeSystem = homeSystem;
+    }
     void WindowHide()
     {
         _currentWindow.style.display = DisplayStyle.None;
@@ -81,10 +82,12 @@ public class HomeUI : MonoBehaviour
     void OnclickButton(Button button)
     {
         if (_currentWindow != null) WindowHide();
-        _buttonToWindow[button].style.display = DisplayStyle.Flex;
-        _currentWindow = _buttonToWindow[button];
+        if (_buttonToWindow[button] != null)
+        {
+            _buttonToWindow[button].style.display = DisplayStyle.Flex;
+            _currentWindow = _buttonToWindow[button];
+        }
     }
-
     void OnClickMovementButton()
     {
         OnclickButton(_movementButton);
@@ -92,17 +95,17 @@ public class HomeUI : MonoBehaviour
 
     void OnClickCollectButton()
     {
-
+        OnclickButton(_collectButton);
     }
 
     void OnClickCampButton()
     {
-
+        OnclickButton(_campButton);
     }
 
     void OnClickItemButton()
     {
-
+        OnclickButton(_itemButton);
     }
 
     void MovementSliderUpdate(int value)
@@ -113,8 +116,7 @@ public class HomeUI : MonoBehaviour
 
     void MovementComformButtonClicked()
     {
-        _buttonUnactiveElement.style.display = DisplayStyle.Flex;
         Debug.Log("移動開始");
-        _mainSystem.BackToTitle();
+        _homeSystem.MainSystem.BackToTitle();
     }
 }
