@@ -37,7 +37,6 @@ public class SaveDataManager : MonoBehaviour
         {
             // デシリアライズする
             SaveData saveData = JsonUtility.FromJson<SaveData>(json);
-            Debug.Log(saveData);
             //データを返す
             return saveData;
         }

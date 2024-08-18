@@ -18,6 +18,8 @@ public class HomeUI : MonoBehaviour
 
     VisualElement _movementWindow;
     SliderInt _movementSlider;
+    Label _movenetTimeText;
+    Label _movementDistanceText;
 
     private void Start()
     {
@@ -36,18 +38,20 @@ public class HomeUI : MonoBehaviour
         //Movement関係の取得と初期設定
         _movementWindow = _root.Q<VisualElement>("MovementWindow");
         _movementWindow.style.display = DisplayStyle.None;
-        _movementSlider = _root.Q<SliderInt>("TextBoxSpeedSlider");
-        /*
+        _movenetTimeText = _root.Q<Label>("Movement-TimeText");
+        _movementDistanceText = _root.Q<Label>("Movement-DistanceText");
+        _movementSlider = _root.Q<SliderInt>("Movement-Slider");
+        Label label = _movementSlider.Q<Label>();
+        label.style.color = Color.white;
+        //スライダーが変更された時に数値の変更を加える
         if (_movementSlider != null)
         {
-            _storySystem._textSpeed = _textBoxSpeedSlider.value;
-            _textBoxSpeedSlider.RegisterValueChangedCallback(evt =>
+            MovementSliderUpdate(_movementSlider.value);
+            _movementSlider.RegisterValueChangedCallback(evt =>
             {
-                _storySystem._textSpeed = evt.newValue;
+                MovementSliderUpdate(_movementSlider.value);
             });
         }
-        */
-
         //ボタンに対応したウィンドウのエレメントを設定する
         _buttonToWindow = new()
         {
@@ -87,5 +91,11 @@ public class HomeUI : MonoBehaviour
     void OnClickItemButton()
     {
 
+    }
+
+    void MovementSliderUpdate(int value)
+    {
+        _movenetTimeText.text = value.ToString();
+        _movementDistanceText.text = $"{(value * 3).ToString()}km";
     }
 }
