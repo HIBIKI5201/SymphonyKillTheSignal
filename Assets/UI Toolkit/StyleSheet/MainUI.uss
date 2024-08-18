@@ -1,0 +1,36 @@
+.textBox {
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#font_1_kokugl_1.15_rls");
+}
+
+.button {
+    background-color: rgb(191, 191, 191);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left-color: rgb(153, 153, 153);
+    border-right-color: rgb(153, 153, 153);
+    border-top-color: rgb(153, 153, 153);
+    border-bottom-color: rgb(153, 153, 153);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+}
+
+.button:hover {
+    background-color: rgb(217, 217, 217);
+    border-left-color: rgb(178, 178, 178);
+    border-right-color: rgb(178, 178, 178);
+    border-top-color: rgb(178, 178, 178);
+    border-bottom-color: rgb(178, 178, 178);
+}
+
+.button:active {
+    border-left-color: rgb(77, 77, 77);
+    border-right-color: rgb(77, 77, 77);
+    border-top-color: rgb(77, 77, 77);
+    border-bottom-color: rgb(77, 77, 77);
+    background-color: rgb(115, 115, 115);
+}

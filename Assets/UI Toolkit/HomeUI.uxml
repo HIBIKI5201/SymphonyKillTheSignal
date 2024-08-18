@@ -4,10 +4,10 @@
     <Style src="project://database/Assets/HomeUI.uss?fileID=7433441132597879392&amp;guid=6ce4a178eea1e034e9170cd740f3f5cf&amp;type=3#HomeUI" />
     <engine:VisualElement name="StatusParameter" style="width: 80%; height: 10%; top: 0; left: 0;" />
     <engine:VisualElement name="Buttons" style="width: 85%; height: 30%; left: auto; top: auto; right: auto; position: absolute; bottom: 0; align-items: center; align-self: center; justify-content: center; flex-direction: row-reverse; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
-        <engine:Button text="進む" name="MovementButton" class="homeButton" />
-        <engine:Button text="収集する" name="CollectButton" class="homeButton" />
-        <engine:Button text="キャンプ" name="CampButton" class="homeButton" />
-        <engine:Button text="インベントリ" name="ItemButton" class="homeButton" />
+        <engine:Button text="進む" name="MovementButton" class="homeButton button" />
+        <engine:Button text="収集する" name="CollectButton" class="homeButton button" />
+        <engine:Button text="キャンプ" name="CampButton" class="homeButton button" />
+        <engine:Button text="インベントリ" name="ItemButton" class="homeButton button" />
     </engine:VisualElement>
     <engine:VisualElement name="MovementWindow" style="width: 45%; height: 40%; background-color: rgba(53, 53, 53, 0.75); position: absolute; translate: 0 0; align-self: center; bottom: 30%; padding-top: 15px; padding-right: 50px; padding-bottom: 15px; padding-left: 50px; align-items: center; justify-content: space-around; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; display: none; opacity: 1;">
         <engine:SliderInt label="歩く時間" value="1" high-value="10" low-value="1" name="Movement-Slider" direction="Horizontal" style="width: 80%; height: 20%; font-size: 75%; -unity-font-definition: url(&quot;project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#font_1_kokugl_1.15_rls&quot;); -unity-text-align: middle-center; color: rgb(255, 255, 255);" />
