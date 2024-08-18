@@ -8,6 +8,7 @@ public class HomeSystem : MonoBehaviour
 
     private void Start()
     {
+        SceneChanger.CurrentScene = SceneChanger.SceneKind.Home;
         _mainSystem = FindAnyObjectByType<MainSystem>();
     }
 }

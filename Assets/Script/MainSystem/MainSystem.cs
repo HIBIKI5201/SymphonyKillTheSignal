@@ -69,6 +69,11 @@ public class MainSystem : MonoBehaviour
         StartCoroutine(SceneChange(SceneChanger.SceneKind.Home));
     }
 
+    public void BackToTitle()
+    {
+        StartCoroutine(SceneChange(SceneChanger.SceneKind.Title));
+    }
+
 
     public void SoundPlay(int number, int soundNumber)
     {
@@ -116,6 +121,9 @@ public class MainSystem : MonoBehaviour
                 break;
             case SceneChanger.SceneKind.Home:
                 _pauseUI.enabled = true;
+                break;
+            case SceneChanger.SceneKind.Title:
+                _pauseUI.enabled = false;
                 break;
         }
         //フェードイン演出

@@ -4,8 +4,12 @@ using UnityEngine.UIElements;
 
 public class HomeUI : MonoBehaviour
 {
+    MainSystem _mainSystem;
+
     UIDocument _homeUI;
     VisualElement _root;
+
+    VisualElement _buttonUnactiveElement;
 
     Dictionary<Button, VisualElement> _buttonToWindow;
 
@@ -20,12 +24,18 @@ public class HomeUI : MonoBehaviour
     SliderInt _movementSlider;
     Label _movenetTimeText;
     Label _movementDistanceText;
+    Button _movementComformButton;
 
     private void Start()
     {
+        //システムを取得
+        _mainSystem = FindAnyObjectByType<MainSystem>();
         //UIDocumentの取得
         _homeUI = GetComponent<UIDocument>();
         _root = _homeUI.rootVisualElement;
+        //ButtonUnactiveElementの取得
+        _buttonUnactiveElement = _root.Q<VisualElement>("ButtonUnactiveElement");
+        _buttonUnactiveElement.style.display = DisplayStyle.None;
         //メインボタン系の取得
         _movementButton = _root.Q<Button>("MovementButton");
         _movementButton.clicked += OnClickMovementButton;
@@ -43,6 +53,8 @@ public class HomeUI : MonoBehaviour
         _movementSlider = _root.Q<SliderInt>("Movement-Slider");
         Label label = _movementSlider.Q<Label>();
         label.style.color = Color.white;
+        _movementComformButton = _root.Q<Button>("Movement-Button");
+        _movementComformButton.clicked += MovementComformButtonClicked;
         //スライダーが変更された時に数値の変更を加える
         if (_movementSlider != null)
         {
@@ -56,9 +68,9 @@ public class HomeUI : MonoBehaviour
         _buttonToWindow = new()
         {
             {_movementButton, _movementWindow},
-            {_campButton, _campButton},
-            {_collectButton, _collectButton},
-            {_itemButton, _itemButton},
+            {_campButton, null},
+            {_collectButton, null},
+            {_itemButton, null},
         };
     }
     void WindowHide()
@@ -97,5 +109,12 @@ public class HomeUI : MonoBehaviour
     {
         _movenetTimeText.text = value.ToString();
         _movementDistanceText.text = $"{(value * 3).ToString()}km";
+    }
+
+    void MovementComformButtonClicked()
+    {
+        _buttonUnactiveElement.style.display = DisplayStyle.Flex;
+        Debug.Log("移動開始");
+        _mainSystem.BackToTitle();
     }
 }
