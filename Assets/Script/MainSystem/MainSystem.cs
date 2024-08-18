@@ -103,7 +103,6 @@ public class MainSystem : MonoBehaviour
         //シーンをロードしてロード終了まで待つ
         yield return SceneChanger.ChangeScene(sceneKind);
         //システム系を初期化
-        Debug.Log("b");
         FindAnyObjectByType<SystemBase>()?.SystemAwake(this);
         //ロードしたシーンに応じて動きを変える
         switch (sceneKind)
@@ -120,6 +119,7 @@ public class MainSystem : MonoBehaviour
                 break;
         }
         //フェードイン演出
+        yield return new WaitForSeconds(0.8f);
         _screenEffect.ScreenFadeIn(1);
     }
 }
