@@ -26,6 +26,7 @@ public class MainSystem : MonoBehaviour
         //UI ToolKit‚ðŽæ“¾
         _screenEffect = GetComponentInChildren<ScreenEffectUI>();
         _screenEffect.ButtonUnactiveElement(false);
+        _screenEffect.ScreenFadeIn(2);
         _pauseUI = GetComponentInChildren<PauseUI>();
         //StoryManager‚ðŽæ“¾
         _storyManager = GetComponentInChildren<StoryManager>();
