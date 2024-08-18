@@ -16,7 +16,6 @@ public class StoryManager : MonoBehaviour
     public void StartStory()
     {
         //最初のテキストを呼び出す
-        _storySystem.NextTextTrigger();
-        _storySystem._textUpdateActive = true;
+        StartCoroutine(_storySystem.NextText());
     }
 }

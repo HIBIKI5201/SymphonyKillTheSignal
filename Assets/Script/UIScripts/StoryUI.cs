@@ -23,12 +23,14 @@ public class StoryUI : MonoBehaviour
         _button.clicked += ButtonClicked;
 
         _nameLabel = _root.Q<Label>("NameBox");
+        _nameLabel.pickingMode = PickingMode.Ignore;
         _textLabel = _root.Q<Label>("TextBox");
+        _textLabel.pickingMode = PickingMode.Ignore;
     }
 
     void ButtonClicked()
     {
-        _storySystem.NextTextTrigger();
+        _storySystem.NextPageClick();
     }
 
     public void TextBoxUpdate(string name, string text)

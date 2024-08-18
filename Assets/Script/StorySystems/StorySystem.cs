@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -42,13 +41,14 @@ public class StorySystem : SystemBase
 
     int _currentTextNumber;
     bool _textUpdatingCanselTrigger;
-    public bool _textUpdateActive;
+    bool _textUpdateActive = false;
     Coroutine _nextTimerCoroutine;
 
     public override void Initialize()
     {
         //メンバーの初期設定
         _nextTextUpdating = false;
+        _textUpdateActive = false;
         //UIのPresenterを取得
         _mainUI = FindAnyObjectByType<StoryUI>();
         //最初が0番目のテキストになるように初期値を設定
@@ -111,7 +111,7 @@ public class StorySystem : SystemBase
         }
     }
     /// <summary>
-    /// テキストボックスが押された時に実行されるイベント
+    /// ボタンが押された時に実行されるイベント
     /// </summary>
     /// <param name="context"></param>
     public void NextPageButton(InputAction.CallbackContext context)
@@ -121,11 +121,22 @@ public class StorySystem : SystemBase
             NextTextTrigger();
         }
     }
+
+    public void NextPageClick()
+    {
+        if (_textList != null)
+        {
+            NextTextTrigger();
+        }
+        Debug.Log("clicked");
+    }
+
     /// <summary>
     /// 次のテキストを呼び出す
     /// </summary>
     public void NextTextTrigger()
     {
+        Debug.Log("a");
         if (_textUpdateActive)
         {
             StartCoroutine(NextText());
@@ -146,33 +157,31 @@ public class StorySystem : SystemBase
     /// 次のテキストを呼び出す処理
     /// </summary>
     /// <returns></returns>
-    IEnumerator NextText()
+    public IEnumerator NextText()
     {
+        Debug.Log("b");
         //テキスト更新中にボタンが押された場合にテキストを最後まで表示するトリガーを起動する
         if (_nextTextUpdating && _textList[_currentTextNumber].kind == StoryTextList.TextKind.text)
         {
             _textUpdatingCanselTrigger = true;
             yield break;
         }
-        if (_textList != null)
+        //次のテキストにする
+        if (_textList.Count - 1 > _currentTextNumber)
         {
-            //次のテキストにする
-            if (_textList.Count - 1 > _currentTextNumber)
-            {
-                _currentTextNumber++;
-            }
-            //次のテキストがない場合はホームに帰る
-            else
-            {
-                //ホームに帰還
-                MainSystem.BackToHome();
-                //連打防止
-                if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
-                _textUpdateActive = false;
-                yield break;
-            }
+            _currentTextNumber++;
         }
-        else yield break;
+        //次のテキストがない場合はホームに帰る
+        else
+        {
+            //ホームに帰還
+            MainSystem.BackToHome();
+            //連打防止
+            if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
+            _textUpdateActive = false;
+            yield break;
+        }
+        Debug.Log("c");
         _nextTextUpdating = true;
         //改行ごとに文字を分ける
         string[] texts = _textList[_currentTextNumber].text.Split('\n');
@@ -209,6 +218,7 @@ public class StorySystem : SystemBase
                 if (_mainUI != null)
                 {
                     //連打防止のためのタイマー
+                    if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
                     _nextTimerCoroutine = StartCoroutine(NextTimer(0.1f));
                     //喋っているキャラのみをハイライトする
                     CharacterHighLight(_textList[_currentTextNumber].characterType);
