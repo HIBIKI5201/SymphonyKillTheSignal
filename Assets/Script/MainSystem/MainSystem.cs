@@ -36,7 +36,6 @@ public class MainSystem : MonoBehaviour
         if (SceneChanger.CurrentScene == SceneChanger.SceneKind.Title)
         {
             _pauseUI.HidePause();
-            Debug.Log("ポーズを非表示");
         }
         //セーブデータを確認
         SaveDataManager._mainSaveData = SaveDataManager.Load();
@@ -112,7 +111,7 @@ public class MainSystem : MonoBehaviour
         {
             case SceneChanger.SceneKind.Story:
                 _pauseUI.RevealPause();
-                _storyManager.StoryStart();
+                _storyManager.SetStoryData();
                 break;
             case SceneChanger.SceneKind.Home:
                 _pauseUI.RevealPause();
@@ -124,6 +123,13 @@ public class MainSystem : MonoBehaviour
         //フェードイン演出
         yield return new WaitForSeconds(0.8f);
         _screenEffect.ScreenFadeIn(1);
+        //最初のテキストを呼び出す
+        switch (sceneKind)
+        {
+            case SceneChanger.SceneKind.Story:
+                _storyManager.StartStory();
+                break;
+        }
         //ボタンロックを解除
         _screenEffect.ButtonUnactiveElement(false);
     }

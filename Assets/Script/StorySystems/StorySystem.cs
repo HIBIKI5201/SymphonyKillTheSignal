@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +13,7 @@ public class StorySystem : SystemBase
     [SerializeField, Tooltip("アンハイライトカラー")]
     Color _unHighLightColor = Color.white;
 
-    [HideInInspector]
+    [SerializeField]
     bool _nextTextUpdating;
 
     //クラス
@@ -20,7 +21,7 @@ public class StorySystem : SystemBase
 
     [HideInInspector]
     public List<StoryCharacterList> _characterList = new();
-    List<StoryTextList> _textList = new();
+    List<StoryTextList> _textList = null;
 
 
     public struct CharacterPropaty
@@ -57,7 +58,7 @@ public class StorySystem : SystemBase
     public void TextDataLoad(StoryTextDataBase storyTextData)
     {
         //Characterをデータベースから値渡し
-        _characterList.Clear();
+        _characterList = new();
         foreach (StoryCharacterList character in storyTextData._characterList)
         {
             //Systemのみ例外処理
@@ -108,8 +109,6 @@ public class StorySystem : SystemBase
             //取得したコンポーネントをリストに格納する
             _characterPropaties.Add(Array.IndexOf(_characterList.ToArray(), characterData), new CharacterPropaty(characterName, animator, spriteRenderer));
         }
-        //最初のテキストを呼び出す
-        _textUpdateActive = true;
     }
     /// <summary>
     /// テキストボックスが押された時に実行されるイベント
@@ -155,20 +154,25 @@ public class StorySystem : SystemBase
             _textUpdatingCanselTrigger = true;
             yield break;
         }
-        //次のテキストにする
-        if (_textList.Count - 1 > _currentTextNumber)
+        if (_textList != null)
         {
-            _currentTextNumber++;
+            //次のテキストにする
+            if (_textList.Count - 1 > _currentTextNumber)
+            {
+                _currentTextNumber++;
+            }
+            //次のテキストがない場合はホームに帰る
+            else
+            {
+                //ホームに帰還
+                MainSystem.BackToHome();
+                //連打防止
+                if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
+                _textUpdateActive = false;
+                yield break;
+            }
         }
-        //次のテキストがない場合はホームに帰る
-        else
-        {
-            MainSystem.BackToHome();
-            //連打防止
-            if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
-            _textUpdateActive = false;
-            yield break;
-        }
+        else yield break;
         _nextTextUpdating = true;
         //改行ごとに文字を分ける
         string[] texts = _textList[_currentTextNumber].text.Split('\n');
