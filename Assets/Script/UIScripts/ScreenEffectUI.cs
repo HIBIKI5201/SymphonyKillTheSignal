@@ -17,13 +17,13 @@ public class ScreenEffectUI : MonoBehaviour
         _fade.pickingMode = PickingMode.Ignore;
     }
 
-    public void ScreenFadeOut()
+    public void ScreenFadeOut(float timer)
     {
-        DOTween.To(() => new Color(0, 0, 0, 0), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 1), 1).SetEase(Ease.Linear);
+        DOTween.To(() => new Color(0, 0, 0, 0), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 1), timer).SetEase(Ease.Linear);
     }
 
-    public void ScreenFadeIn()
+    public void ScreenFadeIn(float timer)
     {
-        DOTween.To(() => new Color(0, 0, 0, 1), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 0), 1).SetEase(Ease.Linear);
+        DOTween.To(() => new Color(0, 0, 0, 1), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 0), timer).SetEase(Ease.Linear);
     }
 }

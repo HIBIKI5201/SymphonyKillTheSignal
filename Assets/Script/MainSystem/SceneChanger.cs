@@ -25,7 +25,9 @@ public class SceneChanger : MonoBehaviour
     /// <returns>AsyncOperationƒNƒ‰ƒX</returns>
     public static AsyncOperation ChangeScene(SceneKind sceneKind)
     {
+        SceneManager.LoadSceneAsync(_sceneNames[sceneKind], LoadSceneMode.Additive);
+        AsyncOperation async = SceneManager.UnloadSceneAsync(_sceneNames[CurrentScene]);
         CurrentScene = sceneKind;
-        return SceneManager.LoadSceneAsync(_sceneNames[sceneKind]);
+        return async;
     }
 }

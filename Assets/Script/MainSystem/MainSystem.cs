@@ -97,7 +97,7 @@ public class MainSystem : MonoBehaviour
     IEnumerator SceneChange(SceneChanger.SceneKind sceneKind)
     {
         //フェードアウト演出
-        _screenEffect.ScreenFadeOut();
+        _screenEffect.ScreenFadeOut(1);
         yield return new WaitForSeconds(1);
         //シーンをロードしてロード終了まで待つ
         AsyncOperation asyncLoad = SceneChanger.ChangeScene(sceneKind);
@@ -121,6 +121,6 @@ public class MainSystem : MonoBehaviour
                 break;
         }
         //フェードイン演出
-        _screenEffect.ScreenFadeIn();
+        _screenEffect.ScreenFadeIn(1);
     }
 }

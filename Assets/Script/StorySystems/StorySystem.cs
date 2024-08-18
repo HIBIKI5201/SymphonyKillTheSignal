@@ -16,7 +16,6 @@ public class StorySystem : SystemBase
     bool _nextTextUpdating;
 
     //クラス
-    MainSystem _mainSystem;
     StoryUI _mainUI;
 
     [HideInInspector]
@@ -57,8 +56,6 @@ public class StorySystem : SystemBase
 
     public StorySystem(StoryTextDataBase storyTextData)
     {
-        //メインシステムを取得
-        _mainSystem = FindAnyObjectByType<MainSystem>();
         //Characterをデータベースから値渡し
         _characterList.Clear();
         foreach (StoryCharacterList character in storyTextData._characterList)
@@ -166,7 +163,7 @@ public class StorySystem : SystemBase
         //次のテキストがない場合はホームに帰る
         else
         {
-            _mainSystem.BackToHome();
+            MainSystem.BackToHome();
             //連打防止
             if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
             _textUpdateActive = false;
@@ -238,7 +235,7 @@ public class StorySystem : SystemBase
                 //文字列を数値化してSoundPlayメソッドを送る
                 if (int.TryParse(texts[0], out int num) && int.TryParse(texts[1], out int soundNum))
                 {
-                    _mainSystem.SoundPlay(num, soundNum);
+                    MainSystem.SoundPlay(num, soundNum);
                 }
                 else Debug.LogWarning("Soundの指定が適切ではありませんでした");
                 break;

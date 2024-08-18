@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +8,10 @@ public class MainSystemLoader : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.LoadScene(MainSystemSceneName, LoadSceneMode.Additive);
+        if (!SceneManager.GetSceneByName(MainSystemSceneName).isLoaded)
+        {
+            SceneManager.LoadScene(MainSystemSceneName, LoadSceneMode.Additive);
+        }
         Destroy(gameObject);
     }
 }
