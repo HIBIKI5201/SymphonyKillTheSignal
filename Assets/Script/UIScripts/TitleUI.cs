@@ -3,17 +3,16 @@ using UnityEngine.UIElements;
 
 public class TitleUI : MonoBehaviour
 {
-    MainSystem _mainSystem;
-
+    TitleSystem _titleSystem;
     UIDocument _titleUI;
     VisualElement _root;
 
     Button _startButton;
     Button _continueButton;
 
-    private void Start()
+    public void UIAwake(TitleSystem titleSystem)
     {
-        _mainSystem = FindAnyObjectByType<MainSystem>();
+        _titleSystem = titleSystem;
 
         _titleUI = GetComponent<UIDocument>();
         _root = _titleUI.rootVisualElement;
@@ -26,11 +25,12 @@ public class TitleUI : MonoBehaviour
 
     void PressStartButton()
     {
-        _mainSystem.GameStart(false);
+        Debug.Log(_titleSystem.MainSystem.gameObject);
+        _titleSystem.MainSystem.GameStart(false);
     }
 
     void PressContinueButton()
     {
-        _mainSystem.GameStart(true);
+        _titleSystem.MainSystem.GameStart(true);
     }
 }

@@ -18,16 +18,7 @@ public class MainSystem : MonoBehaviour
     SoundDataBase BGMs;
     private void Awake()
     {
-        //Singletonのようにする処理
-        if (_selfInstance == null)
-        {
-            _selfInstance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+
     }
 
     void Start()
@@ -47,6 +38,8 @@ public class MainSystem : MonoBehaviour
         }
         //セーブデータを確認
         SaveDataManager._mainSaveData = SaveDataManager.Load();
+        //シーンのシステムを起動
+        FindAnyObjectByType<SystemBase>().SystemAwake(this);
     }
 
     public void GameStart(bool Continue)
@@ -112,6 +105,7 @@ public class MainSystem : MonoBehaviour
         {
             yield return null;
         }
+        FindAnyObjectByType<SystemBase>().SystemAwake(this);
         //ロードしたシーンに応じて動きを変える
         switch (sceneKind)
         {

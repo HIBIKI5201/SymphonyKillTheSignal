@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class StorySystem : MonoBehaviour
+public class StorySystem : SystemBase
 {
     [Header("プロパティ")]
     [Tooltip("テキストスピード")]
@@ -45,7 +45,7 @@ public class StorySystem : MonoBehaviour
     public bool _textUpdateActive;
     Coroutine _nextTimerCoroutine;
 
-    private void Start()
+    public override void Initialize()
     {
         //メンバーの初期設定
         _nextTextUpdating = false;

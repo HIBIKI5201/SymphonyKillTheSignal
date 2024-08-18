@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HomeSystem : MonoBehaviour
+public class HomeSystem : SystemBase
 {
     MainSystem _mainSystem;
 
-    private void Start()
+    public override void Initialize()
     {
         SceneChanger.CurrentScene = SceneChanger.SceneKind.Home;
         _mainSystem = FindAnyObjectByType<MainSystem>();
