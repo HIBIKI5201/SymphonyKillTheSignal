@@ -14,4 +14,59 @@
     padding-bottom: 15px;
     padding-left: 15px;
     -unity-font-definition: url("project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#font_1_kokugl_1.15_rls");
+    width: 0;
+    height: 50%;
+    border-left-color: rgb(151, 151, 151);
+    border-right-color: rgb(151, 151, 151);
+    border-top-color: rgb(151, 151, 151);
+    border-bottom-color: rgb(151, 151, 151);
+    flex-grow: 1;
+}
+
+.homeButton:hover {
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-size: 40px;
+    background-color: rgb(193, 193, 193);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    -unity-font-definition: url("project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#font_1_kokugl_1.15_rls");
+    width: 0;
+    height: 50%;
+    border-left-color: rgb(101, 101, 101);
+    border-right-color: rgb(101, 101, 101);
+    border-top-color: rgb(101, 101, 101);
+    border-bottom-color: rgb(101, 101, 101);
+}
+
+.homeButton:active {
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-size: 40px;
+    background-color: rgb(109, 109, 109);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    -unity-font-definition: url("project://database/Assets/font/font_1_kokugl_1.15_rls.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#font_1_kokugl_1.15_rls");
+    width: 0;
+    height: 50%;
+    border-left-color: rgba(101, 101, 101, 0);
+    border-right-color: rgba(101, 101, 101, 0);
+    border-top-color: rgba(101, 101, 101, 0);
+    border-bottom-color: rgba(101, 101, 101, 0);
 }

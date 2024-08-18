@@ -78,7 +78,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8653719598885068355, guid: d252ba4e138a8e94aad1d9f88344ce22, type: 3}
       propertyPath: m_Name
-      value: symphony
+      value: symphonyModel
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: d252ba4e138a8e94aad1d9f88344ce22, type: 3}
       propertyPath: m_LocalScale.x
