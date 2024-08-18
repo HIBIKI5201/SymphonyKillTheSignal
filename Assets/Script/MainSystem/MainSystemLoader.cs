@@ -11,6 +11,8 @@ public class MainSystemLoader : MonoBehaviour
         if (!SceneManager.GetSceneByName(MainSystemSceneName).isLoaded)
         {
             SceneManager.LoadScene(MainSystemSceneName, LoadSceneMode.Additive);
+            Scene currentScene = SceneManager.GetActiveScene();
+            SceneChanger.CurrentScene = SceneChanger.SceneDictionary(currentScene.name);
         }
         Destroy(gameObject);
     }

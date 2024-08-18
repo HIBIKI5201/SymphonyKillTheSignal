@@ -12,13 +12,30 @@ public class SceneChanger : MonoBehaviour
         Home,
         Story,
     }
-
     static readonly Dictionary<SceneKind, string> _sceneNames = new()
     {
         { SceneKind.Title , "TitleScene"},
         { SceneKind.Home , "HomeScene"},
         { SceneKind.Story , "StoryScene"},
     };
+    static readonly Dictionary<string, SceneKind> _sceneKinds = new()
+    {
+        { "TitleScene", SceneKind.Title},
+        { "HomeScene", SceneKind.Home },
+        { "StoryScene" , SceneKind.Story},
+    };
+
+    public static string SceneDictionary(SceneKind sceneKind)
+    {
+        return _sceneNames[sceneKind];
+    }
+
+    public static SceneKind SceneDictionary(string sceneName)
+    {
+        return _sceneKinds[sceneName];
+    }
+
+
     /// <summary>
     /// シーンをロードし、AsyncOperationを戻り値とする
     /// </summary>

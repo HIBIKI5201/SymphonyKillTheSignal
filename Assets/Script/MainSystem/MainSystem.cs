@@ -34,7 +34,8 @@ public class MainSystem : MonoBehaviour
         //ポーズUIを非表示
         if (SceneChanger.CurrentScene == SceneChanger.SceneKind.Title)
         {
-            _pauseUI.enabled = false;
+            _pauseUI.HidePause();
+            Debug.Log("ポーズを非表示");
         }
         //セーブデータを確認
         SaveDataManager._mainSaveData = SaveDataManager.Load();
@@ -102,19 +103,20 @@ public class MainSystem : MonoBehaviour
         //シーンをロードしてロード終了まで待つ
         yield return SceneChanger.ChangeScene(sceneKind);
         //システム系を初期化
+        Debug.Log("b");
         FindAnyObjectByType<SystemBase>()?.SystemAwake(this);
         //ロードしたシーンに応じて動きを変える
         switch (sceneKind)
         {
             case SceneChanger.SceneKind.Story:
-                _pauseUI.enabled = true;
+                _pauseUI.RevealPause();
                 _storyManager.StoryStart();
                 break;
             case SceneChanger.SceneKind.Home:
-                _pauseUI.enabled = true;
+                _pauseUI.RevealPause();
                 break;
             case SceneChanger.SceneKind.Title:
-                _pauseUI.enabled = false;
+                _pauseUI.HidePause();
                 break;
         }
         //フェードイン演出

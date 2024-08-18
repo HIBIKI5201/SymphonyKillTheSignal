@@ -8,7 +8,6 @@ public class HomeSystem : SystemBase
 
     public override void Initialize()
     {
-        SceneChanger.CurrentScene = SceneChanger.SceneKind.Home;
         _mainSystem = FindAnyObjectByType<MainSystem>();
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,5 +20,15 @@ public class PauseUI : MonoBehaviour
     void PauseManuAppear()
     {
         Debug.Log("pma");
+    }
+
+    public void HidePause()
+    {
+        _pauseUIDocument.enabled = false;
+    }
+
+    public void RevealPause()
+    {
+        _pauseUIDocument.enabled = true;
     }
 }
