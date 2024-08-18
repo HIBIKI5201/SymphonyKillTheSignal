@@ -100,12 +100,9 @@ public class MainSystem : MonoBehaviour
         _screenEffect.ScreenFadeOut(1);
         yield return new WaitForSeconds(1);
         //シーンをロードしてロード終了まで待つ
-        AsyncOperation asyncLoad = SceneChanger.ChangeScene(sceneKind);
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-        FindAnyObjectByType<SystemBase>().SystemAwake(this);
+        yield return SceneChanger.ChangeScene(sceneKind);
+        //システム系を初期化
+        FindAnyObjectByType<SystemBase>()?.SystemAwake(this);
         //ロードしたシーンに応じて動きを変える
         switch (sceneKind)
         {

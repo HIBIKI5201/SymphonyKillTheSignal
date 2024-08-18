@@ -20,7 +20,7 @@ public class StorySystem : SystemBase
 
     [HideInInspector]
     public List<StoryCharacterList> _characterList = new();
-    List<StoryTextList> _textList;
+    List<StoryTextList> _textList = new();
 
 
     public struct CharacterPropaty
@@ -54,7 +54,7 @@ public class StorySystem : SystemBase
         _currentTextNumber = -1;
     }
 
-    public StorySystem(StoryTextDataBase storyTextData)
+    public void TextDataLoad(StoryTextDataBase storyTextData)
     {
         //Characterをデータベースから値渡し
         _characterList.Clear();

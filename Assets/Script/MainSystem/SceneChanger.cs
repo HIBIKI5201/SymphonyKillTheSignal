@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,11 +24,22 @@ public class SceneChanger : MonoBehaviour
     /// </summary>
     /// <param name="sceneKind">シーンの種類</param>
     /// <returns>AsyncOperationクラス</returns>
-    public static AsyncOperation ChangeScene(SceneKind sceneKind)
+    public static IEnumerator ChangeScene(SceneKind sceneKind)
     {
-        SceneManager.LoadSceneAsync(_sceneNames[sceneKind], LoadSceneMode.Additive);
-        AsyncOperation async = SceneManager.UnloadSceneAsync(_sceneNames[CurrentScene]);
+        // 新しいシーンを Additive モードでロード
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_sceneNames[sceneKind], LoadSceneMode.Additive);
+        //ロードが終わるまで待機
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        // ロード完了後に現在のシーンをアンロード
+        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(_sceneNames[CurrentScene]);
         CurrentScene = sceneKind;
-        return async;
+        //アンロードが終わるまで待機
+        while (!asyncUnload.isDone)
+        {
+            yield return null;
+        }
     }
 }
