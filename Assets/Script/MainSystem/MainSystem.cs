@@ -47,11 +47,11 @@ public class MainSystem : MonoBehaviour
         //続きからボタンかつセーブデータがある場合
         if (Continue && SaveDataManager._mainSaveData.HasValue)
         {
-            StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
+            StartCoroutine(SceneChange(SceneChanger.SceneKind.Home));
         }
         else
         {
-            StartCoroutine(SceneChange(SceneChanger.SceneKind.Home));
+            StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
             SaveDataManager._mainSaveData = new(0, 0);
             SaveDataManager.Save();
         }
