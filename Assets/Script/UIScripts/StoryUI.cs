@@ -10,8 +10,6 @@ public class StoryUI : MonoBehaviour
     Label _nameLabel;
     Label _textLabel;
 
-    //SliderInt _textBoxSpeedSlider;
-
     StorySystem _storySystem;
 
     private void Start()
@@ -26,19 +24,6 @@ public class StoryUI : MonoBehaviour
 
         _nameLabel = _root.Q<Label>("NameBox");
         _textLabel = _root.Q<Label>("TextBox");
-
-        /*
-        _textBoxSpeedSlider = _root.Q<SliderInt>("TextBoxSpeedSlider");
-        if (_textBoxSpeedSlider != null)
-        {
-            _storySystem._textSpeed = _textBoxSpeedSlider.value;
-            _textBoxSpeedSlider.RegisterValueChangedCallback(evt =>
-            {
-                _storySystem._textSpeed = evt.newValue;
-            });
-        }
-
-        */
     }
 
     void ButtonClicked()
