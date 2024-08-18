@@ -25,6 +25,7 @@ public class MainSystem : MonoBehaviour
     {
         //UI ToolKitを取得
         _screenEffect = GetComponentInChildren<ScreenEffectUI>();
+        _screenEffect.ButtonUnactiveElement(false);
         _pauseUI = GetComponentInChildren<PauseUI>();
         //StoryManagerを取得
         _storyManager = GetComponentInChildren<StoryManager>();
@@ -97,6 +98,8 @@ public class MainSystem : MonoBehaviour
 
     IEnumerator SceneChange(SceneChanger.SceneKind sceneKind)
     {
+        //ボタンロックを起動
+        _screenEffect.ButtonUnactiveElement(true);
         //フェードアウト演出
         _screenEffect.ScreenFadeOut(1);
         yield return new WaitForSeconds(1);
@@ -121,5 +124,7 @@ public class MainSystem : MonoBehaviour
         //フェードイン演出
         yield return new WaitForSeconds(0.8f);
         _screenEffect.ScreenFadeIn(1);
+        //ボタンロックを解除
+        _screenEffect.ButtonUnactiveElement(false);
     }
 }

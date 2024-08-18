@@ -8,13 +8,17 @@ public class ScreenEffectUI : MonoBehaviour
     VisualElement _root;
 
     VisualElement _fade;
+    VisualElement _buttonUnactiveElement;
     void Start()
     {
         _screenEffectUIDocument = GetComponent<UIDocument>();
         _root = _screenEffectUIDocument.rootVisualElement;
-
+        //フェードの取得
         _fade = _root.Q<VisualElement>("Fade");
         _fade.pickingMode = PickingMode.Ignore;
+        //ButtonUnactiveElementの取得
+        _buttonUnactiveElement = _root.Q<VisualElement>("ButtonUnactiveElement");
+        _buttonUnactiveElement.style.display = DisplayStyle.None;
     }
 
     public void ScreenFadeOut(float timer)
@@ -25,5 +29,17 @@ public class ScreenEffectUI : MonoBehaviour
     public void ScreenFadeIn(float timer)
     {
         DOTween.To(() => new Color(0, 0, 0, 1), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 0), timer).SetEase(Ease.Linear);
+    }
+
+    public void ButtonUnactiveElement(bool active)
+    {
+        if (active)
+        {
+            _buttonUnactiveElement.style.display = DisplayStyle.Flex;
+        }
+        else
+        {
+            _buttonUnactiveElement.style.display = DisplayStyle.None;
+        }
     }
 }
