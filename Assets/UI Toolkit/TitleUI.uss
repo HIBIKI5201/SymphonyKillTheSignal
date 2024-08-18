@@ -1,5 +1,5 @@
 .titleButton {
-    width: 180px;
+    width: 230px;
     height: 80px;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -12,6 +12,8 @@
     border-right-color: rgb(128, 128, 128);
     border-top-color: rgb(128, 128, 128);
     border-bottom-color: rgb(128, 128, 128);
+    -unity-text-align: middle-center;
+    text-overflow: ellipsis;
 }
 
 .titleButton:hover {
