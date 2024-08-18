@@ -55,7 +55,7 @@ public class StorySystem : MonoBehaviour
         _currentTextNumber = -1;
     }
 
-    public void SetClass(StoryTextDataBase storyTextData)
+    public StorySystem(StoryTextDataBase storyTextData)
     {
         //メインシステムを取得
         _mainSystem = FindAnyObjectByType<MainSystem>();

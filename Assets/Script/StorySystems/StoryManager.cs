@@ -10,7 +10,7 @@ public class StoryManager : MonoBehaviour
     public void StoryStart()
     {
         _storySystem = FindAnyObjectByType<StorySystem>();
-        _storySystem.SetClass(_textDataBase[0]);
+        _storySystem = new StorySystem(_textDataBase[0]);
         //最初のテキストを呼び出す
         _storySystem.NextTextTrigger();
         _storySystem._textUpdateActive = true;
