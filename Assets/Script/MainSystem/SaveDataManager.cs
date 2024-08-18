@@ -22,7 +22,6 @@ public class SaveDataManager : MonoBehaviour
 
     public static void Save()
     {
-        Debug.Log(_mainSaveData);
         // インスタンス変数を JSON にシリアル化する
         string json = JsonUtility.ToJson(_mainSaveData);
         // PlayerPrefs に保存する

@@ -10,7 +10,6 @@ public abstract class SystemBase : MonoBehaviour
     {
         MainSystem = mainSystem;
         Initialize();
-        Debug.Log(MainSystem.gameObject);
     }
 
     public abstract void Initialize();

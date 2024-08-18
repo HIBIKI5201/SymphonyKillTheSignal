@@ -4,4 +4,23 @@
     margin-bottom: 20px;
     margin-top: 20px;
     font-size: 45px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-left-color: rgb(128, 128, 128);
+    border-right-color: rgb(128, 128, 128);
+    border-top-color: rgb(128, 128, 128);
+    border-bottom-color: rgb(128, 128, 128);
+}
+
+.titleButton:hover {
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-left-color: rgb(63, 63, 63);
+    border-right-color: rgb(63, 63, 63);
+    border-top-color: rgb(63, 63, 63);
+    border-bottom-color: rgb(63, 63, 63);
 }

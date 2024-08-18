@@ -25,7 +25,6 @@ public class TitleUI : MonoBehaviour
 
     void PressStartButton()
     {
-        Debug.Log(_titleSystem.MainSystem.gameObject);
         _titleSystem.MainSystem.GameStart(false);
     }
 
