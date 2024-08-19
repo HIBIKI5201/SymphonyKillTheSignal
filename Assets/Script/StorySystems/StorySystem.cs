@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class StorySystem : SystemBase
 {
@@ -20,7 +19,7 @@ public class StorySystem : SystemBase
 
     [HideInInspector]
     public List<StoryCharacterList> _characterList = new();
-    List<StoryTextList> _textList = null;
+    List<StoryTextList> _textList = new();
 
 
     public struct CharacterPropaty
@@ -41,7 +40,9 @@ public class StorySystem : SystemBase
 
     int _currentTextNumber;
     bool _textUpdatingCanselTrigger;
-    bool _textUpdateActive = false;
+    bool _textUpdateActive;
+    float _timer;
+    bool _timerTrigger;
     Coroutine _nextTimerCoroutine;
 
     public override void Initialize()
@@ -110,29 +111,16 @@ public class StorySystem : SystemBase
             _characterPropaties.Add(Array.IndexOf(_characterList.ToArray(), characterData), new CharacterPropaty(characterName, animator, spriteRenderer));
         }
     }
-    /// <summary>
-    /// ボタンが押された時に実行されるイベント
-    /// </summary>
-    /// <param name="context"></param>
-    public void NextPageButton(InputAction.CallbackContext context)
-    {
-        if (context.phase == InputActionPhase.Started && _textList != null)
-        {
-            NextTextTrigger();
-        }
-    }
 
-    public void NextPageClick()
+    private void Update()
     {
-        if (_textList != null)
+        Debug.Log(_textUpdateActive);
+
+        if (_timer < Time.time && _timerTrigger)
         {
-            NextTextTrigger();
+            _timerTrigger = false;
+            _textUpdateActive = true;
         }
-        else
-        {
-            Debug.Log(_textList);
-        }
-        Debug.Log("clicked");
     }
 
     /// <summary>
@@ -140,11 +128,11 @@ public class StorySystem : SystemBase
     /// </summary>
     public void NextTextTrigger()
     {
-        Debug.Log("a");
         if (_textUpdateActive)
         {
             StartCoroutine(NextText());
         }
+        else Debug.LogWarning($"{_textUpdateActive}");
     }
     /// <summary>
     /// 次のテキストを呼び出せるまでのタイマーを起動するメソッド
@@ -156,14 +144,21 @@ public class StorySystem : SystemBase
         _textUpdateActive = false;
         yield return new WaitForSeconds(time);
         _textUpdateActive = true;
+        yield break;
     }
+
+    void ProvisionalNextTimer(float time)
+    {
+        _timer = Time.time + time;
+        _timerTrigger = true;
+    }
+
     /// <summary>
     /// 次のテキストを呼び出す処理
     /// </summary>
     /// <returns></returns>
     public IEnumerator NextText()
     {
-        Debug.Log("b");
         //テキスト更新中にボタンが押された場合にテキストを最後まで表示するトリガーを起動する
         if (_nextTextUpdating && _textList[_currentTextNumber].kind == StoryTextList.TextKind.text)
         {
@@ -182,10 +177,8 @@ public class StorySystem : SystemBase
             MainSystem.BackToHome();
             //連打防止
             if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
-            _textUpdateActive = false;
             yield break;
         }
-        Debug.Log("c");
         _nextTextUpdating = true;
         //改行ごとに文字を分ける
         string[] texts = _textList[_currentTextNumber].text.Split('\n');
@@ -212,8 +205,13 @@ public class StorySystem : SystemBase
                     waitTime = float.Parse(texts[1]);
                 }
                 //アニメーション中はテキスト更新を無効
+
+                /*
                 if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
                 _nextTimerCoroutine = StartCoroutine(NextTimer(waitTime));
+                */
+                ProvisionalNextTimer(waitTime);
+
                 yield return new WaitForSeconds(waitTime);
                 StartCoroutine(NextText());
                 break;
@@ -222,8 +220,13 @@ public class StorySystem : SystemBase
                 if (_mainUI != null)
                 {
                     //連打防止のためのタイマー
+
+                    /*
                     if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
-                    _nextTimerCoroutine = StartCoroutine(NextTimer(0.1f));
+                    _nextTimerCoroutine = StartCoroutine(NextTimer(0.3f));
+                    */
+                    ProvisionalNextTimer(0.3f);
+
                     //喋っているキャラのみをハイライトする
                     CharacterHighLight(_textList[_currentTextNumber].characterType);
                     //textSpeedの時間に応じてテキストを表示する
