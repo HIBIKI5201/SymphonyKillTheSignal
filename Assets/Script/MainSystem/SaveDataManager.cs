@@ -39,12 +39,12 @@ public class SaveDataManager : MonoBehaviour
         }
     }
 
-    public static void Save()
+    public static void Save(int time, int distance)
     {
-        //現在のプロパティをセーブデータ化
-        _mainSaveData = new SaveData(DateTime.Now, 5, 5);
+        //現在のデータを変数に代入
+        _mainSaveData = new SaveData(DateTime.Now, time, distance);
         //セーブ時刻を確認
-        Debug.Log(_mainSaveData.Value.saveTime);
+        Debug.Log($"{_mainSaveData.Value.saveTime} {_mainSaveData.Value.distance} {_mainSaveData.Value.time}");
         // インスタンス変数を JSON にシリアル化する
         string json = JsonUtility.ToJson(_mainSaveData);
         // PlayerPrefs に保存する
@@ -60,7 +60,7 @@ public class SaveDataManager : MonoBehaviour
             // デシリアライズする
             SaveData saveData = JsonUtility.FromJson<SaveData>(json);
             //セーブデータを確認
-            Debug.Log($"{saveData.saveTime.ToString()}\n{saveData.distance}\n{saveData.time}");
+            Debug.Log($"{saveData.saveTime} {saveData.distance} {saveData.time}");
             //データを返す
             return saveData;
         }

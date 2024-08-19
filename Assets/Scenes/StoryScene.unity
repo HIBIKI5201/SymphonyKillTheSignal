@@ -385,16 +385,7 @@ MonoBehaviour:
   MainSystem: {fileID: 0}
   _unHighLightColor: {r: 0.699, g: 0.699, b: 0.699, a: 1}
   _nextTextUpdating: 0
-  _characterList:
-  - gameObject: {fileID: 1450439096}
-    characterName: System
-    pos: {x: 0, y: 0}
-  - gameObject: {fileID: 0}
-    characterName: Symphony
-    pos: {x: 0, y: 0}
-  - gameObject: {fileID: 0}
-    characterName: Triad
-    pos: {x: 0, y: 0}
+  _characterList: []
 --- !u!4 &1450439098
 Transform:
   m_ObjectHideFlags: 0
