@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: chapter1
   m_EditorClassIdentifier: 
   _characterList:
-  - gameObject: {fileID: 0}
+  - gameObject: {fileID: 8705964420986871938, guid: 01ca81b39e5ea4340a44572151d098c1, type: 3}
     characterName: System
     pos: {x: 0, y: 0}
   - gameObject: {fileID: 1410510812534861152, guid: e7153644fd91dc246a05f38a217b27d5, type: 3}

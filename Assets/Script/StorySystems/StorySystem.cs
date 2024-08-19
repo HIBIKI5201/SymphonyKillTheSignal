@@ -17,7 +17,6 @@ public class StorySystem : SystemBase
     //クラス
     StoryUI _mainUI;
 
-    [HideInInspector]
     public List<StoryCharacterList> _characterList = new();
     List<StoryTextList> _textList = new();
 
@@ -60,14 +59,16 @@ public class StorySystem : SystemBase
         _characterList = new();
         foreach (StoryCharacterList character in storyTextData._characterList)
         {
-            //Systemのみ例外処理
-            if (character.characterName == "System")
-            {
-                _characterList.Add(new StoryCharacterList { gameObject = this.gameObject, characterName = "", pos = Vector2.zero });
-                continue;
-            }
             //データをコピー
             _characterList.Add(new StoryCharacterList(character));
+        }
+        //Systemの名前を変更
+        foreach (StoryCharacterList character in _characterList)
+        {
+            if (character.characterName == "System")
+            {
+                character.characterName = "";
+            }
         }
         //Textをデータベースから参照
         _textList = new List<StoryTextList>(storyTextData._textList);
@@ -76,17 +77,14 @@ public class StorySystem : SystemBase
         //キャラクターを生成
         foreach (var characterData in _characterList)
         {
+            //名前をセット
             string characterName = characterData.characterName;
-            GameObject character = null;
-            if (characterData.characterName != "System")
-            {
-                //データからゲームオブジェクトを生成
-                character = Instantiate(characterData.gameObject);
-                //StorySystemの子オブジェクトにする
-                character.transform.SetParent(gameObject.transform);
-                //初期位置をセット
-                character.transform.position = characterData.pos;
-            }
+            //データからゲームオブジェクトを生成
+            GameObject character = Instantiate(characterData.gameObject);
+            //StorySystemの子オブジェクトにする
+            character.transform.SetParent(gameObject.transform);
+            //初期位置をセット
+            character.transform.position = characterData.pos;
             Animator animator = null;
             CharacterRendererManager spriteRenderer = null;
             //各キャラクターからAnimatorとSpriteRendererを取得する
@@ -110,13 +108,6 @@ public class StorySystem : SystemBase
         }
     }
 
-    private void Update()
-    {
-        Debug.Log("start");
-        Debug.Log(_textUpdateActive);
-        Debug.Log("end");
-    }
-
     /// <summary>
     /// 次のテキストを呼び出す
     /// </summary>
@@ -136,10 +127,8 @@ public class StorySystem : SystemBase
     IEnumerator NextTimer(float time)
     {
         _textUpdateActive = false;
-        Debug.LogWarning(_textUpdateActive);
         yield return new WaitForSeconds(time);
         _textUpdateActive = true;
-        Debug.LogWarning(_textUpdateActive);
         yield break;
     }
 
