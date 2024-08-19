@@ -1,22 +1,16 @@
-using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TitleUI : MonoBehaviour
+public class TitleUI : UIBase
 {
     TitleSystem _titleSystem;
-    UIDocument _titleUI;
-    VisualElement _root;
 
     Button _startButton;
     Button _continueButton;
 
-    public void UIAwake(TitleSystem titleSystem)
+    public override void UIAwake(SystemBase system)
     {
-        _titleSystem = titleSystem;
-
-        _titleUI = GetComponent<UIDocument>();
-        _root = _titleUI.rootVisualElement;
-
+        _titleSystem = (TitleSystem)system;
+        //メインタイトルのボタンを取得
         _startButton = _root.Q<Button>("Start");
         _startButton.clicked += PressStartButton;
         _continueButton = _root.Q<Button>("Continue");

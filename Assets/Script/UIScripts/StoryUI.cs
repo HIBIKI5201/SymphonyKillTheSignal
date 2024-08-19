@@ -1,31 +1,26 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class StoryUI : MonoBehaviour
+public class StoryUI : UIBase
 {
-    UIDocument _mainUIDocument;
-    VisualElement _root;
-
     Button _button;
     Label _nameLabel;
     Label _textLabel;
 
     StorySystem _storySystem;
 
-    private void Start()
+    public override void UIAwake(SystemBase system)
     {
-        _mainUIDocument = GetComponent<UIDocument>();
-        _root = _mainUIDocument.rootVisualElement;
+        _storySystem = (StorySystem)system;
+        //UIがキーに反応しないように
         _root.RegisterCallback<KeyDownEvent>(evt =>
         {
             evt.StopImmediatePropagation();
         });
-
-        _storySystem = FindAnyObjectByType<StorySystem>();
-
+        //テキストボックスのボタンを取得
         _button = _root.Q<Button>("Button");
         _button.clicked += ButtonClicked;
-
+        //テキストボックスを取得
         _nameLabel = _root.Q<Label>("NameBox");
         _nameLabel.pickingMode = PickingMode.Ignore;
         _textLabel = _root.Q<Label>("TextBox");

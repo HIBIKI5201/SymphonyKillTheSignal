@@ -16,12 +16,13 @@ public class PauseUI : MonoBehaviour
 
     void Start()
     {
+        //UIDocumentを取得
         _pauseUIDocument = GetComponent<UIDocument>();
         _root = _pauseUIDocument.rootVisualElement;
-
+        //ポーズボタンを取得
         _pauseButton = _root.Q<Button>("PauseButton");
-        _pauseButton.clicked += PauseManuAppear;
-
+        _pauseButton.clicked += PauseManuReveal;
+        //ウィンドウを取得
         _pauseWindow = _root.Q<VisualElement>("PauseWindow");
         _pauseWindow.style.display = DisplayStyle.None;
         _continueButton = _pauseWindow.Q<Button>("Back");
@@ -30,7 +31,7 @@ public class PauseUI : MonoBehaviour
         _titleButton = _pauseWindow.Q<Button>("Title");
     }
 
-    void PauseManuAppear()
+    void PauseManuReveal()
     {
         Debug.Log("pma");
         _pauseWindow.style.display = DisplayStyle.Flex;
@@ -38,11 +39,11 @@ public class PauseUI : MonoBehaviour
 
     public void HidePause()
     {
-        _pauseUIDocument.enabled = false;
+        _pauseButton.style.display = DisplayStyle.None;
     }
 
     public void RevealPause()
     {
-        _pauseUIDocument.enabled = true;
+        _pauseButton.style.display = DisplayStyle.Flex;
     }
 }

@@ -49,6 +49,7 @@ public class StorySystem : SystemBase
         _textUpdateActive = false;
         //UIのPresenterを取得
         _mainUI = FindAnyObjectByType<StoryUI>();
+        _mainUI.UIAwake(this);
         //最初が0番目のテキストになるように初期値を設定
         _currentTextNumber = -1;
     }

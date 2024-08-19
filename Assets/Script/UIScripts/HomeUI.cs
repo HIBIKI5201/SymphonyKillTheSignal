@@ -2,14 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class HomeUI : MonoBehaviour
+public class HomeUI : UIBase
 {
     HomeSystem _homeSystem;
-
-    UIDocument _homeUI;
-    VisualElement _root;
-
-    VisualElement _buttonUnactiveElement;
 
     Dictionary<Button, VisualElement> _buttonToWindow;
 
@@ -26,11 +21,10 @@ public class HomeUI : MonoBehaviour
     Label _movementDistanceText;
     Button _movementComformButton;
 
-    private void Start()
+    public override void UIAwake(SystemBase system)
     {
-        //UIDocumentの取得
-        _homeUI = GetComponent<UIDocument>();
-        _root = _homeUI.rootVisualElement;
+        //システムを取得
+        _homeSystem = (HomeSystem)system;
         //メインボタン系の取得
         _movementButton = _root.Q<Button>("MovementButton");
         _movementButton.clicked += OnClickMovementButton;
@@ -67,12 +61,6 @@ public class HomeUI : MonoBehaviour
             {_collectButton, null},
             {_itemButton, null},
         };
-    }
-
-    public void UIAwake(HomeSystem homeSystem)
-    {
-        //システムを取得
-        _homeSystem = homeSystem;
     }
     void WindowHide()
     {
