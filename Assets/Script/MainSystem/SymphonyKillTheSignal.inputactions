@@ -18,17 +18,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "c83e8e44-be88-43ac-8e1d-0922163223e1",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "NextPage",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c3bb3d4a-b77c-4293-9d07-0f536f8c232e",
                     "path": "<Keyboard>/enter",
                     "interactions": "",

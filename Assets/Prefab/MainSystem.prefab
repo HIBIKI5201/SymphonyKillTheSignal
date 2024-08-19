@@ -461,8 +461,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d63042f9c6213e4893d28c765758d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textDataBase:
-  - {fileID: 11400000, guid: f966f6c2393644a4bbabd0b90588a1a9, type: 2}
+  _storyData:
+  - storyTextData: {fileID: 11400000, guid: f966f6c2393644a4bbabd0b90588a1a9, type: 2}
+    distance: 0
+  _MovementEventData:
+  - {fileID: 11400000, guid: 68a0879c49556c143bb40f7b60d3e8ab, type: 2}
+  _CollectStoryData:
+  - {fileID: 0}
 --- !u!1 &9111755237554207075
 GameObject:
   m_ObjectHideFlags: 0

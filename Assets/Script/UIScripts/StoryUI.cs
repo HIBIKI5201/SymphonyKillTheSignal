@@ -16,6 +16,10 @@ public class StoryUI : MonoBehaviour
     {
         _mainUIDocument = GetComponent<UIDocument>();
         _root = _mainUIDocument.rootVisualElement;
+        _root.RegisterCallback<KeyDownEvent>(evt =>
+        {
+            evt.StopImmediatePropagation();
+        });
 
         _storySystem = FindAnyObjectByType<StorySystem>();
 
@@ -30,7 +34,7 @@ public class StoryUI : MonoBehaviour
 
     void ButtonClicked()
     {
-        _storySystem.NextPageClick();
+        _storySystem.NextTextTrigger();
     }
 
     public void TextBoxUpdate(string name, string text)

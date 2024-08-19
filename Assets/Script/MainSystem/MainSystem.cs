@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class MainSystem : MonoBehaviour
 {
-    static MainSystem _selfInstance;
     [HideInInspector]
     public StoryManager _storyManager;
 
@@ -16,17 +15,12 @@ public class MainSystem : MonoBehaviour
     SoundDataBase soundEffects;
     [SerializeField]
     SoundDataBase BGMs;
-    private void Awake()
-    {
-
-    }
 
     void Start()
     {
         //UI ToolKitを取得
         _screenEffect = GetComponentInChildren<ScreenEffectUI>();
-        _screenEffect.ButtonUnactiveElement(false);
-        _screenEffect.ScreenFadeIn(2);
+        StartCoroutine(GameStartEffect());
         _pauseUI = GetComponentInChildren<PauseUI>();
         //StoryManagerを取得
         _storyManager = GetComponentInChildren<StoryManager>();
@@ -42,6 +36,14 @@ public class MainSystem : MonoBehaviour
         SaveDataManager._mainSaveData = SaveDataManager.Load();
         //シーンのシステムを起動
         FindAnyObjectByType<SystemBase>().SystemAwake(this);
+    }
+
+    IEnumerator GameStartEffect()
+    {
+        _screenEffect.ButtonUnactiveElement(true);
+        _screenEffect.ScreenFadeIn(2);
+        yield return new WaitForSeconds(2);
+        _screenEffect.ButtonUnactiveElement(false);
     }
 
     public void GameStart(bool Continue)
@@ -69,6 +71,10 @@ public class MainSystem : MonoBehaviour
         StartCoroutine(SceneChange(SceneChanger.SceneKind.Title));
     }
 
+    public void StoryAction(StoryManager.StoryKind storyKind)
+    {
+        StartCoroutine(SceneChange(SceneChanger.SceneKind.Story, storyKind));
+    }
 
     public void SoundPlay(int number, int soundNumber)
     {
@@ -95,8 +101,12 @@ public class MainSystem : MonoBehaviour
                 break;
         }
     }
-
     IEnumerator SceneChange(SceneChanger.SceneKind sceneKind)
+    {
+        StartCoroutine(SceneChange(sceneKind, StoryManager.StoryKind.Story));
+        yield break;
+    }
+    IEnumerator SceneChange(SceneChanger.SceneKind sceneKind, StoryManager.StoryKind storyKind)
     {
         //ボタンロックを起動
         _screenEffect.ButtonUnactiveElement(true);
@@ -112,7 +122,7 @@ public class MainSystem : MonoBehaviour
         {
             case SceneChanger.SceneKind.Story:
                 _pauseUI.RevealPause();
-                _storyManager.SetStoryData();
+                _storyManager.SetStoryData(storyKind);
                 break;
             case SceneChanger.SceneKind.Home:
                 _pauseUI.RevealPause();
@@ -122,8 +132,6 @@ public class MainSystem : MonoBehaviour
                 break;
         }
         yield return new WaitForSeconds(0.8f);
-        //最初のテキストを呼び出す
-        if (sceneKind == SceneChanger.SceneKind.Story) _storyManager.StartStory();
         //フェードイン演出
         _screenEffect.ScreenFadeIn(1.5f);
         yield return new WaitForSeconds(1.5f);

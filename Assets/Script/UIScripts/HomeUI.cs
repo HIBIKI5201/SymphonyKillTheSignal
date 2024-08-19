@@ -117,6 +117,6 @@ public class HomeUI : MonoBehaviour
     void MovementComformButtonClicked()
     {
         Debug.Log("ˆÚ“®ŠJŽn");
-        _homeSystem.MainSystem.BackToTitle();
+        _homeSystem.MainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
 }
