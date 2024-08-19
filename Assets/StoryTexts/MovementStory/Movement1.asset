@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Movement1
   m_EditorClassIdentifier: 
   _characterList:
-  - gameObject: {fileID: 0}
+  - gameObject: {fileID: 8705964420986871938, guid: 01ca81b39e5ea4340a44572151d098c1, type: 3}
     characterName: System
     pos: {x: 0, y: 0}
   - gameObject: {fileID: 1410510812534861152, guid: e7153644fd91dc246a05f38a217b27d5, type: 3}
@@ -22,7 +22,7 @@ MonoBehaviour:
   _textList:
   - characterType: 0
     kind: 0
-    text: 
-  - characterType: 0
+    text: "\u30B7\u30B9\u30C6\u30E0\u306E\u30BB\u30EA\u30D5"
+  - characterType: 1
     kind: 0
-    text: 
+    text: "\u30B7\u30F3\u30D5\u30A9\u30CB\u30FC\u306E\u30BB\u30EA\u30D5"
