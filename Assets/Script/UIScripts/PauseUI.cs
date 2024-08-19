@@ -3,6 +3,8 @@ using UnityEngine.UIElements;
 
 public class PauseUI : MonoBehaviour
 {
+    MainSystem _mainSystem;
+
     UIDocument _pauseUIDocument;
     VisualElement _root;
 
@@ -16,6 +18,8 @@ public class PauseUI : MonoBehaviour
 
     void Start()
     {
+        //ƒVƒXƒeƒ€‚ðŽæ“¾
+        _mainSystem = GetComponentInParent<MainSystem>();
         //UIDocument‚ðŽæ“¾
         _pauseUIDocument = GetComponent<UIDocument>();
         _root = _pauseUIDocument.rootVisualElement;
@@ -26,15 +30,20 @@ public class PauseUI : MonoBehaviour
         _pauseWindow = _root.Q<VisualElement>("PauseWindow");
         _pauseWindow.style.display = DisplayStyle.None;
         _continueButton = _pauseWindow.Q<Button>("Back");
+        _continueButton.clicked += BackButtonClicked;
         _saveButton = _pauseWindow.Q<Button>("Save");
+        _saveButton.clicked += SaveButtonClicked;
         _optionButton = _pauseWindow.Q<Button>("Option");
+        _optionButton.clicked += OptionButtonClicked;
         _titleButton = _pauseWindow.Q<Button>("Title");
+        _titleButton.clicked += TitleButtonClicked;
     }
 
     void PauseManuReveal()
     {
         Debug.Log("pma");
         _pauseWindow.style.display = DisplayStyle.Flex;
+        _pauseButton.style.display = DisplayStyle.None;
     }
 
     public void HidePause()
@@ -46,4 +55,29 @@ public class PauseUI : MonoBehaviour
     {
         _pauseButton.style.display = DisplayStyle.Flex;
     }
+
+    void BackButtonClicked()
+    {
+        _pauseWindow.style.display = DisplayStyle.None;
+        _pauseButton.style.display = DisplayStyle.Flex;
+    }
+
+    void SaveButtonClicked()
+    {
+
+    }
+
+
+    void OptionButtonClicked()
+    {
+
+    }
+
+
+    void TitleButtonClicked()
+    {
+        _pauseWindow.style.display = DisplayStyle.None;
+        _mainSystem.BackToTitle();
+    }
+
 }
