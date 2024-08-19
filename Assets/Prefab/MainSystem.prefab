@@ -295,6 +295,7 @@ Transform:
   - {fileID: 5859477382325925285}
   - {fileID: 570402608875770319}
   - {fileID: 614922741909955189}
+  - {fileID: 1410791718871656600}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8234855380147621973
@@ -309,7 +310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f1470086c556c41b49e71cd8486eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _storyManager: {fileID: 0}
   soundEffects: {fileID: 11400000, guid: 884747cdc0f1f6f47befb1dd3b1f5374, type: 2}
   BGMs: {fileID: 11400000, guid: a105febb680f6144b8f1f566dbff4f84, type: 2}
 --- !u!82 &1298497619001177404
@@ -468,6 +468,60 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 68a0879c49556c143bb40f7b60d3e8ab, type: 2}
   _CollectStoryData:
   - {fileID: 0}
+--- !u!1 &8533328079901723266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1410791718871656600}
+  - component: {fileID: 8111783766305852135}
+  m_Layer: 0
+  m_Name: UserDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1410791718871656600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8533328079901723266}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8304050220789265187}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8111783766305852135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8533328079901723266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2659b25712201e04c95cf6a313a0fa94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    saveTime:
+      year: 0
+      month: 0
+      day: 0
+      hour: 0
+      minute: 0
+      second: 0
+    distance: 0
+    time: 0
 --- !u!1 &9111755237554207075
 GameObject:
   m_ObjectHideFlags: 0

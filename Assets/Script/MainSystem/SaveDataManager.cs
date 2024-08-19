@@ -39,10 +39,10 @@ public class SaveDataManager : MonoBehaviour
         }
     }
 
-    public static void Save(int time, int distance)
+    public static void Save(SaveData saveData)
     {
         //現在のデータを変数に代入
-        _mainSaveData = new SaveData(DateTime.Now, time, distance);
+        _mainSaveData = new SaveData(DateTime.Now, saveData.time, saveData.distance);
         //セーブ時刻を確認
         Debug.Log($"{_mainSaveData.Value.saveTime} {_mainSaveData.Value.distance} {_mainSaveData.Value.time}");
         // インスタンス変数を JSON にシリアル化する

@@ -154,7 +154,7 @@ public class StorySystem : SystemBase
         else
         {
             //ホームに帰還
-            MainSystem.BackToHome();
+            mainSystem.BackToHome();
             //連打防止
             if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
             yield break;
@@ -226,7 +226,7 @@ public class StorySystem : SystemBase
                 //文字列を数値化してSoundPlayメソッドを送る
                 if (int.TryParse(texts[0], out int num) && int.TryParse(texts[1], out int soundNum))
                 {
-                    MainSystem.SoundPlay(num, soundNum);
+                    mainSystem.SoundPlay(num, soundNum);
                 }
                 else Debug.LogWarning("Soundの指定が適切ではありませんでした");
                 break;

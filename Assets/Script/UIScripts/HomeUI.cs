@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -17,6 +18,7 @@ public class HomeUI : UIBase
 
     VisualElement _movementWindow;
     SliderInt _movementSlider;
+    int _sliderValue;
     Label _movenetTimeText;
     Label _movementDistanceText;
     Button _movementComformButton;
@@ -98,6 +100,7 @@ public class HomeUI : UIBase
 
     void MovementSliderUpdate(int value)
     {
+        _sliderValue = value;
         _movenetTimeText.text = value.ToString();
         _movementDistanceText.text = $"{(value * 3).ToString()}km";
     }
@@ -105,6 +108,7 @@ public class HomeUI : UIBase
     void MovementComformButtonClicked()
     {
         Debug.Log("ˆÚ“®ŠJŽn");
-        _homeSystem.MainSystem.StoryAction(StoryManager.StoryKind.Movement);
+        _homeSystem.Movement(_sliderValue, _sliderValue * 3);
+        _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
 }

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public abstract class SystemBase : MonoBehaviour
 {
-    public MainSystem MainSystem;
+    public MainSystem mainSystem;
 
     public void SystemAwake(MainSystem mainSystem)
     {
-        MainSystem = mainSystem;
+        this.mainSystem = mainSystem;
         Initialize();
     }
 

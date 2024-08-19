@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class MainSystem : MonoBehaviour
 {
-    [HideInInspector]
-    public StoryManager _storyManager;
+    StoryManager _storyManager;
+    public UserDataManager _userDataManager;
 
     ScreenEffectUI _screenEffect;
     PauseUI _pauseUI;
@@ -22,8 +23,9 @@ public class MainSystem : MonoBehaviour
         _screenEffect = GetComponentInChildren<ScreenEffectUI>();
         StartCoroutine(GameStartEffect());
         _pauseUI = GetComponentInChildren<PauseUI>();
-        //StoryManagerを取得
+        //マネージャークラスを取得
         _storyManager = GetComponentInChildren<StoryManager>();
+        _userDataManager = GetComponentInChildren<UserDataManager>();
         //AudioSourceを取得する
         _soundEffectSource = GetComponentInChildren<AudioSource>();
         _BGMSource = GetComponent<AudioSource>();
@@ -55,9 +57,10 @@ public class MainSystem : MonoBehaviour
         }
         else
         {
-            SaveDataManager.Save(0, 0);
+            SaveDataManager.Save(new SaveDataManager.SaveData(DateTime.Now, 0, 0));
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
         }
+        _userDataManager.saveData = SaveDataManager._mainSaveData.Value;
     }
 
     public void BackToHome()
@@ -125,7 +128,6 @@ public class MainSystem : MonoBehaviour
                 break;
             case SceneChanger.SceneKind.Home:
                 _pauseUI.RevealPause();
-                SaveDataManager.Save(5, 5);
                 break;
             case SceneChanger.SceneKind.Title:
                 _pauseUI.HidePause();

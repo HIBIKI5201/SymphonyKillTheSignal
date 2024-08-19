@@ -19,11 +19,11 @@ public class TitleUI : UIBase
 
     void PressStartButton()
     {
-        _titleSystem.MainSystem.GameStart(false);
+        _titleSystem.mainSystem.GameStart(false);
     }
 
     void PressContinueButton()
     {
-        _titleSystem.MainSystem.GameStart(true);
+        _titleSystem.mainSystem.GameStart(true);
     }
 }
