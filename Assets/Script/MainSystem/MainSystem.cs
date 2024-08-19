@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -56,7 +57,7 @@ public class MainSystem : MonoBehaviour
         else
         {
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
-            SaveDataManager._mainSaveData = new(0, 0);
+            SaveDataManager._mainSaveData = new(DateTime.Now, 0, 0);
             SaveDataManager.Save();
         }
     }
@@ -126,6 +127,7 @@ public class MainSystem : MonoBehaviour
                 break;
             case SceneChanger.SceneKind.Home:
                 _pauseUI.RevealPause();
+                SaveDataManager.Save();
                 break;
             case SceneChanger.SceneKind.Title:
                 _pauseUI.HidePause();
