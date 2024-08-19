@@ -41,8 +41,6 @@ public class StorySystem : SystemBase
     int _currentTextNumber;
     bool _textUpdatingCanselTrigger;
     bool _textUpdateActive;
-    float _timer;
-    bool _timerTrigger;
     Coroutine _nextTimerCoroutine;
 
     public override void Initialize()
@@ -114,13 +112,9 @@ public class StorySystem : SystemBase
 
     private void Update()
     {
+        Debug.Log("start");
         Debug.Log(_textUpdateActive);
-
-        if (_timer < Time.time && _timerTrigger)
-        {
-            _timerTrigger = false;
-            _textUpdateActive = true;
-        }
+        Debug.Log("end");
     }
 
     /// <summary>
@@ -142,15 +136,11 @@ public class StorySystem : SystemBase
     IEnumerator NextTimer(float time)
     {
         _textUpdateActive = false;
+        Debug.LogWarning(_textUpdateActive);
         yield return new WaitForSeconds(time);
         _textUpdateActive = true;
+        Debug.LogWarning(_textUpdateActive);
         yield break;
-    }
-
-    void ProvisionalNextTimer(float time)
-    {
-        _timer = Time.time + time;
-        _timerTrigger = true;
     }
 
     /// <summary>
@@ -205,13 +195,8 @@ public class StorySystem : SystemBase
                     waitTime = float.Parse(texts[1]);
                 }
                 //アニメーション中はテキスト更新を無効
-
-                /*
                 if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
                 _nextTimerCoroutine = StartCoroutine(NextTimer(waitTime));
-                */
-                ProvisionalNextTimer(waitTime);
-
                 yield return new WaitForSeconds(waitTime);
                 StartCoroutine(NextText());
                 break;
@@ -220,13 +205,8 @@ public class StorySystem : SystemBase
                 if (_mainUI != null)
                 {
                     //連打防止のためのタイマー
-
-                    /*
                     if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
                     _nextTimerCoroutine = StartCoroutine(NextTimer(0.3f));
-                    */
-                    ProvisionalNextTimer(0.3f);
-
                     //喋っているキャラのみをハイライトする
                     CharacterHighLight(_textList[_currentTextNumber].characterType);
                     //textSpeedの時間に応じてテキストを表示する
