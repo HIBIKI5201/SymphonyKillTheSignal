@@ -17,6 +17,8 @@
     border-right-width: 5px;
     border-bottom-width: 5px;
     border-left-width: 5px;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
 }
 
 .button:hover {
@@ -25,6 +27,9 @@
     border-right-color: rgb(178, 178, 178);
     border-top-color: rgb(178, 178, 178);
     border-bottom-color: rgb(178, 178, 178);
+    scale: 1.1 1.1;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-circ;
 }
 
 .button:active {

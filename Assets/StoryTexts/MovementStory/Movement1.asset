@@ -26,3 +26,14 @@ MonoBehaviour:
   - characterType: 1
     kind: 0
     text: "\u30B7\u30F3\u30D5\u30A9\u30CB\u30FC\u306E\u30BB\u30EA\u30D5"
+  - characterType: 1
+    kind: 1
+    text: 'Move
+
+      0'
+  - characterType: 1
+    kind: 0
+    text: "\u52D5\u304F"
+  - characterType: 1
+    kind: 0
+    text: "\u52D5\u3044\u305F"

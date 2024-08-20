@@ -1,9 +1,9 @@
 .titleButton {
-    width: 230px;
-    height: 80px;
+    width: 100%;
+    height: auto;
     margin-bottom: 20px;
     margin-top: 20px;
-    font-size: 45px;
+    font-size: 55px;
     -unity-text-align: middle-center;
-    text-overflow: ellipsis;
+    -unity-font-style: normal;
 }
