@@ -63,6 +63,11 @@ public class MainSystem : MonoBehaviour
         _userDataManager.saveData = SaveDataManager._mainSaveData.Value;
     }
 
+    public void DataSave()
+    {
+        SaveDataManager.Save(_userDataManager.saveData);
+    }
+
     public void BackToHome()
     {
         StartCoroutine(SceneChange(SceneChanger.SceneKind.Home));

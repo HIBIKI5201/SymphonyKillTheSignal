@@ -13,7 +13,7 @@ public class HomeSystem : SystemBase
         _adventureSystem = FindAnyObjectByType<AdventureSystem>();
         _homeUI = GetComponentInChildren<HomeUI>();
         _homeUI.UIAwake(this);
-        SaveDataManager.Save(_userDataManager.saveData);
+        mainSystem.DataSave();
     }
 
     public void Movement(int value)

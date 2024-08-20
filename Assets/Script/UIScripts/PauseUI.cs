@@ -64,7 +64,9 @@ public class PauseUI : MonoBehaviour
 
     void SaveButtonClicked()
     {
-
+        _mainSystem.DataSave();
+        _pauseWindow.style.display = DisplayStyle.None;
+        _pauseButton.style.display = DisplayStyle.Flex;
     }
 
 
