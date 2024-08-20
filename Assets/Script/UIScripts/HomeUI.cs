@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class HomeUI : UIBase
 {
     HomeSystem _homeSystem;
+    AdventureSystem _adventureSystem;
 
     Dictionary<Button, VisualElement> _buttonToWindow;
 
@@ -27,6 +27,7 @@ public class HomeUI : UIBase
     {
         //システムを取得
         _homeSystem = (HomeSystem)system;
+        _adventureSystem = FindAnyObjectByType<AdventureSystem>();
         //メインボタン系の取得
         _movementButton = _root.Q<Button>("MovementButton");
         _movementButton.clicked += OnClickMovementButton;
@@ -102,13 +103,13 @@ public class HomeUI : UIBase
     {
         _sliderValue = value;
         _movenetTimeText.text = value.ToString();
-        _movementDistanceText.text = $"{(value * 3).ToString()}km";
+        _movementDistanceText.text = $"{_adventureSystem.TimeToDistance(value)}km";
     }
 
     void MovementComformButtonClicked()
     {
         Debug.Log("移動開始");
-        _homeSystem.Movement(_sliderValue, _sliderValue * 3);
+        _homeSystem.Movement(_sliderValue);
         _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
 }

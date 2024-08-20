@@ -118,7 +118,6 @@ public class StorySystem : SystemBase
         {
             StartCoroutine(NextText());
         }
-        else Debug.LogWarning($"{_textUpdateActive}");
     }
     /// <summary>
     /// 次のテキストを呼び出せるまでのタイマーを起動するメソッド

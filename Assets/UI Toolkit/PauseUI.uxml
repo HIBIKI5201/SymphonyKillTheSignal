@@ -3,7 +3,7 @@
     <engine:Button text="メニュー" name="PauseButton" class="button textBox" style="margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; width: 120px; height: 50px; -unity-font-style: bold; border-left-color: rgb(99, 99, 99); border-right-color: rgb(99, 99, 99); border-top-color: rgb(99, 99, 99); border-bottom-color: rgb(99, 99, 99); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; color: rgb(0, 0, 0); font-size: 25%; position: absolute;" />
     <engine:VisualElement name="PauseWindow" style="flex-grow: 1; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.45); display: flex;">
         <engine:VisualElement style="width: 30%; height: 65%; background-color: rgba(115, 115, 115, 0.5); align-items: center; justify-content: space-around;">
-            <engine:Button text="ゲームを続ける" name="Back" class="button textBox" style="width: 50%; height: 10%; font-size: 50px; color: rgb(0, 0, 0);" />
+            <engine:Button text="ゲームを続ける" name="Back" usage-hints="None" class="button textBox" style="width: 50%; height: 10%; font-size: 50px; color: rgb(0, 0, 0);" />
             <engine:Button text="セーブする" name="Save" class="button textBox" style="width: 50%; height: 10%; font-size: 50px; color: rgb(0, 0, 0);" />
             <engine:Button text="オプション" name="Option" class="button textBox" style="width: 50%; height: 10%; font-size: 50px; color: rgb(0, 0, 0);" />
             <engine:Button text="タイトルに戻る" name="Title" class="button textBox" style="width: 50%; height: 10%; font-size: 50px; color: rgb(0, 0, 0);" />
