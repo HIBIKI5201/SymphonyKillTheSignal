@@ -6,8 +6,27 @@ public class HomeUI : UIBase
 {
     HomeSystem _homeSystem;
     AdventureSystem _adventureSystem;
+    enum WindowKind
+    {
+        Movement,
+        Collect,
+        Camp,
+        Item,
+    }
 
-    Dictionary<Button, VisualElement> _buttonToWindow;
+    struct WindowElement
+    {
+        public Button button;
+        public VisualElement windowElement;
+
+        public WindowElement(Button button, VisualElement visualElement)
+        {
+            this.button = button;
+            this.windowElement = visualElement;
+        }
+    }
+
+    Dictionary<WindowKind, WindowElement> _WindowDictionary;
 
     Button _movementButton;
     Button _collectButton;
@@ -23,6 +42,11 @@ public class HomeUI : UIBase
     Label _movementDistanceText;
     Button _movementComformButton;
 
+    VisualElement _campWindow;
+    VisualElement _bonfireButton;
+    VisualElement _restButton;
+    VisualElement _repairButton;
+
     public override void UIAwake(SystemBase system)
     {
         //システムを取得
@@ -30,13 +54,13 @@ public class HomeUI : UIBase
         _adventureSystem = FindAnyObjectByType<AdventureSystem>();
         //メインボタン系の取得
         _movementButton = _root.Q<Button>("MovementButton");
-        _movementButton.clicked += OnClickMovementButton;
+        _movementButton.RegisterCallback<ClickEvent>(evt => OnclickMainButton(WindowKind.Movement));
         _collectButton = _root.Q<Button>("CollectButton");
-        _collectButton.clicked += OnClickCollectButton;
+        _collectButton.RegisterCallback<ClickEvent>(evt => OnclickMainButton(WindowKind.Collect));
         _campButton = _root.Q<Button>("CampButton");
-        _campButton.clicked += OnClickCampButton;
+        _campButton.RegisterCallback<ClickEvent>(evt => OnclickMainButton(WindowKind.Camp));
         _itemButton = _root.Q<Button>("ItemButton");
-        _itemButton.clicked += OnClickItemButton;
+        _itemButton.RegisterCallback<ClickEvent>(evt => OnclickMainButton(WindowKind.Item));
         //Movement関係の取得と初期設定
         _movementWindow = _root.Q<VisualElement>("MovementWindow");
         _movementWindow.style.display = DisplayStyle.None;
@@ -56,47 +80,36 @@ public class HomeUI : UIBase
                 MovementSliderUpdate(_movementSlider.value);
             });
         }
+        //Collect関係の取得と初期化
+
+
+        //Camp関係の取得と初期設定
+        _campWindow = _root.Q<VisualElement>("CampWindow");
+        _campWindow.style.display = DisplayStyle.None;
+        _bonfireButton = _root.Q<VisualElement>("Camp-Bonfire");
+        _bonfireButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_bonfireButton));
+        _restButton = _root.Q<VisualElement>("Camp-Rest");
+        _restButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_restButton));
+        _repairButton = _root.Q<VisualElement>("Camp-Repair");
+        _repairButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_repairButton));
         //ボタンに対応したウィンドウのエレメントを設定する
-        _buttonToWindow = new()
+        _WindowDictionary = new()
         {
-            {_movementButton, _movementWindow},
-            {_campButton, null},
-            {_collectButton, null},
-            {_itemButton, null},
+            {WindowKind.Movement, new WindowElement(_movementButton, _movementWindow) },
+            {WindowKind.Collect, new WindowElement(null, null)},
+            {WindowKind.Camp, new WindowElement(_campButton, _campWindow)},
+            {WindowKind.Item, new WindowElement(null, null)},
         };
     }
-    void WindowHide()
-    {
-        _currentWindow.style.display = DisplayStyle.None;
-    }
 
-    void OnclickButton(Button button)
+    void OnclickMainButton(WindowKind kind)
     {
-        if (_currentWindow != null) WindowHide();
-        if (_buttonToWindow[button] != null)
+        if (_currentWindow != null) _currentWindow.style.display = DisplayStyle.None;
+        if (_WindowDictionary[kind].windowElement != null )
         {
-            _buttonToWindow[button].style.display = DisplayStyle.Flex;
-            _currentWindow = _buttonToWindow[button];
+            _WindowDictionary[kind].windowElement.style.display = DisplayStyle.Flex;
+            _currentWindow = _WindowDictionary[kind].windowElement;
         }
-    }
-    void OnClickMovementButton()
-    {
-        OnclickButton(_movementButton);
-    }
-
-    void OnClickCollectButton()
-    {
-        OnclickButton(_collectButton);
-    }
-
-    void OnClickCampButton()
-    {
-        OnclickButton(_campButton);
-    }
-
-    void OnClickItemButton()
-    {
-        OnclickButton(_itemButton);
     }
 
     void MovementSliderUpdate(int value)
@@ -111,5 +124,24 @@ public class HomeUI : UIBase
         Debug.Log("移動開始");
         _homeSystem.Movement(_sliderValue);
         _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
+    }
+
+    void CampWindowButtonClicked(VisualElement clickedElement)
+    {
+        VisualElement[] campWindowButtons = new VisualElement[] {_bonfireButton, _restButton, _repairButton};
+        string[] classListNames = new string[] { "camp-button-active", "camp-button-inactive" };
+        foreach (VisualElement button in campWindowButtons)
+        {
+            if (button == clickedElement)
+            {
+                button.RemoveFromClassList(classListNames[1]);
+                button.AddToClassList(classListNames[0]);
+            }
+            else
+            {
+                button.RemoveFromClassList(classListNames[0]);
+                button.AddToClassList(classListNames[1]);
+            }
+        }
     }
 }

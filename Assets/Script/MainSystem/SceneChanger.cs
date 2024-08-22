@@ -58,5 +58,6 @@ public class SceneChanger : MonoBehaviour
         {
             yield return null;
         }
+        CurrentScene = sceneKind;
     }
 }
