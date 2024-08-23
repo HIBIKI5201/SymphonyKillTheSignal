@@ -121,8 +121,8 @@ public class HomeUI : UIBase
     {
         _sliderValue = value;
         _movementDistanceText.text = $"{_adventureSystem.TimeToDistance(value)}km";
-        _movemetTimeText.text = value.ToString();
-        _movementHealthText.text = (value * 5).ToString("");
+        _movemetTimeText.text = $"{value}ŽžŠÔ";
+        _movementHealthText.text = (value * 5).ToString("0.0");
     }
 
     void MovementComformButtonClicked()
