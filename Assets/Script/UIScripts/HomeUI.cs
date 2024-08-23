@@ -14,7 +14,19 @@ public class HomeUI : UIBase
         Item,
     }
 
-    Dictionary<WindowKind, VisualElement> _WindowDictionary;
+    struct WindowElement
+    {
+        public Button button;
+        public VisualElement windowElement;
+
+        public WindowElement(Button button, VisualElement visualElement)
+        {
+            this.button = button;
+            this.windowElement = visualElement;
+        }
+    }
+
+    Dictionary<WindowKind, WindowElement> _WindowDictionary;
 
     Button _movementButton;
     Button _collectButton;
@@ -26,19 +38,14 @@ public class HomeUI : UIBase
     VisualElement _movementWindow;
     SliderInt _movementSlider;
     int _sliderValue;
+    Label _movenetTimeText;
     Label _movementDistanceText;
-    Label _movemetTimeText;
-    Label _movementHealthText;
     Button _movementComformButton;
 
     VisualElement _campWindow;
     VisualElement _bonfireButton;
     VisualElement _restButton;
     VisualElement _repairButton;
-    Dictionary<VisualElement, VisualElement> _campWindowChildrens;
-    VisualElement _bonfireWindow;
-    VisualElement _restWindow;
-    VisualElement _repairWindow;
 
     public override void UIAwake(SystemBase system)
     {
@@ -54,12 +61,11 @@ public class HomeUI : UIBase
         _campButton.RegisterCallback<ClickEvent>(evt => OnclickMainButton(WindowKind.Camp));
         _itemButton = _root.Q<Button>("ItemButton");
         _itemButton.RegisterCallback<ClickEvent>(evt => OnclickMainButton(WindowKind.Item));
-        //Movementä÷åWÇÃéÊìæÇ∆èâä˙âª
+        //Movementä÷åWÇÃéÊìæÇ∆èâä˙ê›íË
         _movementWindow = _root.Q<VisualElement>("MovementWindow");
         _movementWindow.style.display = DisplayStyle.None;
+        _movenetTimeText = _root.Q<Label>("Movement-TimeText");
         _movementDistanceText = _root.Q<Label>("Movement-DistanceText");
-        _movemetTimeText = _root.Q<Label>("Movement-TimeText");
-        _movementHealthText = _root.Q<Label>("Movement-HealthText");
         _movementSlider = _root.Q<SliderInt>("Movement-Slider");
         Label label = _movementSlider.Q<Label>();
         label.style.color = Color.white;
@@ -76,53 +82,41 @@ public class HomeUI : UIBase
         }
         //Collectä÷åWÇÃéÊìæÇ∆èâä˙âª
 
-        //Campä÷åWÇÃéÊìæÇ∆èâä˙âª
+
+        //Campä÷åWÇÃéÊìæÇ∆èâä˙ê›íË
         _campWindow = _root.Q<VisualElement>("CampWindow");
         _campWindow.style.display = DisplayStyle.None;
         _bonfireButton = _root.Q<VisualElement>("Camp-Bonfire");
         _bonfireButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_bonfireButton));
-        _bonfireWindow = _root.Q<VisualElement>("Camp-BonfireWindow");
         _restButton = _root.Q<VisualElement>("Camp-Rest");
         _restButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_restButton));
-        _restWindow = _root.Q<VisualElement>("Camp-RestWindow");
         _repairButton = _root.Q<VisualElement>("Camp-Repair");
         _repairButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_repairButton));
-        _repairWindow = _root.Q<VisualElement>("Camp-RepairWindow");
-        _campWindowChildrens = new()
-        {
-            {_bonfireButton, _bonfireWindow},
-            {_restButton, _restWindow},
-            {_repairButton, _repairWindow},
-        };
-        //Itemä÷åWÇÃéÊìæÇ∆èâä˙âª
-
-
         //É{É^ÉìÇ…ëŒâûÇµÇΩÉEÉBÉìÉhÉEÇÃÉGÉåÉÅÉìÉgÇê›íËÇ∑ÇÈ
         _WindowDictionary = new()
         {
-            {WindowKind.Movement, _movementWindow},
-            {WindowKind.Collect, null},
-            {WindowKind.Camp, _campWindow},
-            {WindowKind.Item, null},
+            {WindowKind.Movement, new WindowElement(_movementButton, _movementWindow) },
+            {WindowKind.Collect, new WindowElement(null, null)},
+            {WindowKind.Camp, new WindowElement(_campButton, _campWindow)},
+            {WindowKind.Item, new WindowElement(null, null)},
         };
     }
 
     void OnclickMainButton(WindowKind kind)
     {
         if (_currentWindow != null) _currentWindow.style.display = DisplayStyle.None;
-        if (_WindowDictionary[kind] != null)
+        if (_WindowDictionary[kind].windowElement != null )
         {
-            _WindowDictionary[kind].style.display = DisplayStyle.Flex;
-            _currentWindow = _WindowDictionary[kind];
+            _WindowDictionary[kind].windowElement.style.display = DisplayStyle.Flex;
+            _currentWindow = _WindowDictionary[kind].windowElement;
         }
     }
 
     void MovementSliderUpdate(int value)
     {
         _sliderValue = value;
+        _movenetTimeText.text = value.ToString();
         _movementDistanceText.text = $"{_adventureSystem.TimeToDistance(value)}km";
-        _movemetTimeText.text = value.ToString();
-        _movementHealthText.text = (value * 5).ToString("");
     }
 
     void MovementComformButtonClicked()
@@ -135,16 +129,19 @@ public class HomeUI : UIBase
     void CampWindowButtonClicked(VisualElement clickedElement)
     {
         VisualElement[] campWindowButtons = new VisualElement[] {_bonfireButton, _restButton, _repairButton};
-        VisualElement[] campWindows = new VisualElement[] {_bonfireWindow, _restWindow, _repairWindow};
         string[] classListNames = new string[] { "camp-button-active", "camp-button-inactive" };
         foreach (VisualElement button in campWindowButtons)
         {
-            button.RemoveFromClassList(classListNames[button == clickedElement ? 1 : 0]);
-            button.AddToClassList(classListNames[button == clickedElement ? 0 : 1]);
-        }
-        foreach (VisualElement window in campWindows)
-        {
-            window.style.display = window == _campWindowChildrens[clickedElement]? DisplayStyle.Flex : DisplayStyle.None;
+            if (button == clickedElement)
+            {
+                button.RemoveFromClassList(classListNames[1]);
+                button.AddToClassList(classListNames[0]);
+            }
+            else
+            {
+                button.RemoveFromClassList(classListNames[0]);
+                button.AddToClassList(classListNames[1]);
+            }
         }
     }
 }
