@@ -30,10 +30,15 @@ MonoBehaviour:
     kind: 1
     text: 'Move
 
-      0'
+      0.5
+
+'
   - characterType: 1
     kind: 0
     text: "\u52D5\u304F"
   - characterType: 1
     kind: 0
     text: "\u52D5\u3044\u305F"
+  - characterType: 1
+    kind: 0
+    text: "\u30C6\u30AD\u30B9\u30C8\u306E\u91CF\u306B\u5FDC\u3058\u3066\u6587\u5B57\u306E\u66F4\u65B0\u901F\u5EA6\u304C\u81EA\u52D5\u8ABF\u6574\u3055\u308C\u308B"
