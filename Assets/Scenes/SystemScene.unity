@@ -233,6 +233,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3929344600074424685, guid: a49de3e569919584ea8fb39fc657570b, type: 3}
+      propertyPath: _MovementEventData.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3929344600074424685, guid: a49de3e569919584ea8fb39fc657570b, type: 3}
+      propertyPath: '_MovementEventData.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 68a0879c49556c143bb40f7b60d3e8ab, type: 2}
+    - target: {fileID: 3929344600074424685, guid: a49de3e569919584ea8fb39fc657570b, type: 3}
+      propertyPath: '_MovementEventData.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 68a0879c49556c143bb40f7b60d3e8ab, type: 2}
+    - target: {fileID: 3929344600074424685, guid: a49de3e569919584ea8fb39fc657570b, type: 3}
+      propertyPath: '_MovementEventData.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 68a0879c49556c143bb40f7b60d3e8ab, type: 2}
     - target: {fileID: 7613788328368531148, guid: a49de3e569919584ea8fb39fc657570b, type: 3}
       propertyPath: m_Name
       value: MainSystem
