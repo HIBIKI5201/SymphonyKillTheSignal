@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UserDataManager : MonoBehaviour
 {
-    public SaveDataManager.SaveData saveData;
+    public SaveData saveData;
 
     public void ChangeDistance(int distance)
     {

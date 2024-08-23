@@ -51,16 +51,16 @@ public class MainSystem : MonoBehaviour
     public void GameStart(bool Continue)
     {
         //続きからボタンかつセーブデータがある場合
-        if (Continue && SaveDataManager._mainSaveData.HasValue)
+        if (Continue && SaveDataManager._mainSaveData != null)
         {
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Home));
         }
         else
         {
-            SaveDataManager.Save(new SaveDataManager.SaveData(DateTime.Now, 0, 0));
+            SaveDataManager.Save(new SaveData(DateTime.Now, 0, 0));
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
         }
-        _userDataManager.saveData = SaveDataManager._mainSaveData.Value;
+        _userDataManager.saveData = SaveDataManager._mainSaveData;
     }
 
     public void DataSave()

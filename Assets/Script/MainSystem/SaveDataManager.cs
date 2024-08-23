@@ -1,24 +1,10 @@
 using System;
 using UnityEngine;
+using static SaveDataManager;
 
 public class SaveDataManager : MonoBehaviour
 {
-    public static SaveData? _mainSaveData;
-
-    [Serializable]
-    public struct SaveData
-    {
-        public RealTime saveTime;
-        public int distance;
-        public int time;
-
-        public SaveData(DateTime dateTime, int time, int distance)
-        {
-            this.saveTime = new RealTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
-            this.distance = distance;
-            this.time = time;
-        }
-    }
+    public static SaveData _mainSaveData;
 
     [Serializable]
     public struct RealTime
@@ -44,14 +30,14 @@ public class SaveDataManager : MonoBehaviour
         //現在のデータを変数に代入
         _mainSaveData = new SaveData(DateTime.Now, saveData.time, saveData.distance);
         //セーブ時刻を確認
-        Debug.Log($"{_mainSaveData.Value.saveTime} {_mainSaveData.Value.distance} {_mainSaveData.Value.time}");
+        Debug.Log($"{_mainSaveData.saveTime} {_mainSaveData.distance} {_mainSaveData.time}");
         // インスタンス変数を JSON にシリアル化する
         string json = JsonUtility.ToJson(_mainSaveData);
         // PlayerPrefs に保存する
         PlayerPrefs.SetString("SaveData", json);
     }
 
-    public static SaveData? Load()
+    public static SaveData Load()
     {
         // PlayerPrefs から文字列を取り出す
         string json = PlayerPrefs.GetString("SaveData");
@@ -69,5 +55,20 @@ public class SaveDataManager : MonoBehaviour
             //セーブデータがない場合にnullを返す
             return null;
         }
+    }
+}
+
+[Serializable]
+public class SaveData
+{
+    public RealTime saveTime;
+    public int distance;
+    public int time;
+
+    public SaveData(DateTime dateTime, int time, int distance)
+    {
+        this.saveTime = new RealTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
+        this.distance = distance;
+        this.time = time;
     }
 }

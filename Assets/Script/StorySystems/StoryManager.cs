@@ -38,7 +38,7 @@ public class StoryManager : MonoBehaviour
             case StoryKind.Story:
                 foreach (StoryTextData data in _storyData)
                 {
-                    if (SaveDataManager._mainSaveData.Value.distance <= data.distance)
+                    if (SaveDataManager._mainSaveData.distance <= data.distance)
                     {
                         _storySystem.TextDataLoad(data.storyTextData);
                         break;
