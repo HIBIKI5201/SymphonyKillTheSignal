@@ -94,6 +94,7 @@ public class HomeUI : UIBase
             {_restButton, _restWindow},
             {_repairButton, _repairWindow},
         };
+        CampWindowButtonClicked(_bonfireButton);
         //ItemŠÖŒW‚Ìæ“¾‚Æ‰Šú‰»
 
 
