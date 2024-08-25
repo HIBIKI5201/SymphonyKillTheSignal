@@ -138,7 +138,7 @@ public class MainSystem : MonoBehaviour
                 _pauseUI.HidePause();
                 break;
         }
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.2f);
         //フェードイン演出
         _screenEffect.ScreenFadeIn(1.5f);
         yield return new WaitForSeconds(1.5f);
