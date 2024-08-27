@@ -1,11 +1,10 @@
+using AdventureSystems;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 public class HomeUI : UIBase
 {
     HomeSystem _homeSystem;
-    AdventureSystem _adventureSystem;
     enum WindowKind
     {
         Movement,
@@ -43,13 +42,16 @@ public class HomeUI : UIBase
     Label _bonfireTimeText;
     Label _bonfireBeLevelText;
     VisualElement _restWindow;
+    SliderInt _restSlider;
+    int _restSliderValue;
+    Label _restTimeText;
+    Label _restHealthText;
     VisualElement _repairWindow;
 
     public override void UIAwake(SystemBase system)
     {
         //システムを取得
         _homeSystem = (HomeSystem)system;
-        _adventureSystem = FindAnyObjectByType<AdventureSystem>();
         //メインボタン系の取得
         _movementButton = _root.Q<Button>("MovementButton");
         _movementButton.RegisterCallback<ClickEvent>(evt => OnclickMainButton(WindowKind.Movement));
@@ -103,6 +105,17 @@ public class HomeUI : UIBase
         _restButton = _root.Q<VisualElement>("Camp-Rest");
         _restButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_restButton));
         _restWindow = _root.Q<VisualElement>("Camp-RestWindow");
+        _restTimeText = _root.Q<Label>("Rest-Time");
+        _restHealthText = _root.Q<Label>("Rest-Health");
+        _restSlider = _root.Q<SliderInt>("Rest-Slider");
+        if (_restSlider != null)
+        {
+            RestSliderUpdate(_restSlider.value);
+            _restSlider.RegisterValueChangedCallback(evt =>
+            {
+                RestSliderUpdate(_restSlider.value);
+            });
+        }
         //修理のプロパティ
         _repairButton = _root.Q<VisualElement>("Camp-Repair");
         _repairButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_repairButton));
@@ -140,25 +153,16 @@ public class HomeUI : UIBase
     void MovementSliderUpdate(int value)
     {
         _movementSliderValue = value;
-        _movementDistanceText.text = $"{_adventureSystem.MovementTimeToDistance(value)}km";
+        _movementDistanceText.text = $"{AdventureSystem.MovementTimeToDistance(value)}km";
         _movemetTimeText.text = $"{value}時間";
-        _movementHealthText.text = (_adventureSystem.MovementTimeToHealth(value)).ToString("0.0");
+        _movementHealthText.text = (AdventureSystem.MovementTimeToHealth(value)).ToString("0.0");
     }
-    void BonfireSliderUpdate(int value)
-    {
-        _bonfireSliderValue = value;
-        _bonfireTimeText.text = $"{value}時間";
-        _bonfireBranchText.text = $"{_adventureSystem.BonfireRequireBranch(value)}";
-        _bonfireBeLevelText.text = _adventureSystem.BonfireBecomeLevel(value).ToString();
-    }
-
     void MovementComformButtonClicked()
     {
         Debug.Log("移動開始");
-        _homeSystem.Movement(_bonfireSliderValue);
+        _homeSystem.Movement(_movementSliderValue);
         _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
-
     void CampWindowButtonClicked(VisualElement clickedElement)
     {
         VisualElement[] campWindowButtons = new VisualElement[] { _bonfireButton, _restButton, _repairButton };
@@ -174,4 +178,18 @@ public class HomeUI : UIBase
             window.style.display = window == _campWindowChildrens[clickedElement] ? DisplayStyle.Flex : DisplayStyle.None;
         }
     }
+    void BonfireSliderUpdate(int value)
+    {
+        _bonfireSliderValue = value;
+        _bonfireTimeText.text = $"{value}時間";
+        _bonfireBranchText.text = $"{AdventureSystem.BonfireRequireBranch(value)}";
+        _bonfireBeLevelText.text = AdventureSystem.BonfireBecomeLevel(value).ToString();
+    }
+    void RestSliderUpdate(int value)
+    {
+        _restSliderValue = value;
+        _restTimeText.text = $"{value}時間";
+        _restHealthText.text = AdventureSystem.RestHealHealth(value).ToString("0.0");
+    }
+
 }
