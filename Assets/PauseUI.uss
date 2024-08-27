@@ -1,0 +1,4 @@
+.button-pause {
+    width: 65%;
+    height: 10%;
+}
