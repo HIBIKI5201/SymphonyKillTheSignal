@@ -38,7 +38,7 @@
                     <engine:VisualElement style="flex-grow: 1; width: 70%; padding-top: 1%; padding-right: 1%; padding-bottom: 1%; padding-left: 1%; justify-content: center; align-items: center;">
                         <engine:VisualElement name="Bonfire-Image" style="visibility: visible; background-image: url(&quot;project://database/Assets/Sprite/Square.png?fileID=7482667652216324306&amp;guid=9e91330c14ea62c4da62473701014cdc&amp;type=3#Square&quot;); width: 240px; height: 135px;" />
                         <engine:VisualElement style="flex-direction: row; margin-top: 5px;">
-                            <engine:Label text="レベル：1 → " class="textBox" style="visibility: visible; font-size: 45px; -unity-text-align: upper-center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                            <engine:Label text="レベル：1 → " class="textBox" style="visibility: visible; font-size: 45px; -unity-text-align: upper-center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(255, 255, 255);" />
                             <engine:Label text="2" class="textBox" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; visibility: visible; font-size: 45px; color: rgb(123, 255, 51);" />
                         </engine:VisualElement>
                     </engine:VisualElement>
@@ -56,7 +56,7 @@
                                 <engine:Label text="1時間" class="textBox worningTextColor" style="text-overflow: ellipsis; color: rgb(255, 64, 64); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
                             </engine:VisualElement>
                         </engine:VisualElement>
-                        <engine:SliderInt value="1" high-value="3" low-value="1" name="Rest-Slider" direction="Horizontal" style="width: 80%; height: 20%; font-size: 75%; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); -unity-text-align: middle-center; color: rgb(255, 255, 255); margin-top: 0;" />
+                        <engine:SliderInt value="1" high-value="8" low-value="1" name="Rest-Slider" direction="Horizontal" style="width: 80%; height: 20%; font-size: 75%; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); -unity-text-align: middle-center; color: rgb(255, 255, 255); margin-top: 0;" />
                     </engine:VisualElement>
                 </engine:VisualElement>
                 <engine:VisualElement style="width: 100%; -unity-text-align: middle-center; visibility: visible; font-size: 65px; justify-content: center; align-items: center; align-self: center; flex-direction: row;">
@@ -78,19 +78,19 @@
             <engine:VisualElement name="VisualElement" style="height: auto; width: 100%; flex-direction: row; align-self: center; align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); font-size: 75px; -unity-font-style: bold; color: rgb(255, 255, 255); margin-bottom: 35px;">
                 <engine:Label text="推定移動距離：" style="width: auto; -unity-text-align: upper-right;" />
                 <engine:VisualElement style="width: 30%;">
-                    <engine:Label text="100km" name="Movement-DistanceText" />
+                    <engine:Label text="100km" name="Movement-DistanceText" class="benefitTextColor" />
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement style="height: auto; width: 100%; flex-direction: row; align-self: center; align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); font-size: 60px; -unity-font-style: bold; color: rgb(255, 255, 255);">
                 <engine:Label text="消費時間：" style="width: 30%; -unity-text-align: upper-right;" />
                 <engine:VisualElement style="width: 30%;">
-                    <engine:Label text="1時間" name="Movement-TimeText" style="-unity-text-align: upper-left;" />
+                    <engine:Label text="1時間" name="Movement-TimeText" class="worningTextColor" style="-unity-text-align: upper-left;" />
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement style="height: auto; width: 100%; flex-direction: row; align-self: center; align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); font-size: 60px; -unity-font-style: bold; color: rgb(255, 255, 255);">
                 <engine:Label text="消費体力：" style="width: 30%; -unity-text-align: upper-right;" />
                 <engine:VisualElement name="VisualElement" style="width: 30%;">
-                    <engine:Label text="1.0" name="Movement-HealthText" style="-unity-text-align: upper-left;" />
+                    <engine:Label text="1.0" name="Movement-HealthText" class="worningTextColor" style="-unity-text-align: upper-left;" />
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>

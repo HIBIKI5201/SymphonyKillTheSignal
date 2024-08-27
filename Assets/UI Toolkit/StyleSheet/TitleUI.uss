@@ -11,7 +11,3 @@
     -unity-text-align: middle-center;
     -unity-font-style: normal;
 }
-
-.benefitTextColor {
-    color: rgb(131, 255, 64);
-}
