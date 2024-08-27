@@ -25,7 +25,7 @@ public class HomeUI : UIBase
 
     VisualElement _movementWindow;
     SliderInt _movementSlider;
-    int _sliderValue;
+    int _movementSliderValue;
     Label _movementDistanceText;
     Label _movemetTimeText;
     Label _movementHealthText;
@@ -37,6 +37,11 @@ public class HomeUI : UIBase
     VisualElement _repairButton;
     Dictionary<VisualElement, VisualElement> _campWindowChildrens;
     VisualElement _bonfireWindow;
+    SliderInt _bonfireSlider;
+    int _bonfireSliderValue;
+    Label _bonfireBranchText;
+    Label _bonfireTimeText;
+    Label _bonfireBeLevelText;
     VisualElement _restWindow;
     VisualElement _repairWindow;
 
@@ -65,7 +70,6 @@ public class HomeUI : UIBase
         label.style.color = Color.white;
         _movementComformButton = _root.Q<Button>("Movement-Button");
         _movementComformButton.clicked += MovementComformButtonClicked;
-        //スライダーが変更された時に数値の変更を加える
         if (_movementSlider != null)
         {
             MovementSliderUpdate(_movementSlider.value);
@@ -79,12 +83,27 @@ public class HomeUI : UIBase
         //Camp関係の取得と初期化
         _campWindow = _root.Q<VisualElement>("CampWindow");
         _campWindow.style.display = DisplayStyle.None;
+        //焚火のプロパティ
         _bonfireButton = _root.Q<VisualElement>("Camp-Bonfire");
         _bonfireButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_bonfireButton));
         _bonfireWindow = _root.Q<VisualElement>("Camp-BonfireWindow");
+        _bonfireBranchText = _root.Q<Label>("Bonfire-Branch");
+        _bonfireTimeText = _root.Q<Label>("Bonfire-Time");
+        _bonfireBeLevelText = _root.Q<Label>("Bonfire-BeLevel");
+        _bonfireSlider = _root.Q<SliderInt>("Bonfire-Slider");
+        if (_bonfireSlider != null)
+        {
+            BonfireSliderUpdate(_bonfireSlider.value);
+            _bonfireSlider.RegisterValueChangedCallback(evt =>
+            {
+                BonfireSliderUpdate(_bonfireSlider.value);
+            });
+        }
+        //休息のプロパティ
         _restButton = _root.Q<VisualElement>("Camp-Rest");
         _restButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_restButton));
         _restWindow = _root.Q<VisualElement>("Camp-RestWindow");
+        //修理のプロパティ
         _repairButton = _root.Q<VisualElement>("Camp-Repair");
         _repairButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_repairButton));
         _repairWindow = _root.Q<VisualElement>("Camp-RepairWindow");
@@ -120,23 +139,30 @@ public class HomeUI : UIBase
 
     void MovementSliderUpdate(int value)
     {
-        _sliderValue = value;
-        _movementDistanceText.text = $"{_adventureSystem.TimeToDistance(value)}km";
+        _movementSliderValue = value;
+        _movementDistanceText.text = $"{_adventureSystem.MovementTimeToDistance(value)}km";
         _movemetTimeText.text = $"{value}時間";
-        _movementHealthText.text = (value * 5).ToString("0.0");
+        _movementHealthText.text = (_adventureSystem.MovementTimeToHealth(value)).ToString("0.0");
+    }
+    void BonfireSliderUpdate(int value)
+    {
+        _bonfireSliderValue = value;
+        _bonfireTimeText.text = $"{value}時間";
+        _bonfireBranchText.text = $"{_adventureSystem.BonfireRequireBranch(value)}";
+        _bonfireBeLevelText.text = _adventureSystem.BonfireBecomeLevel(value).ToString();
     }
 
     void MovementComformButtonClicked()
     {
         Debug.Log("移動開始");
-        _homeSystem.Movement(_sliderValue);
+        _homeSystem.Movement(_bonfireSliderValue);
         _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
 
     void CampWindowButtonClicked(VisualElement clickedElement)
     {
-        VisualElement[] campWindowButtons = new VisualElement[] {_bonfireButton, _restButton, _repairButton};
-        VisualElement[] campWindows = new VisualElement[] {_bonfireWindow, _restWindow, _repairWindow};
+        VisualElement[] campWindowButtons = new VisualElement[] { _bonfireButton, _restButton, _repairButton };
+        VisualElement[] campWindows = new VisualElement[] { _bonfireWindow, _restWindow, _repairWindow };
         string[] classListNames = new string[] { "camp-button-active", "camp-button-inactive" };
         foreach (VisualElement button in campWindowButtons)
         {
@@ -145,7 +171,7 @@ public class HomeUI : UIBase
         }
         foreach (VisualElement window in campWindows)
         {
-            window.style.display = window == _campWindowChildrens[clickedElement]? DisplayStyle.Flex : DisplayStyle.None;
+            window.style.display = window == _campWindowChildrens[clickedElement] ? DisplayStyle.Flex : DisplayStyle.None;
         }
     }
 }

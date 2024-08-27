@@ -18,7 +18,7 @@ public class HomeSystem : SystemBase
 
     public void Movement(int value)
     {
-        _userDataManager.ChangeDistance(_adventureSystem.TimeToDistance(value));
+        _userDataManager.ChangeDistance(_adventureSystem.MovementTimeToDistance(value));
         _userDataManager.ChangeTime(value);
     }
 }
