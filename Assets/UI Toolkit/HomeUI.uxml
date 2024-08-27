@@ -53,7 +53,7 @@
                                 <engine:Label text="消費時間：" class="textBox" style="text-overflow: ellipsis; color: rgb(255, 255, 255); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
                             </engine:VisualElement>
                             <engine:VisualElement style="justify-content: space-around; -unity-text-align: middle-left;">
-                                <engine:Label text="1時間" class="textBox worningTextColor" style="text-overflow: ellipsis; color: rgb(255, 64, 64); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                                <engine:Label text="1時間" name="Rest-Time" class="textBox worningTextColor" style="text-overflow: ellipsis; color: rgb(255, 64, 64); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
                             </engine:VisualElement>
                         </engine:VisualElement>
                         <engine:SliderInt value="1" high-value="8" low-value="1" name="Rest-Slider" direction="Horizontal" style="width: 80%; height: 20%; font-size: 75%; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); -unity-text-align: middle-center; color: rgb(255, 255, 255); margin-top: 0;" />
@@ -64,7 +64,7 @@
                         <engine:Label text="体力回復量：" class="textBox" style="text-overflow: ellipsis; color: rgb(255, 255, 255);" />
                     </engine:VisualElement>
                     <engine:VisualElement style="justify-content: space-around; -unity-text-align: middle-left;">
-                        <engine:Label text="15" class="textBox benefitTextColor" style="text-overflow: ellipsis;" />
+                        <engine:Label text="15" name="Rest-Health" class="textBox benefitTextColor" style="text-overflow: ellipsis;" />
                     </engine:VisualElement>
                 </engine:VisualElement>
                 <engine:Button text="仮眠する" name="Rest-Button" class="homeButton button" style="height: 18%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 90%; flex-grow: 0; -unity-font-style: bold;" />
