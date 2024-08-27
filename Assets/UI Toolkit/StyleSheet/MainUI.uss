@@ -1,8 +1,3 @@
-.textBox {
-    color: rgb(255, 255, 255);
-    -unity-font-definition: url("project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#JapaneseFont");
-}
-
 .button {
     background-color: rgb(191, 191, 191);
     border-top-left-radius: 5px;
@@ -42,4 +37,8 @@
 
 .unity-base-field__label {
     color: rgb(255, 255, 255);
+}
+
+.worningTextColor {
+    color: rgb(255, 64, 64);
 }
