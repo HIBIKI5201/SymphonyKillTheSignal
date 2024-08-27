@@ -18,7 +18,7 @@ MonoBehaviour:
     pos: {x: 0, y: 0}
   - gameObject: {fileID: 1410510812534861152, guid: e7153644fd91dc246a05f38a217b27d5, type: 3}
     characterName: Symphony
-    pos: {x: -3, y: -2}
+    pos: {x: -3, y: -8}
   _textList:
   - characterType: 0
     kind: 1
