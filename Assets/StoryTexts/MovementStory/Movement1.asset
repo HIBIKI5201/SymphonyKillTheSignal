@@ -30,8 +30,6 @@ MonoBehaviour:
     kind: 1
     text: 'Move
 
-      0.5
-
 '
   - characterType: 1
     kind: 0

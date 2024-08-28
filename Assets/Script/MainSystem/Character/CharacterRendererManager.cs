@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 public class CharacterRendererManager : MonoBehaviour
 {
     SpriteRenderer[] _spriteRenderers;

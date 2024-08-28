@@ -179,9 +179,9 @@ public class StorySystem : SystemBase
                 else { Debug.LogWarning($"characterListの{_characterList[_textList[_currentTextNumber].characterType].characterName}にオブジェクトをアサインしてください"); }
                 //アニメーションの待機時間を計算
                 float waitTime = 1;
-                if (texts.Length > 1)
+                if (texts.Length > 1 && float.TryParse(texts[1], out float result))
                 {
-                    waitTime = float.Parse(texts[1]);
+                    waitTime = result;
                 }
                 //アニメーション中はテキスト更新を無効
                 if (_nextTimerCoroutine != null) StopCoroutine(_nextTimerCoroutine);
