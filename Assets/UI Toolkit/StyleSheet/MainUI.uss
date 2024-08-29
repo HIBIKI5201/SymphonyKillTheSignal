@@ -38,3 +38,14 @@
 .unity-base-field__label {
     color: rgb(255, 255, 255);
 }
+
+.unity-base-slider__tracker {
+    background-color: rgb(128, 128, 128);
+    height: 15%;
+}
+
+.textBox {
+    -unity-font-definition: url("project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#JapaneseFont");
+    color: rgb(255, 255, 255);
+    text-shadow: 3px 3px 0 rgb(0, 0, 0);
+}

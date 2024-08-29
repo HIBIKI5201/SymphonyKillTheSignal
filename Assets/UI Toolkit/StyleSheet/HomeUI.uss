@@ -44,6 +44,18 @@
     border-left-width: 3px;
 }
 
+.parameter-element {
+    flex-grow: 0;
+    flex-direction: column;
+    border-right-width: 45px;
+    width: 100%;
+}
+
+.parameter-bar-base {
+    flex-grow: 1;
+    background-color: rgb(77, 77, 77);
+}
+
 .window-element {
     flex-grow: 1;
     padding-top: 10px;
