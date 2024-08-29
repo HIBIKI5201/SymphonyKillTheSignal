@@ -20,6 +20,11 @@ public class HomeUI : UIBase
     Button _campButton;
     Button _itemButton;
 
+    VisualElement _healthBar;
+    Label _healthText;
+    VisualElement _hungerBar;
+    VisualElement _thirstBar;
+
     VisualElement _currentWindow;
 
     VisualElement _movementWindow;
@@ -61,6 +66,13 @@ public class HomeUI : UIBase
         _campButton.RegisterCallback<ClickEvent>(evt => OnclickMainButton(WindowKind.Camp));
         _itemButton = _root.Q<Button>("ItemButton");
         _itemButton.RegisterCallback<ClickEvent>(evt => OnclickMainButton(WindowKind.Item));
+        //パラメーターを設定
+        _healthBar = _root.Q<VisualElement>("Health-Bar");
+        _healthBar.style.width = new Length(SaveDataManager._mainSaveData.health, LengthUnit.Percent);
+        _healthText = _root.Q<Label>("Health-Text");
+        _healthText.text = $"{SaveDataManager._mainSaveData.health}/100";
+        _hungerBar = _root.Q<VisualElement>("Hunger-Bar");
+        _thirstBar = _root.Q<VisualElement>("Thirst-Bar");
         //Movement関係の取得と初期化
         _movementWindow = _root.Q<VisualElement>("MovementWindow");
         _movementWindow.style.display = DisplayStyle.None;

@@ -30,7 +30,7 @@ public class SaveDataManager : MonoBehaviour
         //現在のデータを変数に代入
         _mainSaveData = saveData;
         //セーブ時刻を確認
-        Debug.Log($"{_mainSaveData.time} - {_mainSaveData.time}");
+        Debug.Log($"{_mainSaveData.saveTime} {_mainSaveData.time}");
         // インスタンス変数を JSON にシリアル化する
         string json = JsonUtility.ToJson(_mainSaveData);
         // PlayerPrefs に保存する
@@ -41,12 +41,13 @@ public class SaveDataManager : MonoBehaviour
     {
         // PlayerPrefs から文字列を取り出す
         string json = PlayerPrefs.GetString("SaveData");
+        Debug.Log(json);
         if (json != null)
         {
             // デシリアライズする
             SaveData saveData = JsonUtility.FromJson<SaveData>(json);
             //セーブデータを確認
-            Debug.Log($"{saveData.saveTime} {saveData.distance} {saveData.time}");
+            Debug.Log($"{saveData.saveTime} {saveData.time}");
             //データを返す
             return saveData;
         }

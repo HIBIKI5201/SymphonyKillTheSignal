@@ -10,7 +10,7 @@
                     <engine:Label text="100/100" class="textBox" style="font-size: 35px; -unity-text-align: upper-right; align-self: flex-end;" />
                 </engine:VisualElement>
                 <engine:VisualElement class="parameter-bar-base">
-                    <engine:VisualElement style="height: 100%; width: 100%; background-color: rgb(64, 255, 68);" />
+                    <engine:VisualElement name="Health-Bar" style="height: 100%; width: 100%; background-color: rgb(64, 255, 68);" />
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement class="parameter-element" style="flex-grow: 1;">
@@ -19,7 +19,7 @@
                     <engine:Label text="80/100" class="textBox" style="font-size: 35px; -unity-text-align: upper-right; align-self: flex-end;" />
                 </engine:VisualElement>
                 <engine:VisualElement class="parameter-bar-base">
-                    <engine:VisualElement style="height: 100%; width: 80%; background-color: rgb(234, 164, 51);" />
+                    <engine:VisualElement name="Hunger-Bar" style="height: 100%; width: 80%; background-color: rgb(234, 164, 51);" />
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement class="parameter-element" style="flex-grow: 1;">
@@ -28,7 +28,7 @@
                     <engine:Label text="100/100" class="textBox" style="font-size: 35px; -unity-text-align: upper-right; align-self: flex-end;" />
                 </engine:VisualElement>
                 <engine:VisualElement class="parameter-bar-base">
-                    <engine:VisualElement style="height: 100%; width: 100%; background-color: rgb(133, 230, 242);" />
+                    <engine:VisualElement name="Thirst-Bar" style="height: 100%; width: 100%; background-color: rgb(133, 230, 242);" />
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement class="parameter-element" style="flex-direction: row; justify-content: flex-end; align-items: center;">
