@@ -13,4 +13,10 @@ public class UserDataManager : MonoBehaviour
     {
         saveData.time += time;
     }
+
+    public void ChangeHealth(int value)
+    {
+        saveData.health += value;
+        saveData.health = Mathf.Clamp(saveData.health, 0, 100);
+    }
 }

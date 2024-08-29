@@ -28,9 +28,9 @@ public class SaveDataManager : MonoBehaviour
     public static void Save(SaveData saveData)
     {
         //現在のデータを変数に代入
-        _mainSaveData = new SaveData(DateTime.Now, saveData.time, saveData.distance);
+        _mainSaveData = saveData;
         //セーブ時刻を確認
-        Debug.Log($"{_mainSaveData.saveTime} {_mainSaveData.distance} {_mainSaveData.time}");
+        Debug.Log($"{_mainSaveData.time} - {_mainSaveData.time}");
         // インスタンス変数を JSON にシリアル化する
         string json = JsonUtility.ToJson(_mainSaveData);
         // PlayerPrefs に保存する
@@ -64,11 +64,17 @@ public class SaveData
     public RealTime saveTime;
     public int distance;
     public int time;
+    public int health;
+    public int hunger;
+    public int thirst;
 
-    public SaveData(DateTime dateTime, int time, int distance)
+    public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst)
     {
         this.saveTime = new RealTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
         this.distance = distance;
         this.time = time;
+        this.health = health;
+        this.hunger = hunger;
+        this.thirst = thirst;
     }
 }

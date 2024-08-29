@@ -16,5 +16,6 @@ public class HomeSystem : SystemBase
     {
         _userDataManager.ChangeDistance(AdventureSystem.MovementTimeToDistance(value));
         _userDataManager.ChangeTime(value);
+        _userDataManager.ChangeHealth(-AdventureSystem.MovementTimeToHealth(value));
     }
 }
