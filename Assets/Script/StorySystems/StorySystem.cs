@@ -78,13 +78,9 @@ public class StorySystem : SystemBase
         //キャラクターを生成
         foreach (var characterData in _characterList)
         {
-            //名前をセット
             string characterName = characterData.characterName;
-            //データからゲームオブジェクトを生成
             GameObject character = Instantiate(characterData.gameObject);
-            //StorySystemの子オブジェクトにする
             character.transform.SetParent(gameObject.transform);
-            //初期位置をセット
             character.transform.position = characterData.pos;
             Animator animator = null;
             CharacterRendererManager spriteRenderer = null;

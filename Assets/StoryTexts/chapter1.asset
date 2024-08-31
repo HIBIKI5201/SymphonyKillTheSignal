@@ -25,27 +25,36 @@ MonoBehaviour:
     text: 'FadeActive
 
       2'
+    voiceData: {fileID: 0}
   - characterType: 1
     kind: 0
     text: "\u30C6\u30B9\u30C8\u3060\u3088"
+    voiceData: {fileID: 0}
   - characterType: 1
     kind: 0
     text: "\u30C6\u30B9\u30C8\u3060"
+    voiceData: {fileID: 0}
   - characterType: 0
     kind: 1
     text: FadeOut
+    voiceData: {fileID: 0}
   - characterType: 1
     kind: 0
     text: "\u30D5\u30A7\u30FC\u30C9\u30A2\u30A6\u30C8"
+    voiceData: {fileID: 0}
   - characterType: 1
     kind: 1
     text: Move
+    voiceData: {fileID: 0}
   - characterType: 1
     kind: 0
     text: Move
+    voiceData: {fileID: 0}
   - characterType: 1
     kind: 1
     text: Move
+    voiceData: {fileID: 0}
   - characterType: 1
     kind: 0
     text: Move
+    voiceData: {fileID: 0}
