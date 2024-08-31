@@ -13,7 +13,7 @@ public class StoryTextListDrawer : PropertyDrawer
         SerializedProperty characterTypeProp = property.FindPropertyRelative("characterType");
         SerializedProperty kindProp = property.FindPropertyRelative("kind");
         SerializedProperty textProp = property.FindPropertyRelative("text");
-
+        SerializedProperty voiceProp = property.FindPropertyRelative("voiceData");
         // Draw CharacterType Popup
         position.height = EditorGUIUtility.singleLineHeight;
         StoryTextDataBase storySystem = (StoryTextDataBase)property.serializedObject.targetObject;
@@ -31,6 +31,10 @@ public class StoryTextListDrawer : PropertyDrawer
 
         position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
+        EditorGUI.PropertyField(position, voiceProp, new GUIContent("voice"));
+
+        position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+
         // Draw Text Property as TextArea
         // Adjust height for TextArea
         var textAreaHeight = Mathf.Max(30, EditorGUI.GetPropertyHeight(textProp));
@@ -42,7 +46,7 @@ public class StoryTextListDrawer : PropertyDrawer
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        return EditorGUIUtility.singleLineHeight * 2 + EditorGUIUtility.standardVerticalSpacing + 75; // Adjusted height to fit TextArea
+        return EditorGUIUtility.singleLineHeight * 3 + EditorGUIUtility.standardVerticalSpacing + 75; // Adjusted height to fit TextArea
     }
 }
 #endif

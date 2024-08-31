@@ -15,4 +15,5 @@ public class StoryTextList
     public TextKind kind;
     [TextArea]
     public string text;
+    public AudioClip voiceData;
 }

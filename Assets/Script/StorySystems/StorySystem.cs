@@ -198,6 +198,10 @@ public class StorySystem : SystemBase
                     _nextTimerCoroutine = StartCoroutine(NextTimer(0.3f));
                     //喋っているキャラのみをハイライトする
                     CharacterHighLight(_textList[_currentTextNumber].characterType);
+                    if (_textList[_currentTextNumber].voiceData != null)
+                    {
+                        mainSystem.VoicePlay(_textList[_currentTextNumber].voiceData);
+                    }
                     //textSpeedの時間に応じてテキストを表示する
                     float x = 0;
                     do

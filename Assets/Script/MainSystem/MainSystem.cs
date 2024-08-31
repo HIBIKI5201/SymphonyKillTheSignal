@@ -102,11 +102,14 @@ public class MainSystem : MonoBehaviour
                     _BGMSource.Play();
                 }
                 break;
-
             default:
                 Debug.LogWarning("SoundPlayメソッドの範囲外です");
                 break;
         }
+    }
+    public void VoicePlay(AudioClip audio)
+    {
+        _soundEffectSource.PlayOneShot(audio);
     }
     IEnumerator SceneChange(SceneChanger.SceneKind sceneKind)
     {
