@@ -33,9 +33,16 @@ namespace AdventureSystems
             return value * 5;
         }
 
-        public static int RestHealHealth(int value)
+        public static int RestHealHealth(int time, int bonfireLevel)
         {
-            return value * 5;
+            int bonfireRestTime = Mathf.Min(bonfireLevel, time);
+            //•°‰Î‚ ‚è x^2 + 9x
+            int bonfireRestHeal = bonfireRestTime * bonfireRestTime + 9 * bonfireRestTime;
+            //•°‰Î‚È‚µ 0.8x^2 - 7,2x
+            float normalRestHeal = Mathf.Max(0.8f * time * time + 7.2f * time - (0.8f * bonfireRestTime * bonfireRestTime + 7.2f * bonfireRestTime), 0);
+            float result = normalRestHeal + bonfireRestHeal;
+            Debug.Log($"{time} {bonfireLevel} {bonfireRestTime}\n{bonfireRestHeal} {normalRestHeal}\n{result}");
+            return (int)result;
         }
     }
 }

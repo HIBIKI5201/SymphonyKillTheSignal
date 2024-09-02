@@ -57,6 +57,7 @@ public class HomeUI : UIBase
     int _restSliderValue;
     Label _restTimeText;
     Label _restHealthText;
+    Button _restComformButton;
     VisualElement _repairWindow;
 
     public override void UIAwake(SystemBase system)
@@ -139,6 +140,8 @@ public class HomeUI : UIBase
                 RestSliderUpdate(_restSlider.value);
             });
         }
+        _restComformButton = _root.Q<Button>("Rest-Button");
+        _restComformButton.clicked += RestComformButtonClicked;
         //修理のプロパティ
         _repairButton = _root.Q<VisualElement>("Camp-Repair");
         _repairButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_repairButton));
@@ -216,11 +219,17 @@ public class HomeUI : UIBase
         _homeSystem.Bonfire(_bonfireSliderValue);
         _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
+
     void RestSliderUpdate(int value)
     {
         _restSliderValue = value;
         _restTimeText.text = $"{value}時間";
-        _restHealthText.text = AdventureSystem.RestHealHealth(value).ToString("0.0");
+        _restHealthText.text = AdventureSystem.RestHealHealth(value, _homeSystem._userDataManager.saveData.campLevel).ToString("0.0");
+    }
+    void RestComformButtonClicked()
+    {
+        _homeSystem.Rest(_restSliderValue);
+        _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
 
 }

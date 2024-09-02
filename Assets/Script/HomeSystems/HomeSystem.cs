@@ -27,4 +27,10 @@ public class HomeSystem : SystemBase
         _userDataManager.ChangeBonfireLevel(Mathf.Min(AdventureSystem.BonfireBecomeLevel(value) + _userDataManager.saveData.campLevel, 8));
         _userDataManager.ChangeBranch(value);
     }
+
+    public void Rest(int value)
+    {
+        _userDataManager.ChangeTime(value);
+        _userDataManager.ChangeHealth(AdventureSystem.RestHealHealth(value, _userDataManager.saveData.campLevel));
+    }
 }
