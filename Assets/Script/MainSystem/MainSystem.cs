@@ -36,6 +36,7 @@ public class MainSystem : MonoBehaviour
         }
         //セーブデータを確認
         SaveDataManager._mainSaveData = SaveDataManager.Load();
+        _userDataManager.saveData = SaveDataManager._mainSaveData;
         //シーンのシステムを起動
         FindAnyObjectByType<SystemBase>().SystemAwake(this);
     }
@@ -51,13 +52,13 @@ public class MainSystem : MonoBehaviour
     public void GameStart(bool Continue)
     {
         //続きからボタンかつセーブデータがある場合
-        if (Continue && SaveDataManager._mainSaveData != null)
+        if (Continue && SaveDataManager._mainSaveData != null && SaveDataManager._mainSaveData.time > 0)
         {
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Home));
         }
         else
         {
-            SaveDataManager.Save(new SaveData(DateTime.Now, 0, 0, 100, 80, 100));
+            SaveDataManager.Save(new SaveData(DateTime.Now, 0, 0, 100, 80, 100, 0, new ItemList(0)));
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
         }
         _userDataManager.saveData = SaveDataManager._mainSaveData;

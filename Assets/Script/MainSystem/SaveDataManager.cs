@@ -29,10 +29,9 @@ public class SaveDataManager : MonoBehaviour
     {
         //現在のデータを変数に代入
         _mainSaveData = saveData;
-        //セーブ時刻を確認
-        Debug.Log($"{_mainSaveData.saveTime} {_mainSaveData.time}");
         // インスタンス変数を JSON にシリアル化する
         string json = JsonUtility.ToJson(_mainSaveData);
+        Debug.Log(json);
         // PlayerPrefs に保存する
         PlayerPrefs.SetString("SaveData", json);
     }
@@ -42,12 +41,10 @@ public class SaveDataManager : MonoBehaviour
         // PlayerPrefs から文字列を取り出す
         string json = PlayerPrefs.GetString("SaveData");
         Debug.Log(json);
+        // デシリアライズする
+        SaveData saveData = JsonUtility.FromJson<SaveData>(json);
         if (json != null)
         {
-            // デシリアライズする
-            SaveData saveData = JsonUtility.FromJson<SaveData>(json);
-            //セーブデータを確認
-            Debug.Log($"{saveData.saveTime} {saveData.time}");
             //データを返す
             return saveData;
         }
@@ -68,8 +65,11 @@ public class SaveData
     public int health;
     public int hunger;
     public int thirst;
+    public int campLevel;
 
-    public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst)
+    public ItemList itemList;
+
+    public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst, int campLevel, ItemList itemList)
     {
         this.saveTime = new RealTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
         this.distance = distance;
@@ -77,5 +77,17 @@ public class SaveData
         this.health = health;
         this.hunger = hunger;
         this.thirst = thirst;
+        this.campLevel = campLevel;
+        this.itemList = itemList;
+    }
+}
+[Serializable]
+public struct ItemList
+{
+    public int branch;
+
+    public ItemList(int branch)
+    {
+        this.branch = branch;
     }
 }

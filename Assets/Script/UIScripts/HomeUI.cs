@@ -34,6 +34,7 @@ public class HomeUI : UIBase
     int _movementSliderValue;
     Label _movementDistanceText;
     Label _movemetTimeText;
+    Label _movementHungerText;
     Label _movementHealthText;
     Button _movementComformButton;
 
@@ -43,11 +44,13 @@ public class HomeUI : UIBase
     VisualElement _repairButton;
     Dictionary<VisualElement, VisualElement> _campWindowChildrens;
     VisualElement _bonfireWindow;
-    SliderInt _bonfireSlider;
+    Button _bonfirePlusButton;
+    Button _bonfireMinusButton;
     int _bonfireSliderValue;
     Label _bonfireBranchText;
-    Label _bonfireTimeText;
+    Label _bonfireRootLevelText;
     Label _bonfireBeLevelText;
+    Button _bonfireComformButton;
     VisualElement _restWindow;
     SliderInt _restSlider;
     int _restSliderValue;
@@ -86,10 +89,9 @@ public class HomeUI : UIBase
         _movementWindow.style.display = DisplayStyle.None;
         _movementDistanceText = _root.Q<Label>("Movement-DistanceText");
         _movemetTimeText = _root.Q<Label>("Movement-TimeText");
+        _movementHungerText = _root.Q<Label>("Movement-HungerText");
         _movementHealthText = _root.Q<Label>("Movement-HealthText");
         _movementSlider = _root.Q<SliderInt>("Movement-Slider");
-        Label label = _movementSlider.Q<Label>();
-        label.style.color = Color.white;
         _movementComformButton = _root.Q<Button>("Movement-Button");
         _movementComformButton.clicked += MovementComformButtonClicked;
         if (_movementSlider != null)
@@ -110,17 +112,16 @@ public class HomeUI : UIBase
         _bonfireButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_bonfireButton));
         _bonfireWindow = _root.Q<VisualElement>("Camp-BonfireWindow");
         _bonfireBranchText = _root.Q<Label>("Bonfire-Branch");
-        _bonfireTimeText = _root.Q<Label>("Bonfire-Time");
+        _bonfireRootLevelText = _root.Q<Label>("Bonfire-RootLevel");
+        _bonfireRootLevelText.text = $"{SaveDataManager._mainSaveData.campLevel.ToString()} → ";
         _bonfireBeLevelText = _root.Q<Label>("Bonfire-BeLevel");
-        _bonfireSlider = _root.Q<SliderInt>("Bonfire-Slider");
-        if (_bonfireSlider != null)
-        {
-            BonfireSliderUpdate(_bonfireSlider.value);
-            _bonfireSlider.RegisterValueChangedCallback(evt =>
-            {
-                BonfireSliderUpdate(_bonfireSlider.value);
-            });
-        }
+        _bonfirePlusButton = _root.Q<Button>("");
+        _bonfirePlusButton.RegisterCallback<ClickEvent>(evt => BonfireSliderUpdate(1));
+        _bonfireMinusButton = _root.Q<Button>("");
+        _bonfireMinusButton.RegisterCallback<ClickEvent>(evt => BonfireSliderUpdate(-1));
+        BonfireSliderUpdate(0);        
+        _bonfireComformButton = _root.Q<Button>("Bonfire-Button");
+        _bonfireComformButton.clicked += BonfireComformButtonClicked;
         //休息のプロパティ
         _restButton = _root.Q<VisualElement>("Camp-Rest");
         _restButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_restButton));
@@ -175,11 +176,11 @@ public class HomeUI : UIBase
         _movementSliderValue = value;
         _movementDistanceText.text = $"{AdventureSystem.MovementTimeToDistance(value)}km";
         _movemetTimeText.text = $"{value}時間";
-        _movementHealthText.text = (AdventureSystem.MovementTimeToHealth(value)).ToString("0.0");
+        _movementHungerText.text = AdventureSystem.MovementTimeToHunger(value).ToString("0.0");
+        _movementHealthText.text = AdventureSystem.MovementTimeToHealth(value).ToString("0.0");
     }
     void MovementComformButtonClicked()
     {
-        Debug.Log("移動開始");
         _homeSystem.Movement(_movementSliderValue);
         _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
@@ -200,10 +201,14 @@ public class HomeUI : UIBase
     }
     void BonfireSliderUpdate(int value)
     {
-        _bonfireSliderValue = value;
-        _bonfireTimeText.text = $"{value}時間";
-        _bonfireBranchText.text = $"{AdventureSystem.BonfireRequireBranch(value)}";
-        _bonfireBeLevelText.text = AdventureSystem.BonfireBecomeLevel(value).ToString();
+        _bonfireSliderValue += value;
+        _bonfireBranchText.text = $"{AdventureSystem.BonfireRequireBranch(_bonfireSliderValue)}";
+        _bonfireBeLevelText.text = Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8).ToString();
+    }
+    void BonfireComformButtonClicked()
+    {
+        _homeSystem.Bonfire(_bonfireSliderValue);
+        _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
     void RestSliderUpdate(int value)
     {
