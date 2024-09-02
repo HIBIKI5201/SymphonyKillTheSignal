@@ -28,7 +28,7 @@ public class ScreenEffectUI : MonoBehaviour
 
     public void ScreenFadeIn(float timer)
     {
-        DOTween.To(() => new Color(0, 0, 0, 1), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 0), timer).SetEase(Ease.Linear);
+        DOTween.To(() => new Color(0, 0, 0, 1), x => _fade.style.backgroundColor = x, new Color(0, 0, 0, 0), timer).SetEase(Ease.InOutCirc);
     }
 
     public void ButtonUnactiveElement(bool active)
