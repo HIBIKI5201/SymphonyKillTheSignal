@@ -24,6 +24,7 @@ public class HomeSystem : SystemBase
     public void Bonfire(int value)
     {
         _userDataManager.ChangeTime(1);
+        _userDataManager.ChangeHunger(-8);
         _userDataManager.ChangeBonfireLevel(Mathf.Min(AdventureSystem.BonfireBecomeLevel(value) + _userDataManager.saveData.campLevel, 8));
         _userDataManager.ChangeBranch(value);
     }
