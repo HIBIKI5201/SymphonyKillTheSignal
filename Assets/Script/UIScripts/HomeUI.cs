@@ -1,4 +1,5 @@
 using AdventureSystems;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -115,11 +116,12 @@ public class HomeUI : UIBase
         _bonfireRootLevelText = _root.Q<Label>("Bonfire-RootLevel");
         _bonfireRootLevelText.text = $"{SaveDataManager._mainSaveData.campLevel.ToString()} → ";
         _bonfireBeLevelText = _root.Q<Label>("Bonfire-BeLevel");
-        _bonfirePlusButton = _root.Q<Button>("");
+        _bonfirePlusButton = _root.Q<Button>("Bonfire-PlusButton");
         _bonfirePlusButton.RegisterCallback<ClickEvent>(evt => BonfireSliderUpdate(1));
-        _bonfireMinusButton = _root.Q<Button>("");
+        _bonfireMinusButton = _root.Q<Button>("Bonfire-MinusButton");
         _bonfireMinusButton.RegisterCallback<ClickEvent>(evt => BonfireSliderUpdate(-1));
-        BonfireSliderUpdate(0);        
+        _bonfireSliderValue = 1;
+        BonfireSliderUpdate(0);
         _bonfireComformButton = _root.Q<Button>("Bonfire-Button");
         _bonfireComformButton.clicked += BonfireComformButtonClicked;
         //休息のプロパティ
@@ -201,8 +203,12 @@ public class HomeUI : UIBase
     }
     void BonfireSliderUpdate(int value)
     {
+        if (_bonfireSliderValue + value <= 0 || _bonfireSliderValue + value >= 4)
+        {
+            return;
+        }
         _bonfireSliderValue += value;
-        _bonfireBranchText.text = $"{AdventureSystem.BonfireRequireBranch(_bonfireSliderValue)}";
+        _bonfireBranchText.text = $"{AdventureSystem.BonfireRequireBranch(_bonfireSliderValue)}本";
         _bonfireBeLevelText.text = Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8).ToString();
     }
     void BonfireComformButtonClicked()

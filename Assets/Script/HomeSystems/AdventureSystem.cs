@@ -11,7 +11,7 @@ namespace AdventureSystems
         }
         public static int MovementTimeToHunger(int time)
         {
-            return time * 15;
+            return time * 9;
         }
         public static int MovementTimeToHealth(int time)
         {
