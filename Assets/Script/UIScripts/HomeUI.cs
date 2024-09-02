@@ -77,15 +77,15 @@ public class HomeUI : UIBase
         _healthBar = _root.Q<VisualElement>("Health-Bar");
         _healthBar.style.width = new Length(SaveDataManager._mainSaveData.health, LengthUnit.Percent);
         _healthText = _root.Q<Label>("Health-Text");
-        _healthText.text = $"{SaveDataManager._mainSaveData.health}/100";
+        _healthText.text = $"{SaveDataManager._mainSaveData.health} / 100";
         _hungerBar = _root.Q<VisualElement>("Hunger-Bar");
         _hungerBar.style.width = new Length(SaveDataManager._mainSaveData.hunger, LengthUnit.Percent);
         _hungerText = _root.Q<Label>("Hunger-Text");
-        _hungerText.text = $"{SaveDataManager._mainSaveData.hunger}/100";
+        _hungerText.text = $"{SaveDataManager._mainSaveData.hunger} / 100";
         _thirstBar = _root.Q<VisualElement>("Thirst-Bar");
         _thirstBar.style.width = new Length(SaveDataManager._mainSaveData.thirst, LengthUnit.Percent);
         _thirstText = _root.Q<Label>("Thirst-Text");
-        _thirstText.text = $"{SaveDataManager._mainSaveData.thirst}/100";
+        _thirstText.text = $"{SaveDataManager._mainSaveData.thirst} / 100";
         //Movementä÷åWÇÃéÊìæÇ∆èâä˙âª
         _movementWindow = _root.Q<VisualElement>("MovementWindow");
         _movementWindow.style.display = DisplayStyle.None;
@@ -217,7 +217,7 @@ public class HomeUI : UIBase
     void BonfireComformButtonClicked()
     {
         _homeSystem.Bonfire(_bonfireSliderValue);
-        _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
+        _homeSystem.mainSystem.BackToHome();
     }
 
     void RestSliderUpdate(int value)
@@ -229,7 +229,7 @@ public class HomeUI : UIBase
     void RestComformButtonClicked()
     {
         _homeSystem.Rest(_restSliderValue);
-        _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
+        _homeSystem.mainSystem.BackToHome();
     }
 
 }

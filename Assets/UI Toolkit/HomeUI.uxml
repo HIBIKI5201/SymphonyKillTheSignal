@@ -7,7 +7,7 @@
             <engine:VisualElement class="parameter-element">
                 <engine:VisualElement style="flex-direction: row; justify-content: space-between;">
                     <engine:Label text="体力" class="textBox" style="font-size: 35px; flex-grow: 0;" />
-                    <engine:Label text="100/100" name="Health-Text" class="textBox" style="font-size: 35px; -unity-text-align: upper-right; align-self: flex-end;" />
+                    <engine:Label text="100 / 100" name="Health-Text" class="textBox" style="font-size: 35px; -unity-text-align: upper-right; align-self: flex-end;" />
                 </engine:VisualElement>
                 <engine:VisualElement class="parameter-bar-base">
                     <engine:VisualElement name="Health-Bar-Heal" style="height: 100%; width: 100%; background-color: rgb(111, 255, 114); position: absolute;" />
@@ -17,7 +17,7 @@
             <engine:VisualElement class="parameter-element" style="flex-grow: 1;">
                 <engine:VisualElement style="flex-direction: row; justify-content: space-between;">
                     <engine:Label text="満腹度" class="textBox" style="font-size: 35px; flex-grow: 0;" />
-                    <engine:Label text="80/100" name="Hunger-Text" class="textBox" style="font-size: 35px; -unity-text-align: upper-right; align-self: flex-end;" />
+                    <engine:Label text="80 / 100" name="Hunger-Text" class="textBox" style="font-size: 35px; -unity-text-align: upper-right; align-self: flex-end;" />
                 </engine:VisualElement>
                 <engine:VisualElement class="parameter-bar-base">
                     <engine:VisualElement name="Hunger-Bar" style="height: 100%; width: 80%; background-color: rgb(234, 164, 51);" />
@@ -26,7 +26,7 @@
             <engine:VisualElement class="parameter-element" style="flex-grow: 1;">
                 <engine:VisualElement style="flex-direction: row; justify-content: space-between;">
                     <engine:Label text="渇き度" class="textBox" style="font-size: 35px; flex-grow: 0;" />
-                    <engine:Label text="100/100" name="Thirst-Text" class="textBox" style="font-size: 35px; -unity-text-align: upper-right; align-self: flex-end;" />
+                    <engine:Label text="100 / 100" name="Thirst-Text" class="textBox" style="font-size: 35px; -unity-text-align: upper-right; align-self: flex-end;" />
                 </engine:VisualElement>
                 <engine:VisualElement class="parameter-bar-base">
                     <engine:VisualElement name="Thirst-Bar" style="height: 100%; width: 100%; background-color: rgb(133, 230, 242);" />
@@ -44,7 +44,7 @@
             <engine:Button text="インベントリ" name="ItemButton" class="homeButton button" />
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="CampWindow" class="window" style="display: flex; visibility: hidden; padding-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);">
+    <engine:VisualElement name="CampWindow" class="window" style="display: none; visibility: hidden; padding-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);">
         <engine:VisualElement style="width: 100%; height: 20%; flex-grow: 1; flex-direction: row; font-size: 50px; color: rgb(255, 255, 255); -unity-text-align: middle-center; text-shadow: 2px 2px 10px rgb(0, 0, 0); display: flex;">
             <engine:VisualElement name="Camp-Bonfire" class="camp-button-active">
                 <engine:Label text="焚火" />
@@ -75,7 +75,7 @@
                             <engine:Label text="消費時間：" class="textBox" style="text-overflow: ellipsis; color: rgb(255, 255, 255);" />
                         </engine:VisualElement>
                         <engine:VisualElement style="flex-grow: 1; justify-content: space-around; -unity-text-align: middle-left; color: rgb(255, 69, 69);">
-                            <engine:Label text="3" name="Bonfire-Hunger" class="textBox" style="text-overflow: ellipsis; color: rgb(255, 77, 77);" />
+                            <engine:Label text="8" class="textBox" style="text-overflow: ellipsis; color: rgb(255, 77, 77);" />
                             <engine:Label text="1時間" class="textBox" style="text-overflow: ellipsis; color: rgb(255, 77, 77);" />
                         </engine:VisualElement>
                     </engine:VisualElement>
