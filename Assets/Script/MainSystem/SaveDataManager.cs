@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using static SaveDataManager;
+using static UserDataManager;
 
 public class SaveDataManager : MonoBehaviour
 {
@@ -71,9 +72,7 @@ public class SaveData
     public int campLevel;
 
     public List<int> itemList;
-    public int branch { get => itemList[0]; set => itemList[0] = value; }
-    public int water { get => itemList[1]; set => itemList[1] = value; }
-    public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst, int campLevel, int itemKind)
+    public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst, int campLevel)
     {
         this.saveTime = new RealTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
         this.distance = distance;
@@ -82,6 +81,6 @@ public class SaveData
         this.hunger = hunger;
         this.thirst = thirst;
         this.campLevel = campLevel;
-        this.itemList = new List<int>(new int[itemKind]);
+        this.itemList = new List<int>(new int[Enum.GetValues(typeof(ItemKind)).Length]);
     }
 }

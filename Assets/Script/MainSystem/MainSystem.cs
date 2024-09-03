@@ -58,7 +58,7 @@ public class MainSystem : MonoBehaviour
         }
         else
         {
-            SaveDataManager.Save(new SaveData(DateTime.Now, 0, 0, 100, 80, 100, 0, 2));
+            SaveDataManager.Save(new SaveData(DateTime.Now, 0, 0, 100, 80, 100, 0));
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
         }
         _userDataManager.saveData = SaveDataManager._mainSaveData;

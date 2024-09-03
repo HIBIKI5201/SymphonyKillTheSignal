@@ -1,7 +1,16 @@
+using System;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class UserDataManager : MonoBehaviour
 {
+    public enum ItemKind
+    {
+        branch,
+        water,
+        food,
+    }
+
     public SaveData saveData;
     public void ChangeDistance(int distance)
     {
@@ -45,8 +54,8 @@ public class UserDataManager : MonoBehaviour
         saveData.campLevel = value;
     }
 
-    public void ChangeBranch(int value)
+    public void ChangeItemValue(ItemKind kind, int value)
     {
-        saveData.branch += value;
+        saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), kind)] += value;
     }
 }
