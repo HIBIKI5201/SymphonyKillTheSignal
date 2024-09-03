@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using static SaveDataManager;
 
@@ -67,7 +70,7 @@ public class SaveData
     public int thirst;
     public int campLevel;
 
-    public ItemList itemList;
+    public List<int> itemList;
 
     public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst, int campLevel, ItemList itemList)
     {
@@ -78,16 +81,22 @@ public class SaveData
         this.hunger = hunger;
         this.thirst = thirst;
         this.campLevel = campLevel;
-        this.itemList = itemList;
+        this.itemList = itemList.itemList;
     }
 }
-[Serializable]
-public struct ItemList
-{
-    public int branch;
 
-    public ItemList(int branch)
+[Serializable]
+public class ItemList
+{
+    public List<int> itemList;
+
+    public ItemList(int itemKind)
     {
-        this.branch = branch;
+        itemList = Enumerable.Repeat(0, itemKind).ToList(); ;
+    }
+
+    public void AddItem(int itemID, int value)
+    {
+        itemList[itemID] += value;
     }
 }
