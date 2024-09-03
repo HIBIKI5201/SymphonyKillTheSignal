@@ -3,7 +3,6 @@ using UnityEngine;
 public class UserDataManager : MonoBehaviour
 {
     public SaveData saveData;
-    public ItemList itemList;
     public void ChangeDistance(int distance)
     {
         saveData.distance += distance;
@@ -48,6 +47,6 @@ public class UserDataManager : MonoBehaviour
 
     public void ChangeBranch(int value)
     {
-        itemList = new ItemList(value);
+        saveData.branch += value;
     }
 }

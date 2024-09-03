@@ -71,8 +71,9 @@ public class SaveData
     public int campLevel;
 
     public List<int> itemList;
-
-    public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst, int campLevel, ItemList itemList)
+    public int branch { get => itemList[0]; set => itemList[0] = value; }
+    public int water { get => itemList[1]; set => itemList[1] = value; }
+    public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst, int campLevel, int itemKind)
     {
         this.saveTime = new RealTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
         this.distance = distance;
@@ -81,22 +82,6 @@ public class SaveData
         this.hunger = hunger;
         this.thirst = thirst;
         this.campLevel = campLevel;
-        this.itemList = itemList.itemList;
-    }
-}
-
-[Serializable]
-public class ItemList
-{
-    public List<int> itemList;
-
-    public ItemList(int itemKind)
-    {
-        itemList = Enumerable.Repeat(0, itemKind).ToList(); ;
-    }
-
-    public void AddItem(int itemID, int value)
-    {
-        itemList[itemID] += value;
+        this.itemList = new List<int>(new int[itemKind]);
     }
 }
