@@ -3,13 +3,16 @@ using UnityEngine;
 public class HomeSystem : SystemBase
 {
     HomeUI _homeUI;
+    WorldManager _worldManager;
     public UserDataManager _userDataManager;
 
     public override void Initialize()
     {
         _userDataManager = mainSystem._userDataManager;
         _homeUI = GetComponentInChildren<HomeUI>();
+        _worldManager = GetComponentInChildren<WorldManager>();
         _homeUI.UIAwake(this);
+        _worldManager.Initialize();
         mainSystem.DataSave();
     }
 

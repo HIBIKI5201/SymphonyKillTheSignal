@@ -1,5 +1,4 @@
 using AdventureSystems;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -115,7 +114,7 @@ public class HomeUI : UIBase
         _bonfireWindow = _root.Q<VisualElement>("Camp-BonfireWindow");
         _bonfireBranchText = _root.Q<Label>("Bonfire-Branch");
         _bonfireRootLevelText = _root.Q<Label>("Bonfire-RootLevel");
-        _bonfireRootLevelText.text = $"{SaveDataManager._mainSaveData.campLevel.ToString()} Å® ";
+        _bonfireRootLevelText.text = $"{SaveDataManager._mainSaveData.campLevel} Å® ";
         _bonfireBeLevelText = _root.Q<Label>("Bonfire-BeLevel");
         _bonfirePlusButton = _root.Q<Button>("Bonfire-PlusButton");
         _bonfirePlusButton.RegisterCallback<ClickEvent>(evt => BonfireSliderUpdate(1));

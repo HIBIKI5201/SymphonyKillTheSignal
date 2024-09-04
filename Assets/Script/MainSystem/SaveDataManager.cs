@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UnityEngine;
 using static SaveDataManager;
 using static UserDataManager;
@@ -23,7 +21,7 @@ public class SaveDataManager : MonoBehaviour
             this.minute = minute;
             this.second = second;
         }
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"{year}/{month:D2}/{day:D2} {hour:D2}:{minute:D2}:{second:D2}";
         }
@@ -70,9 +68,10 @@ public class SaveData
     public int hunger;
     public int thirst;
     public int campLevel;
+    public WorldManager.Weather weather;
 
     public List<int> itemList;
-    public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst, int campLevel)
+    public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst, int campLevel, WorldManager.Weather weather)
     {
         this.saveTime = new RealTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
         this.distance = distance;
@@ -82,5 +81,6 @@ public class SaveData
         this.thirst = thirst;
         this.campLevel = campLevel;
         this.itemList = new List<int>(new int[Enum.GetValues(typeof(ItemKind)).Length]);
+        this.weather = weather;
     }
 }
