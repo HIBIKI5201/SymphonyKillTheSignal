@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static SaveDataManager;
 using static UserDataManager;
@@ -11,19 +12,20 @@ public class SaveDataManager : MonoBehaviour
     [Serializable]
     public struct RealTime
     {
-        public int year, month, day, hour, minute, second;
-        public RealTime(int year, int month, int day, int hour, int minute, int second)
+        public List<int> time;
+        public RealTime(DateTime date)
         {
-            this.year = year;
-            this.month = month;
-            this.day = day;
-            this.hour = hour;
-            this.minute = minute;
-            this.second = second;
+            time = Enumerable.Repeat(0, 6).ToList();
+            time[0] = date.Year;
+            this.time[1] = date.Month;
+            this.time[2] = date.Day;
+            this.time[3] = date.Hour;
+            this.time[4] = date.Minute;
+            this.time[5] = date.Second;
         }
         public override readonly string ToString()
         {
-            return $"{year}/{month:D2}/{day:D2} {hour:D2}:{minute:D2}:{second:D2}";
+            return $"{time[0]}/{time[1]:D2}/{time[2]:D2} {time[3]:D2}:{time[4]:D2}:{time[5]:D2}";
         }
     }
 
@@ -61,7 +63,7 @@ public class SaveDataManager : MonoBehaviour
 [Serializable]
 public class SaveData
 {
-    public RealTime saveTime;
+    public List<int> saveDate;
     public int distance;
     public int time;
     public int health;
@@ -73,7 +75,7 @@ public class SaveData
     public List<int> itemList;
     public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst, int campLevel, WorldManager.Weather weather)
     {
-        this.saveTime = new RealTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
+        saveDate = new RealTime(DateTime.Now).time;
         this.distance = distance;
         this.time = time;
         this.health = health;
