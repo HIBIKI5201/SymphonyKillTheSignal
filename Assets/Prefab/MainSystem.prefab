@@ -500,7 +500,7 @@ MonoBehaviour:
   _MovementEventData:
   - {fileID: 11400000, guid: 68a0879c49556c143bb40f7b60d3e8ab, type: 2}
   _CollectStoryData:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 8a63aff7dc906bc4188a2b2d6f2880d6, type: 2}
 --- !u!1 &8533328079901723266
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,15 +546,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveData:
-    saveTime:
-      year: 0
-      month: 0
-      day: 0
-      hour: 0
-      minute: 0
-      second: 0
+    saveDate: 
     distance: 0
     time: 0
+    health: 0
+    hunger: 0
+    thirst: 0
+    campLevel: 0
+    weather: 0
+    itemList: 
 --- !u!1 &9111755237554207075
 GameObject:
   m_ObjectHideFlags: 0

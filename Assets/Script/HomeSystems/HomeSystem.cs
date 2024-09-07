@@ -22,6 +22,12 @@ public class HomeSystem : SystemBase
         _userDataManager.ChangeTime(value);
         _userDataManager.ChangeHunger(-AdventureSystem.MovementTimeToHunger(value));
         _userDataManager.ChangeHealth(-AdventureSystem.MovementTimeToHealth(value));
+        mainSystem.StoryAction(StoryManager.StoryKind.Movement);
+    }
+
+    public void Collect()
+    {
+        mainSystem.StoryAction(StoryManager.StoryKind.Collect);
     }
 
     public void Bonfire(int value)
@@ -30,11 +36,13 @@ public class HomeSystem : SystemBase
         _userDataManager.ChangeHunger(-8);
         _userDataManager.ChangeBonfireLevel(Mathf.Min(AdventureSystem.BonfireBecomeLevel(value) + _userDataManager.saveData.campLevel, 8));
         _userDataManager.ChangeItemValue(UserDataManager.ItemKind.branch, -value * 5);
+        mainSystem.BackToHome();
     }
 
     public void Rest(int value)
     {
         _userDataManager.ChangeTime(value);
         _userDataManager.ChangeHealth(AdventureSystem.RestHealHealth(value, _userDataManager.saveData.campLevel));
+        mainSystem.BackToHome();
     }
 }

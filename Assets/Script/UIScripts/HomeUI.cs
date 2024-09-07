@@ -122,6 +122,7 @@ public class HomeUI : UIBase
         _collectWindow = _root.Q<VisualElement>("CollectWindow");
         _collectWindow.style.display = DisplayStyle.None;
         _collectComformButton = _root.Q<Button>("Collect-Button");
+        _collectComformButton.clicked += CollectComformButtonClicked;
         _collectBranchButton = _root.Q<VisualElement>("Collect-Branch");
         _collectBranchButton.RegisterCallback<ClickEvent>(evt => CollectWindowButtonClicked(_collectBranchButton));
         _collectFoodButton = _root.Q<VisualElement>("Collect-Food");
@@ -217,7 +218,6 @@ public class HomeUI : UIBase
     void MovementComformButtonClicked()
     {
         _homeSystem.Movement(_movementSliderValue);
-        _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
     void CollectWindowButtonClicked(VisualElement clickedElement)
     {
@@ -234,12 +234,17 @@ public class HomeUI : UIBase
                 _collectGetItemListText.text = $"小枝";
                 break;
             case CollectWindowKind.Food:
-                _collectGetItemListText.text = $"ベリー、肉";
+                _collectGetItemListText.text = $"ベリー\n肉";
                 break;
             case CollectWindowKind.Water:
                 _collectGetItemListText.text = $"非濾過水";
                 break;
         }
+    }
+
+    void CollectComformButtonClicked()
+    {
+        _homeSystem.Collect();
     }
     void CampWindowButtonClicked(VisualElement clickedElement)
     {
@@ -269,7 +274,6 @@ public class HomeUI : UIBase
     void BonfireComformButtonClicked()
     {
         _homeSystem.Bonfire(_bonfireSliderValue);
-        _homeSystem.mainSystem.BackToHome();
     }
     void RestSliderUpdate(int value)
     {
@@ -280,6 +284,5 @@ public class HomeUI : UIBase
     void RestComformButtonClicked()
     {
         _homeSystem.Rest(_restSliderValue);
-        _homeSystem.mainSystem.BackToHome();
     }
 }
