@@ -40,6 +40,17 @@ public class HomeUI : UIBase
     Button _movementComformButton;
 
     VisualElement _collectWindow;
+    VisualElement _collectBranchButton;
+    VisualElement _collectFoodButton;
+    VisualElement _collectWaterButton;
+    enum CollectWindowKind
+    {
+        Branch,
+        Food,
+        Water,
+    }
+    Dictionary<VisualElement, CollectWindowKind> _collectWindowDictionary;
+    Label _collectGetItemListText;
     Button _collectComformButton;
 
     VisualElement _campWindow;
@@ -111,6 +122,20 @@ public class HomeUI : UIBase
         _collectWindow = _root.Q<VisualElement>("CollectWindow");
         _collectWindow.style.display = DisplayStyle.None;
         _collectComformButton = _root.Q<Button>("Collect-Button");
+        _collectBranchButton = _root.Q<VisualElement>("Collect-Branch");
+        _collectBranchButton.RegisterCallback<ClickEvent>(evt => CollectWindowButtonClicked(_collectBranchButton));
+        _collectFoodButton = _root.Q<VisualElement>("Collect-Food");
+        _collectFoodButton.RegisterCallback<ClickEvent>(evt => CollectWindowButtonClicked(_collectFoodButton));
+        _collectWaterButton = _root.Q<VisualElement>("Collect-Water");
+        _collectWaterButton.RegisterCallback<ClickEvent>(evt => CollectWindowButtonClicked(_collectWaterButton));
+        _collectGetItemListText = _root.Q<Label>("Collect-GetItemList");
+        _collectWindowDictionary = new()
+        {
+            {_collectBranchButton, CollectWindowKind.Branch },
+            {_collectFoodButton, CollectWindowKind.Food },
+            {_collectWaterButton, CollectWindowKind.Water },
+        };
+        CollectWindowButtonClicked(_collectBranchButton);
         //Campä÷åWÇÃéÊìæÇ∆èâä˙âª
         _campWindow = _root.Q<VisualElement>("CampWindow");
         _campWindow.style.display = DisplayStyle.None;
@@ -196,7 +221,25 @@ public class HomeUI : UIBase
     }
     void CollectWindowButtonClicked(VisualElement clickedElement)
     {
-
+        VisualElement[] collectWindowButtons = new VisualElement[] { _collectBranchButton, _collectFoodButton, _collectWaterButton };
+        string[] classListNames = new string[] { "collect-button-active", "collect-button-inactive" };
+        foreach (VisualElement button in collectWindowButtons)
+        {
+            button.RemoveFromClassList(classListNames[button == clickedElement ? 1 : 0]);
+            button.AddToClassList(classListNames[button == clickedElement ? 0 : 1]);
+        }
+        switch(_collectWindowDictionary[clickedElement])
+        {
+            case CollectWindowKind.Branch:
+                _collectGetItemListText.text = $"è¨é}";
+                break;
+            case CollectWindowKind.Food:
+                _collectGetItemListText.text = $"ÉxÉäÅ[ÅAì˜";
+                break;
+            case CollectWindowKind.Water:
+                _collectGetItemListText.text = $"îÒ‡hâﬂêÖ";
+                break;
+        }
     }
     void CampWindowButtonClicked(VisualElement clickedElement)
     {
