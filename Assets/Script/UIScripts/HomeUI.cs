@@ -2,6 +2,7 @@ using AdventureSystems;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI.MessageBox;
 public class HomeUI : UIBase
 {
     HomeSystem _homeSystem;
@@ -37,6 +38,9 @@ public class HomeUI : UIBase
     Label _movementHungerText;
     Label _movementHealthText;
     Button _movementComformButton;
+
+    VisualElement _collectWindow;
+    Button _collectComformButton;
 
     VisualElement _campWindow;
     VisualElement _bonfireButton;
@@ -104,7 +108,9 @@ public class HomeUI : UIBase
             });
         }
         //Collectä÷åWÇÃéÊìæÇ∆èâä˙âª
-
+        _collectWindow = _root.Q<VisualElement>("CollectWindow");
+        _collectWindow.style.display = DisplayStyle.None;
+        _collectComformButton = _root.Q<Button>("Collect-Button");
         //Campä÷åWÇÃéÊìæÇ∆èâä˙âª
         _campWindow = _root.Q<VisualElement>("CampWindow");
         _campWindow.style.display = DisplayStyle.None;
@@ -144,7 +150,7 @@ public class HomeUI : UIBase
         //èCóùÇÃÉvÉçÉpÉeÉB
         _repairButton = _root.Q<VisualElement>("Camp-Repair");
         _repairButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_repairButton));
-        _repairWindow = _root.Q<VisualElement>("Camp-RepairWindow");
+        _repairWindow = _root.Q<VisualElement>("Camp-CraftWindow");
         _campWindowChildrens = new()
         {
             {_bonfireButton, _bonfireWindow},
@@ -159,7 +165,7 @@ public class HomeUI : UIBase
         _WindowDictionary = new()
         {
             {WindowKind.Movement, _movementWindow},
-            {WindowKind.Collect, null},
+            {WindowKind.Collect, _collectWindow},
             {WindowKind.Camp, _campWindow},
             {WindowKind.Item, null},
         };
@@ -187,6 +193,10 @@ public class HomeUI : UIBase
     {
         _homeSystem.Movement(_movementSliderValue);
         _homeSystem.mainSystem.StoryAction(StoryManager.StoryKind.Movement);
+    }
+    void CollectWindowButtonClicked(VisualElement clickedElement)
+    {
+
     }
     void CampWindowButtonClicked(VisualElement clickedElement)
     {
@@ -218,7 +228,6 @@ public class HomeUI : UIBase
         _homeSystem.Bonfire(_bonfireSliderValue);
         _homeSystem.mainSystem.BackToHome();
     }
-
     void RestSliderUpdate(int value)
     {
         _restSliderValue = value;
@@ -230,5 +239,4 @@ public class HomeUI : UIBase
         _homeSystem.Rest(_restSliderValue);
         _homeSystem.mainSystem.BackToHome();
     }
-
 }

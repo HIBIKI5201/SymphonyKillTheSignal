@@ -113,49 +113,69 @@
                 </engine:VisualElement>
                 <engine:Button text="仮眠する" name="Rest-Button" class="homeButton button" style="height: 18%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 90%; flex-grow: 0; -unity-font-style: bold;" />
             </engine:VisualElement>
-            <engine:VisualElement name="Camp-RepairWindow" class="window-element" style="width: 100%; height: 100%; position: absolute; display: none;" />
+            <engine:VisualElement name="Camp-CraftWindow" class="window-element" style="width: 100%; height: 100%; position: absolute; display: none;" />
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="MovementWindow" class="window" style="display: none; justify-content: space-evenly;">
         <engine:VisualElement style="height: auto; width: 100%; flex-direction: row; align-self: center; align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); font-size: 60px; -unity-font-style: bold; color: rgb(255, 255, 255);">
-            <engine:Label text="消費時間：" style="width: auto; -unity-text-align: upper-right; margin-bottom: 0;" />
+            <engine:Label text="消費時間：" class="textBox" style="width: auto; -unity-text-align: upper-right; margin-bottom: 0;" />
             <engine:VisualElement style="width: 20%;">
-                <engine:Label text="1時間" name="Movement-TimeText" class="worningTextColor" style="-unity-text-align: upper-left;" />
+                <engine:Label text="1時間" name="Movement-TimeText" class="worningTextColor textBox" style="-unity-text-align: upper-left;" />
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:SliderInt value="1" high-value="10" low-value="1" name="Movement-Slider" direction="Horizontal" style="width: 80%; height: 10%; font-size: 75%; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); -unity-text-align: middle-center; color: rgb(255, 255, 255); text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5); margin-top: 0;" />
         <engine:VisualElement style="align-items: center; justify-content: flex-start; height: auto; text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);">
             <engine:VisualElement style="height: auto; width: 100%; flex-direction: row; align-self: center; align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); font-size: 75px; -unity-font-style: bold; color: rgb(255, 255, 255); margin-bottom: 35px;">
-                <engine:Label text="推定移動距離：" style="width: auto; -unity-text-align: upper-right;" />
+                <engine:Label text="推定移動距離：" class="textBox" style="width: auto; -unity-text-align: upper-right;" />
                 <engine:VisualElement style="width: 30%;">
-                    <engine:Label text="100km" name="Movement-DistanceText" class="benefitTextColor" />
+                    <engine:Label text="100km" name="Movement-DistanceText" class="benefitTextColor textBox" />
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement style="height: auto; width: 100%; flex-direction: row; align-self: center; align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); font-size: 60px; -unity-font-style: bold; color: rgb(255, 255, 255);">
-                <engine:Label text="消費満腹度：" style="width: 30%; -unity-text-align: upper-right;" />
+                <engine:Label text="消費満腹度：" class="textBox" style="width: 30%; -unity-text-align: upper-right;" />
                 <engine:VisualElement style="width: 30%;">
-                    <engine:Label text="1.0" name="Movement-HungerText" class="worningTextColor" style="-unity-text-align: upper-left;" />
+                    <engine:Label text="1.0" name="Movement-HungerText" class="worningTextColor textBox" style="-unity-text-align: upper-left;" />
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement style="height: auto; width: 100%; flex-direction: row; align-self: center; align-items: center; justify-content: center; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;); font-size: 60px; -unity-font-style: bold; color: rgb(255, 255, 255);">
-                <engine:Label text="消費体力：" style="width: 30%; -unity-text-align: upper-right;" />
+                <engine:Label text="消費体力：" class="textBox" style="width: 30%; -unity-text-align: upper-right;" />
                 <engine:VisualElement name="VisualElement" style="width: 30%;">
-                    <engine:Label text="1.0" name="Movement-HealthText" class="worningTextColor" style="-unity-text-align: upper-left;" />
+                    <engine:Label text="1.0" name="Movement-HealthText" class="worningTextColor textBox" style="-unity-text-align: upper-left;" />
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:Button text="移動開始" name="Movement-Button" class="homeButton button" style="height: 18%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 100%; flex-grow: 0; -unity-font-style: bold; text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);" />
     </engine:VisualElement>
     <engine:VisualElement name="CollectWindow" class="window" style="display: flex; justify-content: space-evenly; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-direction: row;">
-        <engine:ScrollView style="width: auto; height: 100%; background-color: rgb(128, 128, 128); flex-grow: 1; font-size: 60px; -unity-text-align: upper-center;">
-            <engine:VisualElement style="height: 586px; width: 100%;">
-                <engine:VisualElement class="camp-button-active" style="width: 100%; height: 100%; flex-grow: 0;">
-                    <engine:Label text="Label" class="textBox" style="font-size: 50%;" />
+        <engine:ScrollView mode="Vertical" style="width: auto; height: 100%; background-color: rgb(128, 128, 128); font-size: 60px; -unity-text-align: upper-center;">
+            <engine:VisualElement style="height: 100%; width: 100%;">
+                <engine:VisualElement class="camp-button-active" style="width: 100%; height: 100%; flex-grow: 0; margin-top: 0; padding-top: 30px; padding-bottom: 30px; padding-right: 30px; padding-left: 30px; -unity-text-align: middle-center;">
+                    <engine:Label text="小枝・薪" class="textBox" style="font-size: 50%;" />
                 </engine:VisualElement>
-                <engine:VisualElement class="camp-button-inactive" style="width: 100%; height: 100%; flex-grow: 0;" />
-                <engine:VisualElement class="camp-button-inactive" style="width: 100%; height: 100%; flex-grow: 0;" />
+                <engine:VisualElement class="camp-button-inactive" style="width: 100%; height: 100%; flex-grow: 0; padding-top: 30px; padding-right: 30px; padding-bottom: 30px; padding-left: 30px; -unity-text-align: middle-center;">
+                    <engine:Label text="食料" enable-rich-text="false" class="textBox" style="font-size: 50%;" />
+                </engine:VisualElement>
+                <engine:VisualElement class="camp-button-inactive" style="width: 100%; height: 100%; flex-grow: 0; -unity-text-align: middle-center; padding-top: 30px; padding-right: 30px; padding-bottom: 30px; padding-left: 30px;">
+                    <engine:Label text="水" class="textBox" style="font-size: 50%;" />
+                </engine:VisualElement>
             </engine:VisualElement>
         </engine:ScrollView>
-        <engine:VisualElement style="width: 70%; height: 100%;" />
+        <engine:VisualElement style="width: 70%; height: 100%; align-items: center; justify-content: space-around; padding-top: 5%; padding-right: 5%; padding-bottom: 5%; padding-left: 5%; bottom: auto; position: relative;">
+            <engine:VisualElement>
+                <engine:Label text="入手可能アイテム" class="textBox" style="font-size: 75px; -unity-text-align: upper-center; margin-bottom: 3%;" />
+                <engine:Label text="Label" class="benefitTextColor textBox" style="-unity-text-align: upper-center; font-size: 35px;" />
+            </engine:VisualElement>
+            <engine:VisualElement style="width: 100%;">
+                <engine:VisualElement style="width: 100%; flex-direction: row; justify-content: center; align-items: center;">
+                    <engine:Label text="消費時間：" class="textBox" style="-unity-text-align: upper-right; font-size: 40px;" />
+                    <engine:Label text="1時間" class="textBox worningTextColor" style="-unity-text-align: upper-center; font-size: 40px;" />
+                </engine:VisualElement>
+                <engine:VisualElement style="width: 100%; flex-direction: row; justify-content: center; align-items: center;">
+                    <engine:Label text="消費満腹度：" class="textBox" style="-unity-text-align: upper-right; font-size: 40px;" />
+                    <engine:Label text="15" class="textBox worningTextColor" style="-unity-text-align: upper-center; font-size: 40px;" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:Button text="収集に行く" name="Collect-Button" class="textBox button" style="width: 80%; font-size: 50px; text-shadow: 1px 1px 3px rgb(0, 0, 0); color: rgb(0, 0, 0); height: 12%;" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

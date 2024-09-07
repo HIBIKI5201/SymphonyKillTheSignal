@@ -41,7 +41,6 @@ namespace AdventureSystems
             //•°‰Î‚È‚µ 0.8x^2 - 7,2x
             float normalRestHeal = Mathf.Max(0.8f * time * time + 7.2f * time - (0.8f * bonfireRestTime * bonfireRestTime + 7.2f * bonfireRestTime), 0);
             float result = normalRestHeal + bonfireRestHeal;
-            Debug.Log($"{time} {bonfireLevel} {bonfireRestTime}\n{bonfireRestHeal} {normalRestHeal}\n{result}");
             return (int)result;
         }
     }
