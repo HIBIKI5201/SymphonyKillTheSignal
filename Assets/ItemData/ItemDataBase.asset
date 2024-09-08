@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac643ea4268a6054a9d6100a52dbeb66, type: 3}
+  m_Name: ItemDataBase
+  m_EditorClassIdentifier: 
+  itemDataList:
+  - itemKind: "\u5C0F\u679D"
+    time: 1
+    hunger: 10
+    getMinValue: 2
+    getMaxValue: 4
+  - itemKind: "\u30D9\u30EA\u30FC"
+    time: 4
+    hunger: 18
+    getMinValue: 2
+    getMaxValue: 4
+  - itemKind: "\u975E\u6FFE\u904E\u6C34"
+    time: 2
+    hunger: 12
+    getMinValue: 2
+    getMaxValue: 4

@@ -5,12 +5,14 @@ public class HomeSystem : SystemBase
     HomeUI _homeUI;
     WorldManager _worldManager;
     public UserDataManager _userDataManager;
+    public AdventureSystem _adventureSystem;
 
     public override void Initialize()
     {
         _userDataManager = mainSystem._userDataManager;
         _homeUI = GetComponentInChildren<HomeUI>();
         _worldManager = GetComponentInChildren<WorldManager>();
+        _adventureSystem = GetComponentInChildren<AdventureSystem>();
         _homeUI.UIAwake(this);
         _worldManager.Initialize();
         mainSystem.DataSave();
@@ -25,8 +27,9 @@ public class HomeSystem : SystemBase
         mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
 
-    public void Collect()
+    public void Collect(HomeUI.CollectWindowKind collectWindowKind)
     {
+
         mainSystem.StoryAction(StoryManager.StoryKind.Collect);
     }
 

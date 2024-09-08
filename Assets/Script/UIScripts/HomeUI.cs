@@ -1,8 +1,10 @@
 using AdventureSystems;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.Rendering.DebugUI.MessageBox;
+using static UserDataManager;
 public class HomeUI : UIBase
 {
     HomeSystem _homeSystem;
@@ -43,14 +45,17 @@ public class HomeUI : UIBase
     VisualElement _collectBranchButton;
     VisualElement _collectFoodButton;
     VisualElement _collectWaterButton;
-    enum CollectWindowKind
+    public enum CollectWindowKind
     {
         Branch,
         Food,
         Water,
     }
+    CollectWindowKind _collectWindowKind;
     Dictionary<VisualElement, CollectWindowKind> _collectWindowDictionary;
     Label _collectGetItemListText;
+    Label _collectTimeText;
+    Label _collectHungerText;
     Button _collectComformButton;
 
     VisualElement _campWindow;
@@ -130,6 +135,8 @@ public class HomeUI : UIBase
         _collectWaterButton = _root.Q<VisualElement>("Collect-Water");
         _collectWaterButton.RegisterCallback<ClickEvent>(evt => CollectWindowButtonClicked(_collectWaterButton));
         _collectGetItemListText = _root.Q<Label>("Collect-GetItemList");
+        _collectTimeText = _root.Q<Label>("Collect-Time");
+        _collectHungerText = _root.Q<Label>("Collect-Hunger");
         _collectWindowDictionary = new()
         {
             {_collectBranchButton, CollectWindowKind.Branch },
@@ -228,23 +235,22 @@ public class HomeUI : UIBase
             button.RemoveFromClassList(classListNames[button == clickedElement ? 1 : 0]);
             button.AddToClassList(classListNames[button == clickedElement ? 0 : 1]);
         }
-        switch(_collectWindowDictionary[clickedElement])
-        {
-            case CollectWindowKind.Branch:
-                _collectGetItemListText.text = $"è¨é}";
-                break;
-            case CollectWindowKind.Food:
-                _collectGetItemListText.text = $"ÉxÉäÅ[\nì˜";
-                break;
-            case CollectWindowKind.Water:
-                _collectGetItemListText.text = $"îÒ‡hâﬂêÖ";
-                break;
-        }
+        _collectWindowKind = _collectWindowDictionary[clickedElement];
+        int index = Array.IndexOf(Enum.GetValues(typeof(CollectWindowKind)), _collectWindowKind);
+        Debug.Log(index);
+        Debug.Log(_homeSystem._adventureSystem);
+        Debug.Log(_homeSystem._adventureSystem.itemData);
+        Debug.Log(_homeSystem._adventureSystem.itemData.itemDataList);
+
+        ItemDataBase.ItemData itemData = _homeSystem._adventureSystem.itemData.itemDataList[index];
+        _collectGetItemListText.text = itemData.itemKind;
+        _collectTimeText.text = $"{itemData.time}éûä‘";
+        _collectHungerText.text = $"{itemData.hunger}";
     }
 
     void CollectComformButtonClicked()
     {
-        _homeSystem.Collect();
+        _homeSystem.Collect(_collectWindowKind);
     }
     void CampWindowButtonClicked(VisualElement clickedElement)
     {

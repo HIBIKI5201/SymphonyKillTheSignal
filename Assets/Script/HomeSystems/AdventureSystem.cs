@@ -1,9 +1,13 @@
+using NUnit.Framework;
+using System;
 using UnityEngine;
 
 namespace AdventureSystems
 {
     public class AdventureSystem : MonoBehaviour
     {
+        public ItemDataBase itemData;
+
         public static int MovementTimeToDistance(int time)
         {
             float result = 4 * time * (1 + 0.1f * time - 0.1f);

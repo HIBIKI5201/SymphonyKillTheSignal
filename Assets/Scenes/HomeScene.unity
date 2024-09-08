@@ -5655,6 +5655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainSystem: {fileID: 0}
   _userDataManager: {fileID: 0}
+  _adventureSystem: {fileID: 0}
 --- !u!1 &1170504795
 GameObject:
   m_ObjectHideFlags: 0
@@ -6030,6 +6031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b8f4998700cfbc499e4f4fb29fc76e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 0824cae6c96637040b9544c57568f789, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
