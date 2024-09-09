@@ -79,6 +79,8 @@ public class HomeUI : UIBase
     Button _restComformButton;
     VisualElement _craftWindow;
 
+    VisualElement _inventoryWindow;
+
     public override void UIAwake(SystemBase system)
     {
         //システムを取得
@@ -192,16 +194,16 @@ public class HomeUI : UIBase
             {_craftButton, _craftWindow},
         };
         CampWindowButtonClicked(_bonfireButton);
-        //Item関係の取得と初期化
-
-
+        //Inventory関係の取得と初期化
+        _inventoryWindow = _root.Q<VisualElement>("InventoryWindow");
+        _inventoryWindow.style.display = DisplayStyle.None;
         //ボタンに対応したウィンドウのエレメントを設定する
         _WindowDictionary = new()
         {
             {WindowKind.Movement, _movementWindow},
             {WindowKind.Collect, _collectWindow},
             {WindowKind.Camp, _campWindow},
-            {WindowKind.Item, null},
+            {WindowKind.Item, _inventoryWindow},
         };
     }
 

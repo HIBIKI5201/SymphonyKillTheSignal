@@ -13,8 +13,8 @@ public class HomeSystem : SystemBase
     {
         _userDataManager = mainSystem._userDataManager;
         _homeUI = GetComponentInChildren<HomeUI>();
-        _worldManager = GetComponentInChildren<WorldManager>();
         _adventureSystem = GetComponentInChildren<AdventureSystem>();
+        _worldManager = FindAnyObjectByType<WorldManager>();
         _homeUI.UIAwake(this);
         _worldManager.Initialize();
         mainSystem.DataSave();
