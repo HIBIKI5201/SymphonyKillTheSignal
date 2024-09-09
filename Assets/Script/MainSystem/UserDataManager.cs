@@ -8,6 +8,7 @@ public class UserDataManager : MonoBehaviour
         branch,
         food,
         water,
+        dertyWater,
     }
 
     public SaveData saveData;

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.InputManagerEntry;
+using static UserDataManager;
 public class HomeUI : UIBase
 {
     HomeSystem _homeSystem;
@@ -43,14 +45,9 @@ public class HomeUI : UIBase
     VisualElement _collectBranchButton;
     VisualElement _collectFoodButton;
     VisualElement _collectWaterButton;
-    public enum CollectWindowKind
-    {
-        Branch,
-        Food,
-        Water,
-    }
-    CollectWindowKind _collectWindowKind;
-    Dictionary<VisualElement, CollectWindowKind> _collectWindowDictionary;
+
+    ItemKind _collectWindowKind;
+    Dictionary<VisualElement, ItemKind> _collectWindowDictionary;
     Label _collectGetItemListText;
     Label _collectTimeText;
     Label _collectHungerText;
@@ -80,6 +77,7 @@ public class HomeUI : UIBase
     VisualElement _craftWindow;
 
     VisualElement _inventoryWindow;
+    List<(ItemKind kind, VisualElement icon)> inventoryItemsList = new();
 
     public override void UIAwake(SystemBase system)
     {
@@ -141,9 +139,9 @@ public class HomeUI : UIBase
         _collectHungerText = _root.Q<Label>("Collect-Hunger");
         _collectWindowDictionary = new()
         {
-            {_collectBranchButton, CollectWindowKind.Branch },
-            {_collectFoodButton, CollectWindowKind.Food },
-            {_collectWaterButton, CollectWindowKind.Water },
+            {_collectBranchButton, ItemKind.branch },
+            {_collectFoodButton, ItemKind.food },
+            {_collectWaterButton, ItemKind.dertyWater },
         };
         CollectWindowButtonClicked(_collectBranchButton);
         //Camp関係の取得と初期化
@@ -197,6 +195,22 @@ public class HomeUI : UIBase
         //Inventory関係の取得と初期化
         _inventoryWindow = _root.Q<VisualElement>("InventoryWindow");
         _inventoryWindow.style.display = DisplayStyle.None;
+        inventoryItemsList.Add((ItemKind.branch, _root.Q<VisualElement>("Inventory-Branch")));
+        inventoryItemsList.Add((ItemKind.food, _root.Q<VisualElement>("Inventory-Berry")));
+        inventoryItemsList.Add((ItemKind.dertyWater, _root.Q<VisualElement>("Inventory-DertyWater")));
+        foreach (var item in inventoryItemsList)
+        {
+            Debug.Log(_homeSystem._userDataManager.saveData.itemList);
+            int value = _homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), item.kind)];
+            if (value > 0)
+            {
+            item.icon.Q<Label>("Inventory-ItemValue").text = $"×{value}";
+            }
+            else
+            {
+                item.icon.style.display = DisplayStyle.None;
+            }
+        }
         //ボタンに対応したウィンドウのエレメントを設定する
         _WindowDictionary = new()
         {
@@ -239,7 +253,7 @@ public class HomeUI : UIBase
             button.AddToClassList(classListNames[button == clickedElement ? 0 : 1]);
         }
         _collectWindowKind = _collectWindowDictionary[clickedElement];
-        int index = Array.IndexOf(Enum.GetValues(typeof(CollectWindowKind)), _collectWindowKind);
+        int index = Array.IndexOf(Enum.GetValues(typeof(ItemKind)), _collectWindowKind);
         ItemDataBase.ItemData itemData = _homeSystem._adventureSystem.itemData.itemDataList[index];
         _collectGetItemListText.text = itemData.itemKind;
         _collectTimeText.text = $"{itemData.time}時間";

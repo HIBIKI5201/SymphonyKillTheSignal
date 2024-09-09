@@ -2,6 +2,7 @@ using AdventureSystems;
 using System;
 using UnityEngine;
 using static HomeUI;
+using static UserDataManager;
 public class HomeSystem : SystemBase
 {
     HomeUI _homeUI;
@@ -29,21 +30,21 @@ public class HomeSystem : SystemBase
         mainSystem.StoryAction(StoryManager.StoryKind.Movement);
     }
 
-    public void Collect(HomeUI.CollectWindowKind collectWindowKind)
+    public void Collect(ItemKind collectWindowKind)
     {
         mainSystem.StoryAction(StoryManager.StoryKind.Collect);
         ItemDataBase.ItemData data = _adventureSystem.itemData
-            .itemDataList[Array.IndexOf(Enum.GetValues(typeof(CollectWindowKind)), collectWindowKind)];
+            .itemDataList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), collectWindowKind)];
         switch (collectWindowKind)
         {
-            case HomeUI.CollectWindowKind.Branch:
-                _userDataManager.ChangeItemValue(UserDataManager.ItemKind.branch, UnityEngine.Random.Range(data.getMinValue, data.getMaxValue + 1));
+            case ItemKind.branch:
+                _userDataManager.ChangeItemValue(ItemKind.branch, UnityEngine.Random.Range(data.getMinValue, data.getMaxValue + 1));
                 break;
-            case HomeUI.CollectWindowKind.Food:
-                _userDataManager.ChangeItemValue(UserDataManager.ItemKind.food, UnityEngine.Random.Range(data.getMinValue, data.getMaxValue + 1));
+            case ItemKind.food:
+                _userDataManager.ChangeItemValue(ItemKind.food, UnityEngine.Random.Range(data.getMinValue, data.getMaxValue + 1));
                 break;
-            case HomeUI.CollectWindowKind.Water:
-                _userDataManager.ChangeItemValue(UserDataManager.ItemKind.water, UnityEngine.Random.Range(data.getMinValue, data.getMaxValue + 1));
+            case ItemKind.dertyWater:
+                _userDataManager.ChangeItemValue(ItemKind.dertyWater, UnityEngine.Random.Range(data.getMinValue, data.getMaxValue + 1));
                 break;
         }
         _userDataManager.ChangeTime(data.time);
@@ -55,7 +56,7 @@ public class HomeSystem : SystemBase
         _userDataManager.ChangeTime(1);
         _userDataManager.ChangeHunger(-8);
         _userDataManager.ChangeBonfireLevel(Mathf.Min(AdventureSystem.BonfireBecomeLevel(value) + _userDataManager.saveData.campLevel, 8));
-        _userDataManager.ChangeItemValue(UserDataManager.ItemKind.branch, -value * 5);
+        _userDataManager.ChangeItemValue(ItemKind.branch, -value * 5);
         mainSystem.BackToHome();
     }
 

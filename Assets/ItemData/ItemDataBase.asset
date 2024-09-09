@@ -23,7 +23,7 @@ MonoBehaviour:
     hunger: 18
     getMinValue: 4
     getMaxValue: 5
-  - itemKind: "\u975E\u6FFE\u904E\u6C34"
+  - itemKind: "\u4E0D\u7D14\u6C34"
     time: 2
     hunger: 12
     getMinValue: 1
