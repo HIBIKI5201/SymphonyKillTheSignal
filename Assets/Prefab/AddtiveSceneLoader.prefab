@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3260657725892887135}
   - component: {fileID: 6361879016552149887}
   m_Layer: 0
-  m_Name: MainSystemLoader
+  m_Name: AddtiveSceneLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

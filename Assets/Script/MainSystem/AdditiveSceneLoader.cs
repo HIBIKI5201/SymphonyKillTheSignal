@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainSystemLoader : MonoBehaviour
+public class AdditiveSceneLoader : MonoBehaviour
 {
     [SerializeField]
     string MainSystemSceneName = "SystemScene";
