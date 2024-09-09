@@ -2,6 +2,7 @@ using AdventureSystems;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 using static UnityEngine.InputManagerEntry;
 using static UserDataManager;
@@ -224,6 +225,12 @@ public class HomeUI : UIBase
 
     void OnclickMainButton(WindowKind kind)
     {
+        if (_WindowDictionary[kind] == _currentWindow)
+        {
+            _currentWindow.style.display = DisplayStyle.None;
+            _currentWindow = null;
+            return;
+        }
         if (_currentWindow != null) _currentWindow.style.display = DisplayStyle.None;
         if (_WindowDictionary[kind] != null)
         {
