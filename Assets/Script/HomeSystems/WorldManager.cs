@@ -29,7 +29,6 @@ public class WorldManager : MonoBehaviour
         BlueSkyBehaviour(time);
         RedSkyBehaviour(time);
         LightBehaviour(time);
-        Debug.Log($"blue:{blueSky.color.a} + red:{redSky.color.a} + time:{time}");
     }
 
     void BlueSkyBehaviour(float time)

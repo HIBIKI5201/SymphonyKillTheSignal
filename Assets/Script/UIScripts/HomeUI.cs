@@ -1,8 +1,10 @@
 using AdventureSystems;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+//using static UnityEngine.Rendering.DebugUI;
 using static UserDataManager;
 public class HomeUI : UIBase
 {
@@ -15,7 +17,7 @@ public class HomeUI : UIBase
         Item,
     }
 
-    Dictionary<WindowKind, VisualElement> _WindowDictionary;
+    Dictionary<WindowKind, VisualElement> _windowDictionary = new();
 
     Button _movementButton;
     Button _collectButton;
@@ -23,11 +25,32 @@ public class HomeUI : UIBase
     Button _itemButton;
 
     VisualElement _healthBar;
+    VisualElement _healthIncreaseBar;
+    VisualElement _healthDecreaseBar;
     Label _healthText;
     VisualElement _hungerBar;
+    VisualElement _hungerIncreaseBar;
+    VisualElement _hungerDecreaseBar;
     Label _hungerText;
     VisualElement _thirstBar;
+    VisualElement _thirstIncreaseBar;
+    VisualElement _thirstDecreaseBar;
+
     Label _thirstText;
+    enum GaugeAnimation
+    {
+        Increase,
+        Decrease,
+        Reset,
+    }
+    enum GaugeKind
+    {
+        Health,
+        Hunger,
+        Thirst,
+    }
+    Dictionary<GaugeKind, (VisualElement bar, VisualElement increaseBar, VisualElement decreaseBar)> _gaugeDictionary = new();
+    bool gaugeReseting;
 
     VisualElement _currentWindow;
 
@@ -44,9 +67,8 @@ public class HomeUI : UIBase
     VisualElement _collectBranchButton;
     VisualElement _collectFoodButton;
     VisualElement _collectWaterButton;
-
     ItemKind _collectWindowKind;
-    Dictionary<VisualElement, ItemKind> _collectWindowDictionary;
+    Dictionary<VisualElement, ItemKind> _collectWindowDictionary = new();
     Label _collectGetItemListText;
     Label _collectTimeText;
     Label _collectHungerText;
@@ -56,7 +78,7 @@ public class HomeUI : UIBase
     VisualElement _bonfireButton;
     VisualElement _restButton;
     VisualElement _craftButton;
-    Dictionary<VisualElement, VisualElement> _campWindowChildrens;
+    Dictionary<VisualElement, VisualElement> _campWindowChildrens = new();
     VisualElement _bonfireWindow;
     Button _bonfirePlusButton;
     Button _bonfireMinusButton;
@@ -65,7 +87,7 @@ public class HomeUI : UIBase
     Label _bonfireRootLevelText;
     Label _bonfireBeLevelText;
     VisualElement _bonfireImage;
-    [SerializeField] List<Sprite> _bonfireImagesList;
+    [SerializeField] List<Sprite> _bonfireImagesList = new();
     Button _bonfireComformButton;
     VisualElement _restWindow;
     SliderInt _restSlider;
@@ -93,17 +115,27 @@ public class HomeUI : UIBase
         _itemButton.RegisterCallback<ClickEvent>(evt => OnclickMainButton(WindowKind.Item));
         //パラメーターを設定
         _healthBar = _root.Q<VisualElement>("Health-Bar");
-        _healthBar.style.width = new Length(SaveDataManager._mainSaveData.health, LengthUnit.Percent);
+        _healthIncreaseBar = _root.Q<VisualElement>("Health-IncreaseBar");
+        _healthDecreaseBar = _root.Q<VisualElement>("Health-DecreaseBar");
+        _gaugeDictionary.Add(GaugeKind.Health, (_healthBar, _healthIncreaseBar, _healthDecreaseBar));
+        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Health, 0);
         _healthText = _root.Q<Label>("Health-Text");
         _healthText.text = $"{SaveDataManager._mainSaveData.health} / 100";
         _hungerBar = _root.Q<VisualElement>("Hunger-Bar");
-        _hungerBar.style.width = new Length(SaveDataManager._mainSaveData.hunger, LengthUnit.Percent);
+        _hungerIncreaseBar = _root.Q<VisualElement>("Hunger-IncreaseBar");
+        _hungerDecreaseBar = _root.Q<VisualElement>("Hunger-DecreaseBar");
+        _gaugeDictionary.Add(GaugeKind.Hunger, (_hungerBar, _hungerIncreaseBar, _hungerDecreaseBar));
+        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Hunger, 0);
         _hungerText = _root.Q<Label>("Hunger-Text");
         _hungerText.text = $"{SaveDataManager._mainSaveData.hunger} / 100";
         _thirstBar = _root.Q<VisualElement>("Thirst-Bar");
-        _thirstBar.style.width = new Length(SaveDataManager._mainSaveData.thirst, LengthUnit.Percent);
+        _thirstIncreaseBar = _root.Q<VisualElement>("Thirst-IncreaseBar");
+        _thirstDecreaseBar = _root.Q<VisualElement>("Thirst-DecreaseBar");
+        _gaugeDictionary.Add(GaugeKind.Thirst, (_thirstBar, _thirstIncreaseBar, _thirstDecreaseBar));
+        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Thirst, 0);
         _thirstText = _root.Q<Label>("Thirst-Text");
         _thirstText.text = $"{SaveDataManager._mainSaveData.thirst} / 100";
+        gaugeReseting = true;
         //Movement関係の取得と初期化
         _movementWindow = _root.Q<VisualElement>("MovementWindow");
         _movementWindow.style.display = DisplayStyle.None;
@@ -184,6 +216,7 @@ public class HomeUI : UIBase
         _craftButton = _root.Q<VisualElement>("Camp-Craft");
         _craftButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_craftButton));
         _craftWindow = _root.Q<VisualElement>("Camp-CraftWindow");
+        //キャンプウィンドウを初期化
         _campWindowChildrens = new()
         {
             {_bonfireButton, _bonfireWindow},
@@ -198,42 +231,91 @@ public class HomeUI : UIBase
         inventoryItemsList.Add((ItemKind.food, _root.Q<VisualElement>("Inventory-Berry")));
         inventoryItemsList.Add((ItemKind.dertyWater, _root.Q<VisualElement>("Inventory-Water")));
         inventoryItemsList.Add((ItemKind.dertyWater, _root.Q<VisualElement>("Inventory-DertyWater")));
-        foreach (var item in inventoryItemsList)
+        foreach (var (kind, icon) in inventoryItemsList)
         {
-            Debug.Log(_homeSystem._userDataManager.saveData.itemList);
-            int value = _homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), item.kind)];
+            int value = _homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), kind)];
             if (value > 0)
             {
-                item.icon.Q<Label>("Inventory-ItemValue").text = $"×{value}";
+                icon.Q<Label>("Inventory-ItemValue").text = $"×{value}";
             }
             else
             {
-                item.icon.style.display = DisplayStyle.None;
+                icon.style.display = DisplayStyle.None;
             }
         }
-        //ボタンに対応したウィンドウのエレメントを設定する
-        _WindowDictionary = new()
-        {
-            {WindowKind.Movement, _movementWindow},
-            {WindowKind.Collect, _collectWindow},
-            {WindowKind.Camp, _campWindow},
-            {WindowKind.Item, _inventoryWindow},
-        };
+        _windowDictionary = new()
+            {
+                {WindowKind.Movement, _movementWindow},
+                {WindowKind.Collect, _collectWindow},
+                {WindowKind.Camp, _campWindow},
+                {WindowKind.Item, _inventoryWindow},
+            };
+        gaugeReseting = false;
     }
 
     void OnclickMainButton(WindowKind kind)
     {
-        if (_WindowDictionary[kind] == _currentWindow)
+        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Health, 0);
+        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Hunger, 0);
+        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Thirst, 0);
+        //ウィンドウを閉じる
+        if (_windowDictionary[kind] == _currentWindow)
         {
             _currentWindow.style.display = DisplayStyle.None;
             _currentWindow = null;
             return;
         }
+        //ウィンドウを開く
         if (_currentWindow != null) _currentWindow.style.display = DisplayStyle.None;
-        if (_WindowDictionary[kind] != null)
+        if (_windowDictionary[kind] != null)
         {
-            _WindowDictionary[kind].style.display = DisplayStyle.Flex;
-            _currentWindow = _WindowDictionary[kind];
+            _windowDictionary[kind].style.display = DisplayStyle.Flex;
+            _currentWindow = _windowDictionary[kind];
+            switch (kind)
+            {
+                case WindowKind.Movement:
+                    MovementSliderUpdate(_movementSliderValue);
+                    break;
+                case WindowKind.Collect:
+                    CollectWindowButtonClicked(_collectBranchButton);
+                    break;
+            }
+        }
+    }
+
+    void StatusGaugeAnimation(GaugeAnimation animeKind, GaugeKind gaugeKind, int value)
+    {
+        if (gaugeReseting) return;
+        VisualElement[] elements = new VisualElement[] { _gaugeDictionary[gaugeKind].bar, _gaugeDictionary[gaugeKind].increaseBar, _gaugeDictionary[gaugeKind].decreaseBar };
+        switch (animeKind)
+        {
+            case GaugeAnimation.Increase:
+
+                break;
+            case GaugeAnimation.Decrease:
+                DOTween.To(() => (elements[0].resolvedStyle.width / elements[0].parent.resolvedStyle.width) * 100,
+                            x =>  elements[0].style.width = new Length(Mathf.Max(x, 0), LengthUnit.Percent),
+                            gaugeKind switch
+                            {
+                                GaugeKind.Health => SaveDataManager._mainSaveData.health,
+                                GaugeKind.Hunger => SaveDataManager._mainSaveData.hunger,
+                                GaugeKind.Thirst => SaveDataManager._mainSaveData.thirst
+                            } - value, 0.5f);
+                break;
+            case GaugeAnimation.Reset:
+                foreach (VisualElement element in elements)
+                {
+                    Debug.Log("a");
+                    DOTween.To(() => (element.resolvedStyle.width / element.parent.resolvedStyle.width) * 100,
+                            x => { element.style.width = new Length(Mathf.Max(x, 0), LengthUnit.Percent); Debug.Log(x); },
+                            gaugeKind switch
+                            {
+                                GaugeKind.Health => SaveDataManager._mainSaveData.health,
+                                GaugeKind.Hunger => SaveDataManager._mainSaveData.hunger,
+                                GaugeKind.Thirst => SaveDataManager._mainSaveData.thirst
+                            }, 0.3f);
+                }
+                break;
         }
     }
 
@@ -243,7 +325,9 @@ public class HomeUI : UIBase
         _movementDistanceText.text = $"{AdventureSystem.MovementTimeToDistance(value)}km";
         _movemetTimeText.text = $"{value}時間";
         _movementHungerText.text = AdventureSystem.MovementTimeToHunger(value).ToString("0.0");
+        StatusGaugeAnimation(GaugeAnimation.Decrease, GaugeKind.Hunger, AdventureSystem.MovementTimeToHunger(value));
         _movementHealthText.text = AdventureSystem.MovementTimeToHealth(value).ToString("0.0");
+        StatusGaugeAnimation(GaugeAnimation.Decrease, GaugeKind.Health, AdventureSystem.MovementTimeToHealth(value));
     }
     void MovementComformButtonClicked()
     {
@@ -264,6 +348,7 @@ public class HomeUI : UIBase
         _collectGetItemListText.text = itemData.itemKind;
         _collectTimeText.text = $"{itemData.time}時間";
         _collectHungerText.text = $"{itemData.hunger}";
+        StatusGaugeAnimation(GaugeAnimation.Decrease, GaugeKind.Hunger, itemData.hunger);
     }
 
     void CollectComformButtonClicked()
