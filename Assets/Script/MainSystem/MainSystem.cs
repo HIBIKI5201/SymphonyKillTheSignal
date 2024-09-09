@@ -140,6 +140,7 @@ public class MainSystem : MonoBehaviour
                 break;
             case SceneChanger.SceneKind.Title:
                 _pauseUI.HidePause();
+                yield return SceneChanger.UnloadScene(SceneChanger.SceneKind.WorldManager);
                 break;
         }
         yield return new WaitForSeconds(0.2f);

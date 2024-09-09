@@ -11,12 +11,14 @@ public class SceneChanger : MonoBehaviour
         Title,
         Home,
         Story,
+        WorldManager,
     }
     static readonly Dictionary<SceneKind, string> _sceneNames = new()
     {
         { SceneKind.Title , "TitleScene"},
         { SceneKind.Home , "HomeScene"},
         { SceneKind.Story , "StoryScene"},
+        { SceneKind.WorldManager, "WorldManagerScene" },
     };
     static readonly Dictionary<string, SceneKind> _sceneKinds = new()
     {
@@ -24,18 +26,14 @@ public class SceneChanger : MonoBehaviour
         { "HomeScene", SceneKind.Home },
         { "StoryScene" , SceneKind.Story},
     };
-
     public static string SceneDictionary(SceneKind sceneKind)
     {
         return _sceneNames[sceneKind];
     }
-
     public static SceneKind SceneDictionary(string sceneName)
     {
         return _sceneKinds[sceneName];
     }
-
-
     /// <summary>
     /// シーンをロードし、AsyncOperationを戻り値とする
     /// </summary>
@@ -50,6 +48,7 @@ public class SceneChanger : MonoBehaviour
         {
             yield return null;
         }
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(_sceneNames[sceneKind]));
         // ロード完了後に現在のシーンをアンロード
         AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(_sceneNames[CurrentScene]);
         CurrentScene = sceneKind;
@@ -59,5 +58,13 @@ public class SceneChanger : MonoBehaviour
             yield return null;
         }
         CurrentScene = sceneKind;
+    }
+    public static IEnumerator UnloadScene(SceneKind sceneKind)
+    {
+        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(_sceneNames[sceneKind]);
+        while (!asyncUnload.isDone)
+        {
+            yield return null;
+        }
     }
 }
