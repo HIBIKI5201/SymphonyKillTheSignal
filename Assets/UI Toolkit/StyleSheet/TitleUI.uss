@@ -6,4 +6,5 @@
     font-size: 55px;
     -unity-text-align: middle-center;
     -unity-font-style: normal;
+    -unity-font-definition: url("project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#JapaneseFont");
 }

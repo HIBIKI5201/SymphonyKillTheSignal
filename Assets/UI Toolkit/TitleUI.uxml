@@ -1,7 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheet/MainUI.uss?fileID=7433441132597879392&amp;guid=030672bf8791f77439b2e02cd045061b&amp;type=3#MainUI" />
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheet/TitleUI.uss?fileID=7433441132597879392&amp;guid=2fd435c00491bc34cbb5e65e94baed3d&amp;type=3#TitleUI" />
-    <engine:VisualElement name="Buttons" style="width: 15%; height: 50%; bottom: 10%; right: 10%; top: auto; left: auto; align-items: center; justify-content: space-evenly; align-self: flex-end; position: absolute; -unity-font-definition: url(&quot;project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&amp;guid=bf12a9e7c0cbc8e428480f2d8f446958&amp;type=3#JapaneseFont&quot;);">
+    <engine:VisualElement name="Buttons" style="width: 15%; height: 50%; bottom: 10%; right: 10%; top: auto; left: auto; align-items: center; justify-content: space-evenly; align-self: flex-end; position: absolute;">
         <engine:Button text="はじめる" name="Start" class="titleButton button" style="height: 20%;" />
         <engine:Button text="続きから" name="Continue" class="titleButton button" style="height: 20%;" />
         <engine:Button text="オプション" name="Option" class="titleButton button" style="height: 20%;" />

@@ -147,17 +147,15 @@
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:VisualElement name="CollectWindow" class="window" style="display: flex; justify-content: space-evenly; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-direction: row; visibility: visible; background-color: rgba(51, 51, 51, 0);">
-        <engine:ScrollView mode="Vertical" style="width: auto; height: 100%; background-color: rgba(77, 77, 77, 0.75); font-size: 60px; -unity-text-align: upper-center; visibility: visible; border-right-width: 3px; border-right-color: rgb(64, 64, 64);">
-            <engine:VisualElement style="height: 100%; width: 100%;">
-                <engine:VisualElement name="Collect-Branch" class="collect-button-active">
-                    <engine:Label text="小枝・薪" class="textBox" style="font-size: 50%;" />
-                </engine:VisualElement>
-                <engine:VisualElement name="Collect-Food" class="collect-button-inactive">
-                    <engine:Label text="食料" enable-rich-text="false" class="textBox" style="font-size: 50%;" />
-                </engine:VisualElement>
-                <engine:VisualElement name="Collect-Water" class="collect-button-inactive">
-                    <engine:Label text="水" class="textBox" style="font-size: 50%;" />
-                </engine:VisualElement>
+        <engine:ScrollView mode="Vertical" style="width: auto; height: 100%; background-color: rgba(77, 77, 77, 0.75); font-size: 60px; -unity-text-align: upper-center; visibility: visible; border-right-width: 3px; border-right-color: rgb(64, 64, 64); flex-grow: 1;">
+            <engine:VisualElement name="Collect-Branch" class="collect-button-active">
+                <engine:Label text="燃料" class="textBox" style="font-size: 50%;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="Collect-Food" class="collect-button-inactive">
+                <engine:Label text="食料" enable-rich-text="false" class="textBox" style="font-size: 50%;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="Collect-Water" class="collect-button-inactive">
+                <engine:Label text="水" class="textBox" style="font-size: 50%;" />
             </engine:VisualElement>
         </engine:ScrollView>
         <engine:VisualElement style="width: 70%; height: 100%; align-items: center; justify-content: space-around; padding-top: 5%; padding-right: 5%; padding-bottom: 5%; padding-left: 5%; bottom: auto; position: relative; background-color: rgba(51, 51, 51, 0.75);">
