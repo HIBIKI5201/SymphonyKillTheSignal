@@ -1,5 +1,7 @@
 using AdventureSystems;
+using System;
 using UnityEngine;
+using static HomeUI;
 public class HomeSystem : SystemBase
 {
     HomeUI _homeUI;
@@ -29,8 +31,23 @@ public class HomeSystem : SystemBase
 
     public void Collect(HomeUI.CollectWindowKind collectWindowKind)
     {
-
         mainSystem.StoryAction(StoryManager.StoryKind.Collect);
+        ItemDataBase.ItemData data = _adventureSystem.itemData
+            .itemDataList[Array.IndexOf(Enum.GetValues(typeof(CollectWindowKind)), collectWindowKind)];
+        switch (collectWindowKind)
+        {
+            case HomeUI.CollectWindowKind.Branch:
+                _userDataManager.ChangeItemValue(UserDataManager.ItemKind.branch, UnityEngine.Random.Range(data.getMinValue, data.getMaxValue + 1));
+                break;
+            case HomeUI.CollectWindowKind.Food:
+                _userDataManager.ChangeItemValue(UserDataManager.ItemKind.food, UnityEngine.Random.Range(data.getMinValue, data.getMaxValue + 1));
+                break;
+            case HomeUI.CollectWindowKind.Water:
+                _userDataManager.ChangeItemValue(UserDataManager.ItemKind.water, UnityEngine.Random.Range(data.getMinValue, data.getMaxValue + 1));
+                break;
+        }
+        _userDataManager.ChangeTime(data.time);
+        _userDataManager.ChangeHunger(-data.hunger);
     }
 
     public void Bonfire(int value)

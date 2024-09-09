@@ -21,10 +21,10 @@ MonoBehaviour:
   - itemKind: "\u30D9\u30EA\u30FC"
     time: 4
     hunger: 18
-    getMinValue: 2
-    getMaxValue: 4
+    getMinValue: 4
+    getMaxValue: 5
   - itemKind: "\u975E\u6FFE\u904E\u6C34"
     time: 2
     hunger: 12
-    getMinValue: 2
-    getMaxValue: 4
+    getMinValue: 1
+    getMaxValue: 1

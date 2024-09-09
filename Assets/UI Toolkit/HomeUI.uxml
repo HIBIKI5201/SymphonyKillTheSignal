@@ -82,8 +82,8 @@
             <engine:VisualElement name="Camp-Rest" class="camp-button-inactive">
                 <engine:Label text="休息" />
             </engine:VisualElement>
-            <engine:VisualElement name="Camp-Repair" class="camp-button-inactive">
-                <engine:Label text="修理" />
+            <engine:VisualElement name="Camp-Craft" class="camp-button-inactive">
+                <engine:Label text="クラフト" />
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement style="height: 100%; width: 100%; flex-direction: row; visibility: visible; background-color: rgba(51, 51, 51, 0.75); border-left-color: rgb(64, 64, 64); border-right-color: rgb(64, 64, 64); border-top-color: rgb(64, 64, 64); border-bottom-color: rgb(64, 64, 64); border-bottom-width: 3px; border-left-width: 3px; border-right-width: 3px;">

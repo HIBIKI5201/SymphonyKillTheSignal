@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI.MessageBox;
-using static UserDataManager;
 public class HomeUI : UIBase
 {
     HomeSystem _homeSystem;
@@ -61,7 +59,7 @@ public class HomeUI : UIBase
     VisualElement _campWindow;
     VisualElement _bonfireButton;
     VisualElement _restButton;
-    VisualElement _repairButton;
+    VisualElement _craftButton;
     Dictionary<VisualElement, VisualElement> _campWindowChildrens;
     VisualElement _bonfireWindow;
     Button _bonfirePlusButton;
@@ -77,7 +75,7 @@ public class HomeUI : UIBase
     Label _restTimeText;
     Label _restHealthText;
     Button _restComformButton;
-    VisualElement _repairWindow;
+    VisualElement _craftWindow;
 
     public override void UIAwake(SystemBase system)
     {
@@ -181,14 +179,14 @@ public class HomeUI : UIBase
         _restComformButton = _root.Q<Button>("Rest-Button");
         _restComformButton.clicked += RestComformButtonClicked;
         //修理のプロパティ
-        _repairButton = _root.Q<VisualElement>("Camp-Repair");
-        _repairButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_repairButton));
-        _repairWindow = _root.Q<VisualElement>("Camp-CraftWindow");
+        _craftButton = _root.Q<VisualElement>("Camp-Craft");
+        _craftButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_craftButton));
+        _craftWindow = _root.Q<VisualElement>("Camp-CraftWindow");
         _campWindowChildrens = new()
         {
             {_bonfireButton, _bonfireWindow},
             {_restButton, _restWindow},
-            {_repairButton, _repairWindow},
+            {_craftButton, _craftWindow},
         };
         CampWindowButtonClicked(_bonfireButton);
         //Item関係の取得と初期化
@@ -237,11 +235,6 @@ public class HomeUI : UIBase
         }
         _collectWindowKind = _collectWindowDictionary[clickedElement];
         int index = Array.IndexOf(Enum.GetValues(typeof(CollectWindowKind)), _collectWindowKind);
-        Debug.Log(index);
-        Debug.Log(_homeSystem._adventureSystem);
-        Debug.Log(_homeSystem._adventureSystem.itemData);
-        Debug.Log(_homeSystem._adventureSystem.itemData.itemDataList);
-
         ItemDataBase.ItemData itemData = _homeSystem._adventureSystem.itemData.itemDataList[index];
         _collectGetItemListText.text = itemData.itemKind;
         _collectTimeText.text = $"{itemData.time}時間";
@@ -254,8 +247,8 @@ public class HomeUI : UIBase
     }
     void CampWindowButtonClicked(VisualElement clickedElement)
     {
-        VisualElement[] campWindowButtons = new VisualElement[] { _bonfireButton, _restButton, _repairButton };
-        VisualElement[] campWindows = new VisualElement[] { _bonfireWindow, _restWindow, _repairWindow };
+        VisualElement[] campWindowButtons = new VisualElement[] { _bonfireButton, _restButton, _craftButton };
+        VisualElement[] campWindows = new VisualElement[] { _bonfireWindow, _restWindow, _craftWindow };
         string[] classListNames = new string[] { "camp-button-active", "camp-button-inactive" };
         foreach (VisualElement button in campWindowButtons)
         {
