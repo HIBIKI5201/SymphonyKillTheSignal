@@ -197,6 +197,7 @@ public class HomeUI : UIBase
         _inventoryWindow.style.display = DisplayStyle.None;
         inventoryItemsList.Add((ItemKind.branch, _root.Q<VisualElement>("Inventory-Branch")));
         inventoryItemsList.Add((ItemKind.food, _root.Q<VisualElement>("Inventory-Berry")));
+        inventoryItemsList.Add((ItemKind.dertyWater, _root.Q<VisualElement>("Inventory-Water")));
         inventoryItemsList.Add((ItemKind.dertyWater, _root.Q<VisualElement>("Inventory-DertyWater")));
         foreach (var item in inventoryItemsList)
         {
