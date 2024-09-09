@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b6e9654d54d806e42869bacca309c5d4
+guid: 11bbed1a6437d814ebf23ef3ab1d4e56
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5801255725635399724
-    second: bonfire_0
+      213: -4257774042910862010
+    second: Bonfire_0_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bonfire_0
+      name: Bonfire_0_0
       rect:
         serializedVersion: 2
-        x: 24
-        y: 23
-        width: 566
-        height: 753
+        x: 123
+        y: 67
+        width: 991
+        height: 568
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c20f2b99853328050800000000000000
-      internalID: 5801255725635399724
+      spriteID: 6455b6e011959e4c0800000000000000
+      internalID: -4257774042910862010
       vertices: []
       indices: 
       edges: []
@@ -156,8 +156,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      bonfire_0: 5801255725635399724
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

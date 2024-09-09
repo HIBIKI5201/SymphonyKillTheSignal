@@ -68,6 +68,8 @@ public class HomeUI : UIBase
     Label _bonfireBranchText;
     Label _bonfireRootLevelText;
     Label _bonfireBeLevelText;
+    VisualElement _bonfireImage;
+    [SerializeField] List<Sprite> _bonfireImagesList;
     Button _bonfireComformButton;
     VisualElement _restWindow;
     SliderInt _restSlider;
@@ -153,6 +155,7 @@ public class HomeUI : UIBase
         _bonfireRootLevelText = _root.Q<Label>("Bonfire-RootLevel");
         _bonfireRootLevelText.text = $"{SaveDataManager._mainSaveData.campLevel} Å® ";
         _bonfireBeLevelText = _root.Q<Label>("Bonfire-BeLevel");
+        _bonfireImage = _root.Q<VisualElement>("Bonfire-Image");
         _bonfirePlusButton = _root.Q<Button>("Bonfire-PlusButton");
         _bonfirePlusButton.RegisterCallback<ClickEvent>(evt => BonfireSliderUpdate(1));
         _bonfireMinusButton = _root.Q<Button>("Bonfire-MinusButton");
@@ -269,6 +272,7 @@ public class HomeUI : UIBase
         _bonfireSliderValue += value;
         _bonfireBranchText.text = $"{AdventureSystem.BonfireRequireBranch(_bonfireSliderValue)}ñ{";
         _bonfireBeLevelText.text = Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8).ToString();
+        _bonfireImage.style.backgroundImage = _bonfireImagesList[Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8) / 2].texture;
     }
     void BonfireComformButtonClicked()
     {
