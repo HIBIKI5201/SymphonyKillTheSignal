@@ -2,9 +2,7 @@ using AdventureSystems;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
-using static UnityEngine.InputManagerEntry;
 using static UserDataManager;
 public class HomeUI : UIBase
 {
@@ -206,7 +204,7 @@ public class HomeUI : UIBase
             int value = _homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), item.kind)];
             if (value > 0)
             {
-            item.icon.Q<Label>("Inventory-ItemValue").text = $"Å~{value}";
+                item.icon.Q<Label>("Inventory-ItemValue").text = $"Å~{value}";
             }
             else
             {
