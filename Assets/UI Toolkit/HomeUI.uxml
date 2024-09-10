@@ -215,7 +215,7 @@
                 <engine:Label text="説明" class="textBox" style="font-size: 55px; -unity-text-align: upper-center; margin-bottom: 12px; margin-top: 0; margin-right: 0; margin-left: 0;" />
                 <engine:Label text="せつめい" name="Inventory-ExplanationText" class="textBox" style="-unity-text-align: upper-left; font-size: 35px; flex-grow: 1; white-space: normal;" />
             </engine:VisualElement>
-            <engine:Button text="アイテムを使用" name="Inventory-ConformButton" class="textBox" style="width: 30%; height: 50%; color: rgb(0, 0, 0); font-size: 45px; -unity-font-style: normal; text-shadow: 2px 2px 3px rgb(0, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
+            <engine:Button text="アイテムを使用" name="Inventory-ConformButton" class="textBox button" style="width: 30%; height: 50%; color: rgb(0, 0, 0); font-size: 45px; -unity-font-style: normal; text-shadow: 2px 2px 3px rgb(0, 0, 0); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

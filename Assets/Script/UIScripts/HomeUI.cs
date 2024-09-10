@@ -91,8 +91,10 @@ public class HomeUI : UIBase
     VisualElement _craftWindow;
 
     VisualElement _inventoryWindow;
-    List<(ItemKind kind, VisualElement icon)> inventoryItemsList = new();
+    Dictionary<ItemKind, VisualElement> _inventoryItemsDictionary = new();
     Label _inventoryItemExplanationText;
+    Button _inventoryConformbutton;
+    ItemKind _inventorySelectItemKind;
 
     public override void UIAwake(SystemBase system)
     {
@@ -221,24 +223,26 @@ public class HomeUI : UIBase
         //Inventoryä÷åWÇÃéÊìæÇ∆èâä˙âª
         _inventoryWindow = _root.Q<VisualElement>("InventoryWindow");
         _inventoryWindow.style.display = DisplayStyle.None;
-        inventoryItemsList.Add((ItemKind.branch, _root.Q<VisualElement>("Inventory-Branch")));
-        inventoryItemsList.Add((ItemKind.food, _root.Q<VisualElement>("Inventory-Berry")));
-        inventoryItemsList.Add((ItemKind.water, _root.Q<VisualElement>("Inventory-Water")));
-        inventoryItemsList.Add((ItemKind.dertyWater, _root.Q<VisualElement>("Inventory-DertyWater")));
-        foreach (var (kind, icon) in inventoryItemsList)
+        _inventoryItemsDictionary.Add(ItemKind.branch, _root.Q<VisualElement>("Inventory-Branch"));
+        _inventoryItemsDictionary.Add(ItemKind.food, _root.Q<VisualElement>("Inventory-Berry"));
+        _inventoryItemsDictionary.Add(ItemKind.water, _root.Q<VisualElement>("Inventory-Water"));
+        _inventoryItemsDictionary.Add(ItemKind.dertyWater, _root.Q<VisualElement>("Inventory-DertyWater"));
+        foreach (var element in _inventoryItemsDictionary)
         {
-            int value = _homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), kind)];
+            int value = _homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), element.Key)];
             if (value > 0)
             {
-                icon.Q<Label>("Inventory-ItemValue").text = $"Å~{value}";
-                icon.RegisterCallback<ClickEvent>(evt => InventoryIconClicked(kind));
+                element.Value.Q<Label>("Inventory-ItemValue").text = $"Å~{value}";
+                element.Value.RegisterCallback<ClickEvent>(evt => InventoryIconClicked(element.Key));
             }
             else
             {
-                icon.style.display = DisplayStyle.None;
+                element.Value.style.display = DisplayStyle.None;
             }
         }
         _inventoryItemExplanationText = _root.Q<Label>("Inventory-ExplanationText");
+        _inventoryConformbutton = _root.Q<Button>("Inventory-ConformButton");
+        _inventoryConformbutton.clicked += InventoryComformButtonClicked;
         _windowDictionary = new()
             {
                 {WindowKind.Movement, _movementWindow},
@@ -286,12 +290,20 @@ public class HomeUI : UIBase
         switch (animeKind)
         {
             case GaugeAnimation.Increase:
-
+                DOTween.To(() => (elements[1].resolvedStyle.width / elements[1].parent.resolvedStyle.width) * 100,
+                    x => elements[1].style.width = new Length(Mathf.Min(x, 100), LengthUnit.Percent),
+                    gaugeKind switch
+                    {
+                        StatusKind.Health => SaveDataManager._mainSaveData.health,
+                        StatusKind.Hunger => SaveDataManager._mainSaveData.hunger,
+                        StatusKind.Thirst => SaveDataManager._mainSaveData.thirst,
+                        _ => 0
+                    } + value, 0.5f);
                 break;
             case GaugeAnimation.Decrease:
                 DOTween.To(() => (elements[0].resolvedStyle.width / elements[0].parent.resolvedStyle.width) * 100,
-                            x => elements[0].style.width = new Length(Mathf.Max(x, 0), LengthUnit.Percent),
-                            gaugeKind switch
+                         x => elements[0].style.width = new Length(Mathf.Max(x, 0), LengthUnit.Percent),
+                        gaugeKind switch
                             {
                                 StatusKind.Health => SaveDataManager._mainSaveData.health,
                                 StatusKind.Hunger => SaveDataManager._mainSaveData.hunger,
@@ -399,5 +411,38 @@ public class HomeUI : UIBase
         int index = Array.IndexOf(Enum.GetValues(typeof(ItemKind)), itemKind);
         ItemDataBase.ItemInventoryData itemData = _homeSystem._adventureSystem.itemData.itemDataList[index].inventoryData;
         _inventoryItemExplanationText.text = itemData.explanation;
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Health, 0);
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Hunger, 0);
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Thirst, 0);
+        foreach (var kind in itemData.itemEfficacy)
+        {
+            StatusGaugeAnimation(GaugeAnimation.Increase, kind.statusKind, kind.value);
+        }
+        _inventorySelectItemKind = itemKind;
+    }
+
+    void InventoryComformButtonClicked()
+    {
+        if (_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), _inventorySelectItemKind)] <= 0) return;
+        int index = Array.IndexOf(Enum.GetValues(typeof(ItemKind)), _inventorySelectItemKind);
+        _homeSystem.ItemUse(index);
+        _inventoryItemsDictionary[_inventorySelectItemKind].Q<Label>("Inventory-ItemValue").text = $"Å~{_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), _inventorySelectItemKind)]}";
+        ItemDataBase.ItemInventoryData itemData = _homeSystem._adventureSystem.itemData.itemDataList[index].inventoryData;
+        foreach (var kind in itemData.itemEfficacy)
+        {
+            StatusGaugeAnimation(GaugeAnimation.Reset, kind.statusKind, 0);
+            switch (kind.statusKind)
+            {
+                case StatusKind.Health:
+                    _healthText.text = $"{_homeSystem._userDataManager.saveData.health} / 100";
+                    break;
+                case StatusKind.Hunger:
+                    _hungerText.text = $"{_homeSystem._userDataManager.saveData.hunger} / 100";
+                    break;
+                case StatusKind.Thirst:
+                    _thirstText.text = $"{_homeSystem._userDataManager.saveData.thirst} / 100";
+                    break;
+            }
+        }
     }
 }

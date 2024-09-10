@@ -66,4 +66,25 @@ public class HomeSystem : SystemBase
         _userDataManager.ChangeHealth(AdventureSystem.RestHealHealth(value, _userDataManager.saveData.campLevel));
         mainSystem.BackToHome();
     }
+
+    public void ItemUse(int index)
+    {
+        ItemDataBase.ItemInventoryData itemData = _adventureSystem.itemData.itemDataList[index].inventoryData;
+        foreach (ItemDataBase.ItemEfficacy efficacy in itemData.itemEfficacy)
+        {
+            switch (efficacy.statusKind)
+            {
+                case StatusKind.Health:
+                    _userDataManager.ChangeHealth(efficacy.value);
+                    break;
+                case StatusKind.Hunger:
+                    _userDataManager.ChangeHunger(efficacy.value);
+                    break;
+                case StatusKind.Thirst:
+                    _userDataManager.ChangeThirst(efficacy.value);
+                    break;
+            }
+        }
+        _userDataManager.ChangeItemValue(_adventureSystem.itemData.itemDataList[index].kind, -1);
+    }
 }
