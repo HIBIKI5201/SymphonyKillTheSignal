@@ -357,6 +357,7 @@ public class HomeUI : UIBase
         StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Hunger, AdventureSystem.MovementTimeToHunger(value));
         _movementHealthText.text = AdventureSystem.MovementTimeToHealth(value).ToString("0.0");
         StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Health, AdventureSystem.MovementTimeToHealth(value));
+        StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Thirst, AdventureSystem.TimeToThirst(value));
     }
     void MovementComformButtonClicked()
     {
@@ -378,6 +379,8 @@ public class HomeUI : UIBase
         _collectTimeText.text = $"{itemData.time}ŽžŠÔ";
         _collectHungerText.text = $"{itemData.hunger}";
         StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Hunger, itemData.hunger);
+        StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Thirst, AdventureSystem.TimeToThirst(itemData.time));
+
     }
 
     void CollectComformButtonClicked()
@@ -418,6 +421,8 @@ public class HomeUI : UIBase
         }
         _bonfireBeLevelText.text = Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8).ToString();
         _bonfireImage.style.backgroundImage = _bonfireImagesList[Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8) / 2].texture;
+        StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Thirst, AdventureSystem.TimeToThirst(1));
+
     }
     void BonfireComformButtonClicked()
     {
@@ -430,6 +435,8 @@ public class HomeUI : UIBase
         _restTimeText.text = $"{value}ŽžŠÔ";
         _restHealthText.text = AdventureSystem.RestHealHealth(value, _homeSystem._userDataManager.saveData.campLevel).ToString("0.0");
         StatusGaugeAnimation(GaugeAnimation.Increase, StatusKind.Health, AdventureSystem.RestHealHealth(value, _homeSystem._userDataManager.saveData.campLevel));
+        StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Thirst, AdventureSystem.TimeToThirst(value));
+
     }
     void RestComformButtonClicked()
     {

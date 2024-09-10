@@ -1,3 +1,4 @@
+using AdventureSystems;
 using System;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ public class UserDataManager : MonoBehaviour
     {
         saveData.time += time;
         saveData.campLevel = Mathf.Max(saveData.campLevel - time, 0);
-        ChangeThirst(-time * 4);
+        ChangeThirst(-AdventureSystem.TimeToThirst(time));
     }
 
     public void ChangeHealth(int value)

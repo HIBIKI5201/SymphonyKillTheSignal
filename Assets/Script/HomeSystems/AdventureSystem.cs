@@ -7,6 +7,10 @@ namespace AdventureSystems
         public ItemDataBase itemData;
         public CraftDataBase craftData;
 
+        public static int TimeToThirst(int time)
+        {
+            return time * 4;
+        }
         public static int MovementTimeToDistance(int time)
         {
             float result = 4 * time * (1 + 0.1f * time - 0.1f);
