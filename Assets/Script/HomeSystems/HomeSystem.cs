@@ -18,7 +18,7 @@ public class HomeSystem : SystemBase
         _homeUI.UIAwake(this);
         _worldManager.Initialize();
         mainSystem.DataSave();
-        mainSystem.SoundPlay(1, 1);
+        mainSystem.SoundPlay(MainSystem.AudioPlayKind.BGM, 1);
     }
 
     public void Movement(int value)

@@ -52,7 +52,7 @@ public class StorySystem : SystemBase
         _mainUI.UIAwake(this);
         //最初が0番目のテキストになるように初期値を設定
         _currentTextNumber = -1;
-        mainSystem.SoundPlay(1, 2);
+        mainSystem.SoundPlay(MainSystem.AudioPlayKind.BGM, 2);
     }
 
     public void TextDataLoad(StoryTextDataBase storyTextData)
@@ -226,7 +226,7 @@ public class StorySystem : SystemBase
                 //文字列を数値化してSoundPlayメソッドを送る
                 if (int.TryParse(texts[0], out int num) && int.TryParse(texts[1], out int soundNum))
                 {
-                    mainSystem.SoundPlay(num, soundNum);
+                    mainSystem.SoundPlay(MainSystem.AudioPlayKind.Voice, soundNum);
                 }
                 else Debug.LogWarning("Soundの指定が適切ではありませんでした");
                 break;

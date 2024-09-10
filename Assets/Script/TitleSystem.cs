@@ -6,6 +6,6 @@ public class TitleSystem : SystemBase
     {
         _titleUI = GetComponentInChildren<TitleUI>();
         _titleUI.UIAwake(this);
-        mainSystem.SoundPlay(1, 0);
+        mainSystem.SoundPlay(MainSystem.AudioPlayKind.BGM, 0);
     }
 }

@@ -11,6 +11,13 @@ public class MainSystem : MonoBehaviour
     ScreenEffectUI _screenEffect;
     PauseUI _pauseUI;
 
+    public enum AudioPlayKind
+    {
+        SE,
+        BGM,
+        Voice,
+    }
+
     AudioSource _soundEffectSource;
     AudioSource _BGMSource;
     [SerializeField]
@@ -85,11 +92,11 @@ public class MainSystem : MonoBehaviour
         StartCoroutine(SceneChange(SceneChanger.SceneKind.Story, storyKind));
     }
 
-    public void SoundPlay(int number, int soundNumber)
+    public void SoundPlay(AudioPlayKind kind, int soundNumber)
     {
-        switch (number)
+        switch (kind)
         {
-            case 0:
+            case AudioPlayKind.SE:
                 if (soundEffects.dataList.Count > soundNumber)
                 {
                     DOTween.To(() => 1f, x => _soundEffectSource.volume = x, 0f, 3)
@@ -102,7 +109,7 @@ public class MainSystem : MonoBehaviour
                 }
                 break;
 
-            case 1:
+            case AudioPlayKind.BGM:
                 if (soundEffects.dataList.Count > soundNumber)
                 {
                     DOTween.To(() => 1f, x => _BGMSource.volume = x, 0, 1.25f)
@@ -115,8 +122,8 @@ public class MainSystem : MonoBehaviour
                         });
                 }
                 break;
-            default:
-                Debug.LogWarning("SoundPlayメソッドの範囲外です");
+            case AudioPlayKind.Voice:
+
                 break;
         }
     }
