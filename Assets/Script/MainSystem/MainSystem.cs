@@ -92,7 +92,13 @@ public class MainSystem : MonoBehaviour
             case 0:
                 if (soundEffects.dataList.Count > soundNumber)
                 {
-                    _soundEffectSource.PlayOneShot(soundEffects.dataList[soundNumber]);
+                    DOTween.To(() => 1f, x => _soundEffectSource.volume = x, 0f, 3)
+                        .OnStart(() =>
+                        {
+                            if (_soundEffectSource.clip != null) _soundEffectSource.Stop();
+                            _soundEffectSource.clip = soundEffects.dataList[soundNumber];
+                            _soundEffectSource.Play();
+                        });
                 }
                 break;
 

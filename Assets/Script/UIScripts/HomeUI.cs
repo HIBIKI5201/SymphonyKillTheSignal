@@ -406,12 +406,22 @@ public class HomeUI : UIBase
             return;
         }
         _bonfireSliderValue += value;
-        _bonfireBranchText.text = $"{AdventureSystem.BonfireRequireBranch(_bonfireSliderValue)}–{";
+        (int haveBranch, int requireBranch) = (_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), ItemKind.branch)], AdventureSystem.BonfireRequireBranch(_bonfireSliderValue));
+        _bonfireBranchText.text = $"{haveBranch}/{requireBranch}";
+        if (haveBranch < requireBranch)
+        {
+            _bonfireBranchText.AddToClassList("worningTextColor");
+        }
+        else
+        {
+            _bonfireBranchText.RemoveFromClassList("worningTextColor");
+        }
         _bonfireBeLevelText.text = Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8).ToString();
         _bonfireImage.style.backgroundImage = _bonfireImagesList[Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8) / 2].texture;
     }
     void BonfireComformButtonClicked()
     {
+        if (_bonfireSliderValue < 5) return;
         _homeSystem.Bonfire(_bonfireSliderValue);
     }
     void RestSliderUpdate(int value)

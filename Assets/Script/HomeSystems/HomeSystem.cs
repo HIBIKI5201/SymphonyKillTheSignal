@@ -1,9 +1,7 @@
 using AdventureSystems;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static HomeUI;
 using static UserDataManager;
 public class HomeSystem : SystemBase
 {
@@ -98,5 +96,15 @@ public class HomeSystem : SystemBase
             }
         }
         _userDataManager.ChangeItemValue(_adventureSystem.itemData.itemDataList[index].kind, -1);
+        switch (_adventureSystem.itemData.itemDataList[index].kind)
+        {
+            case ItemKind.food:
+                mainSystem.SoundPlay(0, 0);
+                break;
+            case ItemKind.water:
+            case ItemKind.dertyWater:
+                mainSystem.SoundPlay(0, 1);
+                break;
+        }
     }
 }

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SoundEffect DataBase
   m_EditorClassIdentifier: 
   dataList:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: b80eee953fea98d47abcd5f08bc81913, type: 3}
+  - {fileID: 8300000, guid: dadc231fa2dcbe5449a0daba34d48c96, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

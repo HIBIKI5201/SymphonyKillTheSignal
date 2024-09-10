@@ -26,7 +26,7 @@ MonoBehaviour:
   - kind: 1
     collectData:
       itemName: "\u30D9\u30EA\u30FC\n"
-      time: 4
+      time: 3
       hunger: 9
       getMinValue: 2
       getMaxValue: 3
