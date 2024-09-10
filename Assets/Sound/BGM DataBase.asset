@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: BGM DataBase
   m_EditorClassIdentifier: 
   dataList:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 558336a9831c70d47a8e6de060fa1aff, type: 3}
+  - {fileID: 8300000, guid: e7350b1515d0e2d418e77380a02475c8, type: 3}
+  - {fileID: 8300000, guid: 360da0993ef8a994fa993b506cddb8ee, type: 3}

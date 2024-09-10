@@ -52,6 +52,7 @@ public class StorySystem : SystemBase
         _mainUI.UIAwake(this);
         //最初が0番目のテキストになるように初期値を設定
         _currentTextNumber = -1;
+        mainSystem.SoundPlay(1, 2);
     }
 
     public void TextDataLoad(StoryTextDataBase storyTextData)

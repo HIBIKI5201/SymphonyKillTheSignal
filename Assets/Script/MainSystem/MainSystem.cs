@@ -28,8 +28,8 @@ public class MainSystem : MonoBehaviour
         _storyManager = GetComponentInChildren<StoryManager>();
         _userDataManager = GetComponentInChildren<UserDataManager>();
         //AudioSourceを取得する
-        _soundEffectSource = GetComponentInChildren<AudioSource>();
-        _BGMSource = GetComponent<AudioSource>();
+        _soundEffectSource = GetComponent<AudioSource>();
+        _BGMSource = transform.GetChild(0).GetComponent<AudioSource>();
         //ポーズUIを非表示
         if (SceneChanger.CurrentScene == SceneChanger.SceneKind.Title)
         {
@@ -99,13 +99,13 @@ public class MainSystem : MonoBehaviour
             case 1:
                 if (soundEffects.dataList.Count > soundNumber)
                 {
-                    DOTween.To(() => 1f, x => _BGMSource.volume = x, 0, 0.25f)
+                    DOTween.To(() => 1f, x => _BGMSource.volume = x, 0, 1.25f)
                         .OnComplete(() =>
                         {
-                            _BGMSource.Stop();
+                            if (_BGMSource.clip != null) _BGMSource.Stop();
                             _BGMSource.clip = BGMs.dataList[soundNumber];
                             _BGMSource.Play();
-                            DOTween.To(() => 0, x => _BGMSource.volume = x, 1, 0.25f);
+                            DOTween.To(() => 0, x => _BGMSource.volume = x, 1, 1.25f);
                         });
                 }
                 break;
