@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-//using static UnityEngine.Rendering.DebugUI;
 using static UserDataManager;
 public class HomeUI : UIBase
 {
@@ -231,6 +230,7 @@ public class HomeUI : UIBase
             if (value > 0)
             {
                 icon.Q<Label>("Inventory-ItemValue").text = $"Å~{value}";
+                icon.RegisterCallback<ClickEvent>(evt => InventoryIconClicked(kind));
             }
             else
             {
@@ -387,5 +387,10 @@ public class HomeUI : UIBase
     void RestComformButtonClicked()
     {
         _homeSystem.Rest(_restSliderValue);
+    }
+
+    void InventoryIconClicked(ItemKind itemKind)
+    {
+        Debug.Log(itemKind);
     }
 }

@@ -181,28 +181,28 @@
             <engine:Button text="収集に行く" name="Collect-Button" class="textBox button" style="width: 80%; font-size: 50px; text-shadow: 1px 1px 3px rgb(0, 0, 0); color: rgb(0, 0, 0); height: 12%;" />
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="InventoryWindow" class="window" style="display: none;">
+    <engine:VisualElement name="InventoryWindow" class="window" style="display: flex;">
         <engine:ScrollView mode="Horizontal" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="AlwaysVisible" style="width: 100%; height: 65%;">
-            <engine:VisualElement style="height: 100%; width: 25%; flex-wrap: wrap;">
-                <engine:VisualElement name="Inventory-Branch" style="width: 100%; height: 50%; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; display: flex;">
+            <engine:VisualElement style="height: 100%; width: 20%; flex-wrap: wrap; align-items: center; margin-left: 10px;">
+                <engine:VisualElement name="Inventory-Branch" class="inventory-item-icon">
                     <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprite/Item/Branch.png?fileID=2800000&amp;guid=20588408279a5004fa1ce7f181f95e1a&amp;type=3#Branch&quot;); -unity-background-scale-mode: scale-to-fit;">
                         <engine:Label text="×10" name="Inventory-ItemValue" class="textBox" style="right: 0; bottom: 0; position: absolute; font-size: 25px;" />
                     </engine:VisualElement>
                     <engine:Label text="枝" class="textBox" style="-unity-text-align: upper-center; font-size: 35px;" />
                 </engine:VisualElement>
-                <engine:VisualElement name="Inventory-Berry" style="width: 100%; height: 50%; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; display: flex;">
+                <engine:VisualElement name="Inventory-Berry" class="inventory-item-icon">
                     <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprite/Item/Berry.png?fileID=2800000&amp;guid=af677bfe7f7770b458b495b6ab95d6cc&amp;type=3#Berry&quot;); -unity-background-scale-mode: scale-to-fit;">
                         <engine:Label text="×10" name="Inventory-ItemValue" class="textBox" style="right: 0; bottom: 0; position: absolute; font-size: 25px;" />
                     </engine:VisualElement>
                     <engine:Label text="ベリー" class="textBox" style="-unity-text-align: upper-center; font-size: 35px;" />
                 </engine:VisualElement>
-                <engine:VisualElement name="Inventory-DertyWater" style="width: 100%; height: 50%; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; display: flex;">
+                <engine:VisualElement name="Inventory-DertyWater" class="inventory-item-icon">
                     <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprite/Item/DertyWater.png?fileID=2800000&amp;guid=2d89aec582572f243872461d3d5a74e0&amp;type=3#DertyWater&quot;); -unity-background-scale-mode: scale-to-fit;">
                         <engine:Label text="×10" name="Inventory-ItemValue" class="textBox" style="right: 0; bottom: 0; position: absolute; font-size: 25px;" />
                     </engine:VisualElement>
                     <engine:Label text="不純水" class="textBox" style="-unity-text-align: upper-center; font-size: 35px;" />
                 </engine:VisualElement>
-                <engine:VisualElement name="Inventory-Water" style="width: 100%; height: 50%; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; display: flex; background-image: none;">
+                <engine:VisualElement name="Inventory-Water" class="inventory-item-icon">
                     <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprite/Item/Water.png?fileID=2800000&amp;guid=543a36eca784f044fb53ac45afb83759&amp;type=3#Water&quot;); -unity-background-scale-mode: scale-to-fit;">
                         <engine:Label text="×10" name="Inventory-ItemValue" class="textBox" style="right: 0; bottom: 0; position: absolute; font-size: 25px;" />
                     </engine:VisualElement>
