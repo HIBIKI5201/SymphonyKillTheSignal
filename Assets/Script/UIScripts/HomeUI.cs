@@ -95,6 +95,7 @@ public class HomeUI : UIBase
     readonly Dictionary<ItemKind, (int value, List<CraftDataBase.RequireMaterial> list)> _craftDictionary = new();
     readonly List<Label> _craftMaterialTextList = new();
     Button _craftComformButton;
+    VisualElement _craftWarningBonfire;
 
     VisualElement _inventoryWindow;
     readonly Dictionary<ItemKind, VisualElement> _inventoryItemsDictionary = new();
@@ -226,6 +227,8 @@ public class HomeUI : UIBase
         _craftWaterButton = _root.Q<VisualElement>("Craft-Water");
         _craftWaterButton.RegisterCallback<ClickEvent>(evt => CraftButtonClicked(ItemKind.water));
         _craftMaterialTextList.Add(_root.Q<Label>("Craft-MaterialOne"));
+        _craftWarningBonfire = _root.Q<VisualElement>("Craft-BonfireWarning");
+        _craftWarningBonfire.style.display = DisplayStyle.None;
         CraftButtonClicked(ItemKind.water);
         _craftComformButton = _root.Q<Button>("Craft-ConformButton");
         _craftComformButton.clicked += CraftComformButtonClicked;
@@ -430,6 +433,15 @@ public class HomeUI : UIBase
         {
             _craftMaterialTextList[i].text = $"{_homeSystem._adventureSystem.itemData.itemDataList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), datas[i].materialKind)].collectData.itemName} : {_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), datas[i].materialKind)]} / {datas[i].value}";
         }
+        switch (kind)
+        {
+            case ItemKind.water:
+                if (_homeSystem._userDataManager.saveData.campLevel <= 0)
+                {
+                    _craftWarningBonfire.style.display = DisplayStyle.Flex;
+                }
+                break;
+        }
         _craftcurrentKind = kind;
     }
     void CraftComformButtonClicked()
@@ -442,7 +454,14 @@ public class HomeUI : UIBase
         switch (_craftcurrentKind)
         {
             case ItemKind.water:
-                if (_homeSystem._userDataManager.saveData.campLevel <= 0) return;
+                if (_homeSystem._userDataManager.saveData.campLevel <= 0)
+                {
+                    _craftWarningBonfire.style.display = DisplayStyle.Flex;
+                    return;
+                }
+                break;
+            default:
+                _craftWarningBonfire.style.display = DisplayStyle.None;
                 break;
         }
         _homeSystem.Craft(_craftcurrentKind, _craftDictionary[_craftcurrentKind].value, datas);
