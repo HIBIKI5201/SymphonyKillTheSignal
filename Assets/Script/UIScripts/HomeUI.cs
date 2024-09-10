@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Rendering.FilterWindow;
 using static UserDataManager;
 public class HomeUI : UIBase
 {
@@ -309,7 +310,7 @@ public class HomeUI : UIBase
                                 StatusKind.Hunger => SaveDataManager._mainSaveData.hunger,
                                 StatusKind.Thirst => SaveDataManager._mainSaveData.thirst,
                                 _ => 0
-                            } - value, 0.5f); ;
+                            } - value, 0.5f);
                 break;
             case GaugeAnimation.Reset:
                 foreach (VisualElement element in elements)
@@ -451,6 +452,15 @@ public class HomeUI : UIBase
                     break;
             }
         }
-        InventoryIconClicked(_inventorySelectItemKind);
+        if (_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), _inventorySelectItemKind)] <= 0)
+        {
+            _inventoryItemsDictionary[_inventorySelectItemKind].style.display = DisplayStyle.None;
+            _inventoryItemExplanationText.text = "";
+            Debug.Log(_inventoryItemExplanationText.text);
+        }
+        else
+        {
+            InventoryIconClicked(_inventorySelectItemKind);
+        }
     }
 }
