@@ -300,7 +300,7 @@ public class HomeUI : UIBase
                     CollectWindowButtonClicked(_collectBranchButton);
                     break;
                 case WindowKind.Camp:
-                    BonfireSliderUpdate(_bonfireSliderValue);
+                    CampWindowButtonClicked(_bonfireButton);
                     break;
             }
         }
@@ -404,6 +404,18 @@ public class HomeUI : UIBase
         {
             window.style.display = window == _campWindowChildrens[clickedElement] ? DisplayStyle.Flex : DisplayStyle.None;
         }
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Health, 0);
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Hunger, 0);
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Thirst, 0);
+        if (clickedElement == _bonfireButton)
+        {
+            StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Hunger, 8);
+            StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Thirst, AdventureSystem.TimeToThirst(1));
+        }
+        else if (clickedElement == _restButton)
+        {
+            RestSliderUpdate(_restSliderValue);
+        }
     }
     void BonfireSliderUpdate(int value)
     {
@@ -439,7 +451,6 @@ public class HomeUI : UIBase
         _restHealthText.text = AdventureSystem.RestHealHealth(value, _homeSystem._userDataManager.saveData.campLevel).ToString("0.0");
         StatusGaugeAnimation(GaugeAnimation.Increase, StatusKind.Health, AdventureSystem.RestHealHealth(value, _homeSystem._userDataManager.saveData.campLevel));
         StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Thirst, AdventureSystem.TimeToThirst(value));
-
     }
     void RestComformButtonClicked()
     {
