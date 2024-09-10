@@ -399,6 +399,7 @@ public class HomeUI : UIBase
         _restSliderValue = value;
         _restTimeText.text = $"{value}時間";
         _restHealthText.text = AdventureSystem.RestHealHealth(value, _homeSystem._userDataManager.saveData.campLevel).ToString("0.0");
+        StatusGaugeAnimation(GaugeAnimation.Increase, StatusKind.Health, AdventureSystem.RestHealHealth(value, _homeSystem._userDataManager.saveData.campLevel));
     }
     void RestComformButtonClicked()
     {
@@ -407,7 +408,6 @@ public class HomeUI : UIBase
 
     void InventoryIconClicked(ItemKind itemKind)
     {
-        Debug.Log(itemKind);
         int index = Array.IndexOf(Enum.GetValues(typeof(ItemKind)), itemKind);
         ItemDataBase.ItemInventoryData itemData = _homeSystem._adventureSystem.itemData.itemDataList[index].inventoryData;
         _inventoryItemExplanationText.text = itemData.explanation;
@@ -423,7 +423,14 @@ public class HomeUI : UIBase
 
     void InventoryComformButtonClicked()
     {
+        //アイテムがない場合と使用できないアイテムの場合は終了
         if (_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), _inventorySelectItemKind)] <= 0) return;
+        switch (_inventorySelectItemKind)
+        {
+            case ItemKind.branch:
+                return;
+        }
+        //アイテムを使用する処理
         int index = Array.IndexOf(Enum.GetValues(typeof(ItemKind)), _inventorySelectItemKind);
         _homeSystem.ItemUse(index);
         _inventoryItemsDictionary[_inventorySelectItemKind].Q<Label>("Inventory-ItemValue").text = $"×{_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), _inventorySelectItemKind)]}";
@@ -444,5 +451,6 @@ public class HomeUI : UIBase
                     break;
             }
         }
+        InventoryIconClicked(_inventorySelectItemKind);
     }
 }

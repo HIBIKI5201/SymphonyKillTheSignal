@@ -27,7 +27,7 @@ public class UserDataManager : MonoBehaviour
     {
         saveData.time += time;
         saveData.campLevel = Mathf.Max(saveData.campLevel - time, 0);
-        ChangeThirst(-time * 6);
+        ChangeThirst(-time * 4);
     }
 
     public void ChangeHealth(int value)
