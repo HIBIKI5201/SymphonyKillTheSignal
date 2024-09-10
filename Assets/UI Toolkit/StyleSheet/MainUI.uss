@@ -1,3 +1,18 @@
+.textBox {
+    -unity-font-definition: url("project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#JapaneseFont");
+    text-shadow: 3px 3px 3px rgb(0, 0, 0);
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+}
+
+.textBox.worningTextColor {
+    color: rgb(255, 64, 64);
+}
+
+.textBox.benefitTextColor {
+    color: rgb(131, 255, 64);
+}
+
 .button {
     background-color: rgb(191, 191, 191);
     border-top-left-radius: 5px;

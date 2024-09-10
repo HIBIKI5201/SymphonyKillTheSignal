@@ -156,7 +156,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Bonfire_4_0: -9197315575056992080
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

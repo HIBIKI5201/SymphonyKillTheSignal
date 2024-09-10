@@ -29,15 +29,15 @@ MonoBehaviour:
   - characterType: 1
     kind: 0
     text: "...\u3093..."
-    voiceData: {fileID: 0}
+    voiceData: {fileID: 8300000, guid: b6f1d3843af6803458ad309456e9ef52, type: 3}
   - characterType: 1
     kind: 0
     text: "\u5BD2\u3044..."
-    voiceData: {fileID: 0}
+    voiceData: {fileID: 8300000, guid: 39520023b540c2e4190dea028054827f, type: 3}
   - characterType: 1
     kind: 0
     text: "\u8D77\u304D\u306A\u304D\u3083"
-    voiceData: {fileID: 0}
+    voiceData: {fileID: 8300000, guid: 2c93f0c8846cf564ca0033b03bc70821, type: 3}
   - characterType: 0
     kind: 1
     text: FadeOut
@@ -45,11 +45,11 @@ MonoBehaviour:
   - characterType: 1
     kind: 0
     text: "\u3082\u3046\u671D\u3060..."
-    voiceData: {fileID: 0}
+    voiceData: {fileID: 8300000, guid: 9ca29c1b60f7076409c4e37208971f7d, type: 3}
   - characterType: 1
     kind: 0
     text: "\u5BD2\u3044\u3051\u3069\u3001\u9032\u307E\u306A\u304D\u3083"
-    voiceData: {fileID: 0}
+    voiceData: {fileID: 8300000, guid: 498f9cc56d8223f4b9472c206375b18e, type: 3}
   - characterType: 1
     kind: 1
     text: 'Move
