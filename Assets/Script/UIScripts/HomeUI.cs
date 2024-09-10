@@ -423,13 +423,13 @@ public class HomeUI : UIBase
             _bonfireBranchText.RemoveFromClassList("worningTextColor");
         }
         _bonfireBeLevelText.text = Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8).ToString();
-        _bonfireImage.style.backgroundImage = _bonfireImagesList[Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8) / 2].texture;
+        _bonfireImage.style.backgroundImage = _bonfireImagesList[AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) / 2].texture;
         StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Hunger, 8);
         StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Thirst, AdventureSystem.TimeToThirst(1));
     }
     void BonfireComformButtonClicked()
     {
-        if (_bonfireSliderValue < 5) return;
+        if (_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), ItemKind.branch)] < 5) return;
         _homeSystem.Bonfire(_bonfireSliderValue);
     }
     void RestSliderUpdate(int value)
