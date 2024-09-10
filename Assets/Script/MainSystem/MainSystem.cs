@@ -15,11 +15,11 @@ public class MainSystem : MonoBehaviour
     {
         SE,
         BGM,
-        Voice,
     }
 
     AudioSource _soundEffectSource;
     AudioSource _BGMSource;
+    AudioSource _voiceSource;
     [SerializeField]
     SoundDataBase soundEffects;
     [SerializeField]
@@ -35,8 +35,10 @@ public class MainSystem : MonoBehaviour
         _storyManager = GetComponentInChildren<StoryManager>();
         _userDataManager = GetComponentInChildren<UserDataManager>();
         //AudioSourceを取得する
-        _soundEffectSource = GetComponent<AudioSource>();
-        _BGMSource = transform.GetChild(0).GetComponent<AudioSource>();
+        AudioSource[] audioSources = transform.GetChild(0).GetComponents<AudioSource>();
+        _soundEffectSource = audioSources[0];
+        _BGMSource = audioSources[1];
+        _voiceSource = audioSources[2];
         //ポーズUIを非表示
         if (SceneChanger.CurrentScene == SceneChanger.SceneKind.Title)
         {
@@ -122,14 +124,13 @@ public class MainSystem : MonoBehaviour
                         });
                 }
                 break;
-            case AudioPlayKind.Voice:
-
-                break;
         }
     }
     public void VoicePlay(AudioClip audio)
     {
-        _soundEffectSource.PlayOneShot(audio);
+        _voiceSource.Stop();
+        _voiceSource.clip = audio;
+        _voiceSource.Play();
     }
     IEnumerator SceneChange(SceneChanger.SceneKind sceneKind)
     {
