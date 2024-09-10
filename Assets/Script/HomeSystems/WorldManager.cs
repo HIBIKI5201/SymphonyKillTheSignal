@@ -12,7 +12,7 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     SpriteRenderer blackSky;
     [SerializeField]
-    Light2D light;
+    Light2D worldLight;
     [SerializeField]
     AnimationCurve lightCurve;
     public enum Weather
@@ -68,6 +68,6 @@ public class WorldManager : MonoBehaviour
     }
     void LightBehaviour(float time)
     {
-        light.intensity = lightCurve.Evaluate(time);
+        worldLight.intensity = lightCurve.Evaluate(time);
     }
 }
