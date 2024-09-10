@@ -676,6 +676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 0824cae6c96637040b9544c57568f789, type: 2}
+  craftData: {fileID: 11400000, guid: f2ef411c4b8f3a74cbb11c34965cd801, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

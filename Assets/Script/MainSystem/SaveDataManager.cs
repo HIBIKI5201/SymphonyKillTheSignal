@@ -73,7 +73,7 @@ public class SaveData
     public WorldManager.Weather weather;
 
     public List<int> itemList;
-    public SaveData(DateTime dateTime, int time, int distance, int health, int hunger, int thirst, int campLevel, WorldManager.Weather weather)
+    public SaveData(int time, int distance, int health, int hunger, int thirst, int campLevel, WorldManager.Weather weather)
     {
         saveDate = new RealTime(DateTime.Now).time;
         this.distance = distance;

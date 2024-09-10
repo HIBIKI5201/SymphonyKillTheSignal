@@ -5,6 +5,7 @@ namespace AdventureSystems
     public class AdventureSystem : MonoBehaviour
     {
         public ItemDataBase itemData;
+        public CraftDataBase craftData;
 
         public static int MovementTimeToDistance(int time)
         {

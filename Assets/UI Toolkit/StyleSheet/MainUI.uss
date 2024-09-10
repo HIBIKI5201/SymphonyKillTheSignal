@@ -43,10 +43,3 @@
     background-color: rgb(128, 128, 128);
     height: 15%;
 }
-
-.textBox {
-    -unity-font-definition: url("project://database/Assets/font/JapaneseFont.ttf?fileID=12800000&guid=bf12a9e7c0cbc8e428480f2d8f446958&type=3#JapaneseFont");
-    text-shadow: 3px 3px 3px rgb(0, 0, 0);
-    -unity-text-align: middle-center;
-    color: rgb(255, 255, 255);
-}

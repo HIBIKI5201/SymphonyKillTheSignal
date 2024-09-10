@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEditor.Rendering.FilterWindow;
 using static UserDataManager;
 public class HomeUI : UIBase
 {
@@ -43,7 +42,7 @@ public class HomeUI : UIBase
         Decrease,
         Reset,
     }
-    Dictionary<StatusKind, (VisualElement bar, VisualElement increaseBar, VisualElement decreaseBar)> _gaugeDictionary = new();
+    readonly Dictionary<StatusKind, (VisualElement bar, VisualElement increaseBar, VisualElement decreaseBar)> _gaugeDictionary = new();
     bool gaugeReseting;
 
     VisualElement _currentWindow;
@@ -90,9 +89,15 @@ public class HomeUI : UIBase
     Label _restHealthText;
     Button _restComformButton;
     VisualElement _craftWindow;
+    ItemKind _craftcurrentKind;
+    Label _craftNameText;
+    VisualElement _craftWaterButton;
+    readonly Dictionary<ItemKind, (int value, List<CraftDataBase.RequireMaterial> list)> _craftDictionary = new();
+    readonly List<Label> _craftMaterialTextList = new();
+    Button _craftComformButton;
 
     VisualElement _inventoryWindow;
-    Dictionary<ItemKind, VisualElement> _inventoryItemsDictionary = new();
+    readonly Dictionary<ItemKind, VisualElement> _inventoryItemsDictionary = new();
     Label _inventoryItemExplanationText;
     Button _inventoryConformbutton;
     ItemKind _inventorySelectItemKind;
@@ -213,6 +218,17 @@ public class HomeUI : UIBase
         _craftButton = _root.Q<VisualElement>("Camp-Craft");
         _craftButton.RegisterCallback<ClickEvent>(evt => CampWindowButtonClicked(_craftButton));
         _craftWindow = _root.Q<VisualElement>("Camp-CraftWindow");
+        foreach (var element in _homeSystem._adventureSystem.craftData.craftDatas)
+        {
+            _craftDictionary.Add(element.itemKind, (element.getValue, element.requireMaterials));
+        }
+        _craftNameText = _root.Q<Label>("Craft-CraftName");
+        _craftWaterButton = _root.Q<VisualElement>("Craft-Water");
+        _craftWaterButton.RegisterCallback<ClickEvent>(evt => CraftButtonClicked(ItemKind.water));
+        _craftMaterialTextList.Add(_root.Q<Label>("Craft-MaterialOne"));
+        CraftButtonClicked(ItemKind.water);
+        _craftComformButton = _root.Q<Button>("Craft-ConformButton");
+        _craftComformButton.clicked += CraftComformButtonClicked;
         //キャンプウィンドウを初期化
         _campWindowChildrens = new()
         {
@@ -305,12 +321,12 @@ public class HomeUI : UIBase
                 DOTween.To(() => (elements[0].resolvedStyle.width / elements[0].parent.resolvedStyle.width) * 100,
                          x => elements[0].style.width = new Length(Mathf.Max(x, 0), LengthUnit.Percent),
                         gaugeKind switch
-                            {
-                                StatusKind.Health => SaveDataManager._mainSaveData.health,
-                                StatusKind.Hunger => SaveDataManager._mainSaveData.hunger,
-                                StatusKind.Thirst => SaveDataManager._mainSaveData.thirst,
-                                _ => 0
-                            } - value, 0.5f);
+                        {
+                            StatusKind.Health => SaveDataManager._mainSaveData.health,
+                            StatusKind.Hunger => SaveDataManager._mainSaveData.hunger,
+                            StatusKind.Thirst => SaveDataManager._mainSaveData.thirst,
+                            _ => 0
+                        } - value, 0.5f);
                 break;
             case GaugeAnimation.Reset:
                 foreach (VisualElement element in elements)
@@ -405,6 +421,48 @@ public class HomeUI : UIBase
     void RestComformButtonClicked()
     {
         _homeSystem.Rest(_restSliderValue);
+    }
+    void CraftButtonClicked(ItemKind kind)
+    {
+        _craftNameText.text = _homeSystem._adventureSystem.itemData.itemDataList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), kind)].collectData.itemName;
+        List<CraftDataBase.RequireMaterial> datas = _craftDictionary[kind].list;
+        for (int i = 0; i < datas.Count; i++)
+        {
+            _craftMaterialTextList[i].text = $"{_homeSystem._adventureSystem.itemData.itemDataList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), datas[i].materialKind)].collectData.itemName} : {_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), datas[i].materialKind)]} / {datas[i].value}";
+        }
+        _craftcurrentKind = kind;
+    }
+    void CraftComformButtonClicked()
+    {
+        List<CraftDataBase.RequireMaterial> datas = _craftDictionary[_craftcurrentKind].list;
+        foreach (var data in datas)
+        {
+            if (_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), data.materialKind)] <= 0) return;
+        }
+        switch (_craftcurrentKind)
+        {
+            case ItemKind.water:
+                if (_homeSystem._userDataManager.saveData.campLevel <= 0) return;
+                break;
+        }
+        _homeSystem.Craft(_craftcurrentKind, _craftDictionary[_craftcurrentKind].value, datas);
+        foreach (var element in _inventoryItemsDictionary)
+        {
+            int value = _homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), element.Key)];
+            if (value > 0)
+            {
+                element.Value.Q<Label>("Inventory-ItemValue").text = $"×{value}";
+                element.Value.RegisterCallback<ClickEvent>(evt => InventoryIconClicked(element.Key));
+            }
+            else
+            {
+                element.Value.style.display = DisplayStyle.None;
+            }
+        }
+        for (int i = 0; i < datas.Count; i++)
+        {
+            _craftMaterialTextList[i].text = $"{_homeSystem._adventureSystem.itemData.itemDataList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), datas[i].materialKind)].collectData.itemName} : {_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), datas[i].materialKind)]} / {datas[i].value}";
+        }
     }
 
     void InventoryIconClicked(ItemKind itemKind)

@@ -1,5 +1,7 @@
 using AdventureSystems;
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static HomeUI;
 using static UserDataManager;
@@ -9,7 +11,6 @@ public class HomeSystem : SystemBase
     WorldManager _worldManager;
     public UserDataManager _userDataManager;
     public AdventureSystem _adventureSystem;
-
     public override void Initialize()
     {
         _userDataManager = mainSystem._userDataManager;
@@ -65,6 +66,16 @@ public class HomeSystem : SystemBase
         _userDataManager.ChangeTime(value);
         _userDataManager.ChangeHealth(AdventureSystem.RestHealHealth(value, _userDataManager.saveData.campLevel));
         mainSystem.BackToHome();
+    }
+
+    public void Craft(ItemKind itemKind, int value, List<CraftDataBase.RequireMaterial> list)
+    {
+        foreach (CraftDataBase.RequireMaterial item in list)
+        {
+            _userDataManager.ChangeItemValue(item.materialKind, -item.value);
+        }
+        _userDataManager.ChangeItemValue(itemKind, value);
+        Debug.Log(_userDataManager.saveData.itemList[2]);
     }
 
     public void ItemUse(int index)
