@@ -51,7 +51,6 @@ public class SceneChanger : MonoBehaviour
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(_sceneNames[sceneKind]));
         // ロード完了後に現在のシーンをアンロード
         AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(_sceneNames[CurrentScene]);
-        CurrentScene = sceneKind;
         //アンロードが終わるまで待機
         while (!asyncUnload.isDone)
         {

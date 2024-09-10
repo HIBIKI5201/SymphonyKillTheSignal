@@ -92,6 +92,7 @@ public class HomeUI : UIBase
 
     VisualElement _inventoryWindow;
     List<(ItemKind kind, VisualElement icon)> inventoryItemsList = new();
+    Label _inventoryItemExplanationText;
 
     public override void UIAwake(SystemBase system)
     {
@@ -222,7 +223,7 @@ public class HomeUI : UIBase
         _inventoryWindow.style.display = DisplayStyle.None;
         inventoryItemsList.Add((ItemKind.branch, _root.Q<VisualElement>("Inventory-Branch")));
         inventoryItemsList.Add((ItemKind.food, _root.Q<VisualElement>("Inventory-Berry")));
-        inventoryItemsList.Add((ItemKind.dertyWater, _root.Q<VisualElement>("Inventory-Water")));
+        inventoryItemsList.Add((ItemKind.water, _root.Q<VisualElement>("Inventory-Water")));
         inventoryItemsList.Add((ItemKind.dertyWater, _root.Q<VisualElement>("Inventory-DertyWater")));
         foreach (var (kind, icon) in inventoryItemsList)
         {
@@ -237,6 +238,7 @@ public class HomeUI : UIBase
                 icon.style.display = DisplayStyle.None;
             }
         }
+        _inventoryItemExplanationText = _root.Q<Label>("Inventory-ExplanationText");
         _windowDictionary = new()
             {
                 {WindowKind.Movement, _movementWindow},
@@ -288,13 +290,14 @@ public class HomeUI : UIBase
                 break;
             case GaugeAnimation.Decrease:
                 DOTween.To(() => (elements[0].resolvedStyle.width / elements[0].parent.resolvedStyle.width) * 100,
-                            x =>  elements[0].style.width = new Length(Mathf.Max(x, 0), LengthUnit.Percent),
+                            x => elements[0].style.width = new Length(Mathf.Max(x, 0), LengthUnit.Percent),
                             gaugeKind switch
                             {
                                 StatusKind.Health => SaveDataManager._mainSaveData.health,
                                 StatusKind.Hunger => SaveDataManager._mainSaveData.hunger,
-                                StatusKind.Thirst => SaveDataManager._mainSaveData.thirst
-                            } - value, 0.5f);
+                                StatusKind.Thirst => SaveDataManager._mainSaveData.thirst,
+                                _ => 0
+                            } - value, 0.5f); ;
                 break;
             case GaugeAnimation.Reset:
                 foreach (VisualElement element in elements)
@@ -305,7 +308,8 @@ public class HomeUI : UIBase
                             {
                                 StatusKind.Health => SaveDataManager._mainSaveData.health,
                                 StatusKind.Hunger => SaveDataManager._mainSaveData.hunger,
-                                StatusKind.Thirst => SaveDataManager._mainSaveData.thirst
+                                StatusKind.Thirst => SaveDataManager._mainSaveData.thirst,
+                                _ => 0
                             }, 0.3f);
                 }
                 break;
@@ -392,5 +396,8 @@ public class HomeUI : UIBase
     void InventoryIconClicked(ItemKind itemKind)
     {
         Debug.Log(itemKind);
+        int index = Array.IndexOf(Enum.GetValues(typeof(ItemKind)), itemKind);
+        ItemDataBase.ItemInventoryData itemData = _homeSystem._adventureSystem.itemData.itemDataList[index].inventoryData;
+        _inventoryItemExplanationText.text = itemData.explanation;
     }
 }
