@@ -191,11 +191,11 @@ public class HomeUI : UIBase
         _bonfireBeLevelText = _root.Q<Label>("Bonfire-BeLevel");
         _bonfireImage = _root.Q<VisualElement>("Bonfire-Image");
         _bonfirePlusButton = _root.Q<Button>("Bonfire-PlusButton");
-        _bonfirePlusButton.RegisterCallback<ClickEvent>(evt => BonfireSliderUpdate(1));
+        _bonfirePlusButton.RegisterCallback<ClickEvent>(evt => BonfireSliderUpdate(_bonfireSliderValue + 1));
         _bonfireMinusButton = _root.Q<Button>("Bonfire-MinusButton");
-        _bonfireMinusButton.RegisterCallback<ClickEvent>(evt => BonfireSliderUpdate(-1));
+        _bonfireMinusButton.RegisterCallback<ClickEvent>(evt => BonfireSliderUpdate(_bonfireSliderValue - 1));
         _bonfireSliderValue = 1;
-        BonfireSliderUpdate(0);
+        BonfireSliderUpdate(_bonfireSliderValue);
         _bonfireComformButton = _root.Q<Button>("Bonfire-Button");
         _bonfireComformButton.clicked += BonfireComformButtonClicked;
         //休息のプロパティ
@@ -298,6 +298,9 @@ public class HomeUI : UIBase
                     break;
                 case WindowKind.Collect:
                     CollectWindowButtonClicked(_collectBranchButton);
+                    break;
+                case WindowKind.Camp:
+                    BonfireSliderUpdate(_bonfireSliderValue);
                     break;
             }
         }
@@ -404,11 +407,11 @@ public class HomeUI : UIBase
     }
     void BonfireSliderUpdate(int value)
     {
-        if (_bonfireSliderValue + value <= 0 || _bonfireSliderValue + value >= 4)
+        if (value <= 0 || value >= 4)
         {
             return;
         }
-        _bonfireSliderValue += value;
+        _bonfireSliderValue = value;
         (int haveBranch, int requireBranch) = (_homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), ItemKind.branch)], AdventureSystem.BonfireRequireBranch(_bonfireSliderValue));
         _bonfireBranchText.text = $"{haveBranch}/{requireBranch}";
         if (haveBranch < requireBranch)
@@ -421,8 +424,8 @@ public class HomeUI : UIBase
         }
         _bonfireBeLevelText.text = Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8).ToString();
         _bonfireImage.style.backgroundImage = _bonfireImagesList[Mathf.Min(AdventureSystem.BonfireBecomeLevel(_bonfireSliderValue) + _homeSystem._userDataManager.saveData.campLevel, 8) / 2].texture;
+        StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Hunger, 8);
         StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Thirst, AdventureSystem.TimeToThirst(1));
-
     }
     void BonfireComformButtonClicked()
     {
