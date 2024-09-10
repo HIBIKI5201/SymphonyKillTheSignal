@@ -6135,7 +6135,7 @@ MonoBehaviour:
   blueSky: {fileID: 2102504135}
   redSky: {fileID: 2045414438}
   blackSky: {fileID: 409603625}
-  light: {fileID: 366215040}
+  worldLight: {fileID: 366215040}
   lightCurve:
     serializedVersion: 2
     m_Curve:

@@ -43,13 +43,7 @@ public class HomeUI : UIBase
         Decrease,
         Reset,
     }
-    enum GaugeKind
-    {
-        Health,
-        Hunger,
-        Thirst,
-    }
-    Dictionary<GaugeKind, (VisualElement bar, VisualElement increaseBar, VisualElement decreaseBar)> _gaugeDictionary = new();
+    Dictionary<StatusKind, (VisualElement bar, VisualElement increaseBar, VisualElement decreaseBar)> _gaugeDictionary = new();
     bool gaugeReseting;
 
     VisualElement _currentWindow;
@@ -117,22 +111,22 @@ public class HomeUI : UIBase
         _healthBar = _root.Q<VisualElement>("Health-Bar");
         _healthIncreaseBar = _root.Q<VisualElement>("Health-IncreaseBar");
         _healthDecreaseBar = _root.Q<VisualElement>("Health-DecreaseBar");
-        _gaugeDictionary.Add(GaugeKind.Health, (_healthBar, _healthIncreaseBar, _healthDecreaseBar));
-        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Health, 0);
+        _gaugeDictionary.Add(StatusKind.Health, (_healthBar, _healthIncreaseBar, _healthDecreaseBar));
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Health, 0);
         _healthText = _root.Q<Label>("Health-Text");
         _healthText.text = $"{SaveDataManager._mainSaveData.health} / 100";
         _hungerBar = _root.Q<VisualElement>("Hunger-Bar");
         _hungerIncreaseBar = _root.Q<VisualElement>("Hunger-IncreaseBar");
         _hungerDecreaseBar = _root.Q<VisualElement>("Hunger-DecreaseBar");
-        _gaugeDictionary.Add(GaugeKind.Hunger, (_hungerBar, _hungerIncreaseBar, _hungerDecreaseBar));
-        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Hunger, 0);
+        _gaugeDictionary.Add(StatusKind.Hunger, (_hungerBar, _hungerIncreaseBar, _hungerDecreaseBar));
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Hunger, 0);
         _hungerText = _root.Q<Label>("Hunger-Text");
         _hungerText.text = $"{SaveDataManager._mainSaveData.hunger} / 100";
         _thirstBar = _root.Q<VisualElement>("Thirst-Bar");
         _thirstIncreaseBar = _root.Q<VisualElement>("Thirst-IncreaseBar");
         _thirstDecreaseBar = _root.Q<VisualElement>("Thirst-DecreaseBar");
-        _gaugeDictionary.Add(GaugeKind.Thirst, (_thirstBar, _thirstIncreaseBar, _thirstDecreaseBar));
-        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Thirst, 0);
+        _gaugeDictionary.Add(StatusKind.Thirst, (_thirstBar, _thirstIncreaseBar, _thirstDecreaseBar));
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Thirst, 0);
         _thirstText = _root.Q<Label>("Thirst-Text");
         _thirstText.text = $"{SaveDataManager._mainSaveData.thirst} / 100";
         gaugeReseting = true;
@@ -255,9 +249,9 @@ public class HomeUI : UIBase
 
     void OnclickMainButton(WindowKind kind)
     {
-        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Health, 0);
-        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Hunger, 0);
-        StatusGaugeAnimation(GaugeAnimation.Reset, GaugeKind.Thirst, 0);
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Health, 0);
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Hunger, 0);
+        StatusGaugeAnimation(GaugeAnimation.Reset, StatusKind.Thirst, 0);
         //ウィンドウを閉じる
         if (_windowDictionary[kind] == _currentWindow)
         {
@@ -283,7 +277,7 @@ public class HomeUI : UIBase
         }
     }
 
-    void StatusGaugeAnimation(GaugeAnimation animeKind, GaugeKind gaugeKind, int value)
+    void StatusGaugeAnimation(GaugeAnimation animeKind, StatusKind gaugeKind, int value)
     {
         if (gaugeReseting) return;
         VisualElement[] elements = new VisualElement[] { _gaugeDictionary[gaugeKind].bar, _gaugeDictionary[gaugeKind].increaseBar, _gaugeDictionary[gaugeKind].decreaseBar };
@@ -297,22 +291,21 @@ public class HomeUI : UIBase
                             x =>  elements[0].style.width = new Length(Mathf.Max(x, 0), LengthUnit.Percent),
                             gaugeKind switch
                             {
-                                GaugeKind.Health => SaveDataManager._mainSaveData.health,
-                                GaugeKind.Hunger => SaveDataManager._mainSaveData.hunger,
-                                GaugeKind.Thirst => SaveDataManager._mainSaveData.thirst
+                                StatusKind.Health => SaveDataManager._mainSaveData.health,
+                                StatusKind.Hunger => SaveDataManager._mainSaveData.hunger,
+                                StatusKind.Thirst => SaveDataManager._mainSaveData.thirst
                             } - value, 0.5f);
                 break;
             case GaugeAnimation.Reset:
                 foreach (VisualElement element in elements)
                 {
-                    Debug.Log("a");
                     DOTween.To(() => (element.resolvedStyle.width / element.parent.resolvedStyle.width) * 100,
-                            x => { element.style.width = new Length(Mathf.Max(x, 0), LengthUnit.Percent); Debug.Log(x); },
+                            x => element.style.width = new Length(Mathf.Max(x, 0), LengthUnit.Percent),
                             gaugeKind switch
                             {
-                                GaugeKind.Health => SaveDataManager._mainSaveData.health,
-                                GaugeKind.Hunger => SaveDataManager._mainSaveData.hunger,
-                                GaugeKind.Thirst => SaveDataManager._mainSaveData.thirst
+                                StatusKind.Health => SaveDataManager._mainSaveData.health,
+                                StatusKind.Hunger => SaveDataManager._mainSaveData.hunger,
+                                StatusKind.Thirst => SaveDataManager._mainSaveData.thirst
                             }, 0.3f);
                 }
                 break;
@@ -325,9 +318,9 @@ public class HomeUI : UIBase
         _movementDistanceText.text = $"{AdventureSystem.MovementTimeToDistance(value)}km";
         _movemetTimeText.text = $"{value}時間";
         _movementHungerText.text = AdventureSystem.MovementTimeToHunger(value).ToString("0.0");
-        StatusGaugeAnimation(GaugeAnimation.Decrease, GaugeKind.Hunger, AdventureSystem.MovementTimeToHunger(value));
+        StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Hunger, AdventureSystem.MovementTimeToHunger(value));
         _movementHealthText.text = AdventureSystem.MovementTimeToHealth(value).ToString("0.0");
-        StatusGaugeAnimation(GaugeAnimation.Decrease, GaugeKind.Health, AdventureSystem.MovementTimeToHealth(value));
+        StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Health, AdventureSystem.MovementTimeToHealth(value));
     }
     void MovementComformButtonClicked()
     {
@@ -344,11 +337,11 @@ public class HomeUI : UIBase
         }
         _collectWindowKind = _collectWindowDictionary[clickedElement];
         int index = Array.IndexOf(Enum.GetValues(typeof(ItemKind)), _collectWindowKind);
-        ItemDataBase.ItemData itemData = _homeSystem._adventureSystem.itemData.itemDataList[index];
-        _collectGetItemListText.text = itemData.itemKind;
+        ItemDataBase.ItemCollectData itemData = _homeSystem._adventureSystem.itemData.itemDataList[index].collectData;
+        _collectGetItemListText.text = itemData.itemName;
         _collectTimeText.text = $"{itemData.time}時間";
         _collectHungerText.text = $"{itemData.hunger}";
-        StatusGaugeAnimation(GaugeAnimation.Decrease, GaugeKind.Hunger, itemData.hunger);
+        StatusGaugeAnimation(GaugeAnimation.Decrease, StatusKind.Hunger, itemData.hunger);
     }
 
     void CollectComformButtonClicked()

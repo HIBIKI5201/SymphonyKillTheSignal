@@ -10,6 +10,12 @@ public class UserDataManager : MonoBehaviour
         water,
         dertyWater,
     }
+    public enum StatusKind
+    {
+        Health,
+        Hunger,
+        Thirst,
+    }
 
     public SaveData saveData;
     public void ChangeDistance(int distance)

@@ -33,8 +33,8 @@ public class HomeSystem : SystemBase
     public void Collect(ItemKind collectWindowKind)
     {
         mainSystem.StoryAction(StoryManager.StoryKind.Collect);
-        ItemDataBase.ItemData data = _adventureSystem.itemData
-            .itemDataList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), collectWindowKind)];
+        ItemDataBase.ItemCollectData data = _adventureSystem.itemData
+            .itemDataList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), collectWindowKind)].collectData;
         switch (collectWindowKind)
         {
             case ItemKind.branch:

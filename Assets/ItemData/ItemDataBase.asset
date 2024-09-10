@@ -13,23 +13,39 @@ MonoBehaviour:
   m_Name: ItemDataBase
   m_EditorClassIdentifier: 
   itemDataList:
-  - itemKind: "\u5C0F\u679D"
-    time: 1
-    hunger: 10
-    getMinValue: 2
-    getMaxValue: 4
-  - itemKind: "\u30D9\u30EA\u30FC"
-    time: 4
-    hunger: 18
-    getMinValue: 4
-    getMaxValue: 5
-  - itemKind: "\u98F2\u6599\u6C34"
-    time: 0
-    hunger: 0
-    getMinValue: 0
-    getMaxValue: 0
-  - itemKind: "\u4E0D\u7D14\u6C34"
-    time: 2
-    hunger: 12
-    getMinValue: 1
-    getMaxValue: 1
+  - kind: 0
+    collectData:
+      itemName: "\u679D"
+      time: 1
+      hunger: 10
+      getMinValue: 2
+      getMaxValue: 4
+    inventoryData:
+      explanation: 
+  - kind: 1
+    collectData:
+      itemName: "\u30D9\u30EA\u30FC"
+      time: 4
+      hunger: 18
+      getMinValue: 2
+      getMaxValue: 3
+    inventoryData:
+      explanation: 
+  - kind: 2
+    collectData:
+      itemName: "\u98F2\u6599\u6C34"
+      time: 0
+      hunger: 0
+      getMinValue: 0
+      getMaxValue: 0
+    inventoryData:
+      explanation: 
+  - kind: 3
+    collectData:
+      itemName: "\u4E0D\u7D14\u6C34"
+      time: 2
+      hunger: 12
+      getMinValue: 3
+      getMaxValue: 5
+    inventoryData:
+      explanation: 
