@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public class MainSystem : MonoBehaviour
 {
@@ -98,9 +99,14 @@ public class MainSystem : MonoBehaviour
             case 1:
                 if (soundEffects.dataList.Count > soundNumber)
                 {
-                    _BGMSource.Stop();
-                    _BGMSource.clip = BGMs.dataList[soundNumber];
-                    _BGMSource.Play();
+                    DOTween.To(() => 1f, x => _BGMSource.volume = x, 0, 0.25f)
+                        .OnComplete(() =>
+                        {
+                            _BGMSource.Stop();
+                            _BGMSource.clip = BGMs.dataList[soundNumber];
+                            _BGMSource.Play();
+                            DOTween.To(() => 0, x => _BGMSource.volume = x, 1, 0.25f);
+                        });
                 }
                 break;
             default:
