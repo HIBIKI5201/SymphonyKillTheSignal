@@ -470,8 +470,8 @@ public class HomeUI : UIBase
             int value = _homeSystem._userDataManager.saveData.itemList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), element.Key)];
             if (value > 0)
             {
+                element.Value.style.display = DisplayStyle.Flex;
                 element.Value.Q<Label>("Inventory-ItemValue").text = $"Å~{value}";
-                element.Value.RegisterCallback<ClickEvent>(evt => InventoryIconClicked(element.Key));
             }
             else
             {
