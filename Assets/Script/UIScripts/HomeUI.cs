@@ -253,12 +253,12 @@ public class HomeUI : UIBase
             if (value > 0)
             {
                 element.Value.Q<Label>("Inventory-ItemValue").text = $"Å~{value}";
-                element.Value.RegisterCallback<ClickEvent>(evt => InventoryIconClicked(element.Key));
             }
             else
             {
                 element.Value.style.display = DisplayStyle.None;
             }
+            element.Value.RegisterCallback<ClickEvent>(evt => InventoryIconClicked(element.Key));
         }
         _inventoryItemExplanationText = _root.Q<Label>("Inventory-ExplanationText");
         _inventoryConformbutton = _root.Q<Button>("Inventory-ConformButton");
