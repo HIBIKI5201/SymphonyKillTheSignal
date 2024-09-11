@@ -11,10 +11,17 @@ public class StoryManager : MonoBehaviour
         Collect,
     }
     [Serializable]
-    struct StoryTextData
+    class StoryTextData
     {
         public StoryTextDataBase storyTextData;
         public float distance;
+        //[HideInInspector]
+        public bool actived;
+
+        public void Actived()
+        {
+            actived = true;
+        }
     }
 
     StorySystem _storySystem;
@@ -32,23 +39,31 @@ public class StoryManager : MonoBehaviour
 
     public void SetStoryData(StoryKind storyKind)
     {
+
         _storySystem = FindAnyObjectByType<StorySystem>();
         switch (storyKind)
         {
             case StoryKind.Story:
-                foreach (StoryTextData data in _storyData)
+            case StoryKind.Movement:
+                bool storyActive = false;
+                for (int i = 0;  i < _storyData.Count; i++)
                 {
-                    if (SaveDataManager._mainSaveData.distance <= data.distance)
+                    if (SaveDataManager._mainSaveData.distance >= _storyData[i].distance && !_storyData[i].actived)
                     {
-                        _storySystem.TextDataLoad(data.storyTextData);
+                        _storyData[i].Actived();
+                        storyActive = true;
+                        _storySystem.TextDataLoad(_storyData[i].storyTextData);
                         break;
                     }
                 }
+                if (storyActive) break;
+                if (storyKind == StoryKind.Movement)
+                {
+                    int indexM = UnityEngine.Random.Range(0, _MovementEventData.Count);
+                    _storySystem.TextDataLoad(_MovementEventData[indexM]);
+                }
                 break;
-            case StoryKind.Movement:
-                int indexM = UnityEngine.Random.Range(0, _MovementEventData.Count);
-                _storySystem.TextDataLoad(_MovementEventData[indexM]);
-                break;
+
             case StoryKind.Collect:
                 int indexC = UnityEngine.Random.Range(0, _CollectStoryData.Count);
                 _storySystem.TextDataLoad(_CollectStoryData[indexC]);

@@ -595,6 +595,7 @@ MonoBehaviour:
   _storyData:
   - storyTextData: {fileID: 11400000, guid: f966f6c2393644a4bbabd0b90588a1a9, type: 2}
     distance: 0
+    actived: 0
   _MovementEventData:
   - {fileID: 11400000, guid: 68a0879c49556c143bb40f7b60d3e8ab, type: 2}
   _CollectStoryData:
