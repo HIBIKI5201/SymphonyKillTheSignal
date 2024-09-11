@@ -20,11 +20,11 @@ MonoBehaviour:
     characterName: Symphony
     pos: {x: 0, y: -8}
   _textList:
-  - characterType: 1
+  - characterType: 0
     kind: 0
-    text: "\u53CE\u96C6\u4E2D"
+    text: "\u30AC\u30B5\u30AC\u30B5"
     voiceData: {fileID: 0}
   - characterType: 1
     kind: 0
-    text: "\u53CE\u96C6\u7D42\u308F\u308A"
+    text: "...\u3088\u3057"
     voiceData: {fileID: 0}
