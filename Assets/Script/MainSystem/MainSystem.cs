@@ -1,7 +1,6 @@
-using System;
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
-using DG.Tweening;
 
 public class MainSystem : MonoBehaviour
 {
@@ -68,7 +67,7 @@ public class MainSystem : MonoBehaviour
         }
         else
         {
-            SaveDataManager.Save(new SaveData(0, 0, 100, 80, 100, 0, WorldManager.Weather.sunny));
+            SaveDataManager.Save(new SaveData(0, 0, 100, 80, 100, 0, WorldManager.Weather.sunny, _storyManager._activedList));
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
         }
         _userDataManager.saveData = SaveDataManager._mainSaveData;
@@ -157,6 +156,12 @@ public class MainSystem : MonoBehaviour
                 break;
             case SceneChanger.SceneKind.Home:
                 _pauseUI.RevealPause();
+                if (SaveDataManager._mainSaveData.health <= 0)
+                {
+                    SaveDataManager.Save(new SaveData(0, 0, 100, 80, 100, 0, WorldManager.Weather.sunny, _storyManager._activedList));
+                    StartCoroutine(SceneChange(SceneChanger.SceneKind.Title));
+                    yield break;
+                }
                 break;
             case SceneChanger.SceneKind.Title:
                 _pauseUI.HidePause();

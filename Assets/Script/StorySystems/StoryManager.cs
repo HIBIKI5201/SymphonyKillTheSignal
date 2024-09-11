@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StoryManager : MonoBehaviour
@@ -11,11 +12,11 @@ public class StoryManager : MonoBehaviour
         Collect,
     }
     [Serializable]
-    class StoryTextData
+    public class StoryTextData
     {
         public StoryTextDataBase storyTextData;
         public float distance;
-        //[HideInInspector]
+        [HideInInspector]
         public bool actived;
 
         public void Actived()
@@ -27,14 +28,22 @@ public class StoryManager : MonoBehaviour
     StorySystem _storySystem;
     [SerializeField]
     List<StoryTextData> _storyData = new();
+    public List<bool> _activedList = new();
     [SerializeField]
-    List<StoryTextDataBase> _MovementEventData = new();
+    List<StoryTextDataBase> _movementEventData = new();
     [SerializeField]
-    List<StoryTextDataBase> _CollectStoryData = new();
+    List<StoryTextDataBase> _collectStoryData = new();
 
     private void Start()
     {
         _storyData.Sort((x, y) => x.distance.CompareTo(y.distance));
+        if (SaveDataManager._mainSaveData.storyProgress != null)
+        {
+            for (int i = 0; i < _storyData.Count; i++)
+            {
+                _storyData[i].actived = SaveDataManager._mainSaveData.storyProgress[i];
+            }
+        }
     }
 
     public void SetStoryData(StoryKind storyKind)
@@ -59,16 +68,17 @@ public class StoryManager : MonoBehaviour
                 if (storyActive) break;
                 if (storyKind == StoryKind.Movement)
                 {
-                    int indexM = UnityEngine.Random.Range(0, _MovementEventData.Count);
-                    _storySystem.TextDataLoad(_MovementEventData[indexM]);
+                    int indexM = UnityEngine.Random.Range(0, _movementEventData.Count);
+                    _storySystem.TextDataLoad(_movementEventData[indexM]);
                 }
                 break;
 
             case StoryKind.Collect:
-                int indexC = UnityEngine.Random.Range(0, _CollectStoryData.Count);
-                _storySystem.TextDataLoad(_CollectStoryData[indexC]);
+                int indexC = UnityEngine.Random.Range(0, _collectStoryData.Count);
+                _storySystem.TextDataLoad(_collectStoryData[indexC]);
                 break;
         }
+        _activedList = _storyData.Select(x => x.actived).ToList();
         //最初のテキストを呼び出す
         StartCoroutine(_storySystem.NextText());
     }

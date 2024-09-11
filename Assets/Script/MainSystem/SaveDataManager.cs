@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static SaveDataManager;
+using static StoryManager;
 using static UserDataManager;
 
 public class SaveDataManager : MonoBehaviour
@@ -71,9 +72,10 @@ public class SaveData
     public int thirst;
     public int campLevel;
     public WorldManager.Weather weather;
+    public List<bool> storyProgress;
 
     public List<int> itemList;
-    public SaveData(int time, int distance, int health, int hunger, int thirst, int campLevel, WorldManager.Weather weather)
+    public SaveData(int time, int distance, int health, int hunger, int thirst, int campLevel, WorldManager.Weather weather, List<bool> storyTextDatas)
     {
         saveDate = new RealTime(DateTime.Now).time;
         this.distance = distance;
@@ -84,5 +86,6 @@ public class SaveData
         this.campLevel = campLevel;
         this.itemList = new List<int>(new int[Enum.GetValues(typeof(ItemKind)).Length]);
         this.weather = weather;
+        storyProgress = storyTextDatas;
     }
 }
