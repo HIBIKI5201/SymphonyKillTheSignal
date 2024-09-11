@@ -30,7 +30,11 @@ MonoBehaviour:
     voiceData: {fileID: 0}
   - characterType: 1
     kind: 0
-    text: "\u884C\u304B\u306A\u304D\u3083"
+    text: "\u7D50\u69CB\u6B69\u3044\u3066\u304D\u305F\u3051\u3069..."
+    voiceData: {fileID: 0}
+  - characterType: 1
+    kind: 0
+    text: "\u3082\u3063\u3068\u9811\u5F35\u3089\u306A\u304D\u3083"
     voiceData: {fileID: 0}
   - characterType: 1
     kind: 1

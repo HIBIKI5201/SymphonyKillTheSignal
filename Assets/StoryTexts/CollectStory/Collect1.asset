@@ -26,5 +26,9 @@ MonoBehaviour:
     voiceData: {fileID: 0}
   - characterType: 1
     kind: 0
-    text: "...\u3088\u3057"
+    text: "...\u3046\u3093"
+    voiceData: {fileID: 0}
+  - characterType: 1
+    kind: 0
+    text: "\u3053\u308C\u3067\u3088\u3057"
     voiceData: {fileID: 0}
