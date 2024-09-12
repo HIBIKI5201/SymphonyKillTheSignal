@@ -69,7 +69,8 @@ public class MainSystem : MonoBehaviour
         }
         else
         {
-            SaveDataManager.Save(new SaveData(0, 0, 100, 80, 100, 0, WorldManager.Weather.sunny, _storyManager._storyData.Select(x => x.actived).ToList()));
+            SaveDataManager.Save(new SaveData(0, 0, 100, 80, 100, 0, WorldManager.Weather.sunny, Enumerable.Repeat(false, _storyManager._storyData.Count).ToList()));
+            _storyManager.Initialized(this);
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
         }
         _userDataManager.saveData = SaveDataManager._mainSaveData;
@@ -161,7 +162,7 @@ public class MainSystem : MonoBehaviour
                 _pauseUI.RevealPause();
                 if (SaveDataManager._mainSaveData.health <= 0)
                 {
-                    SaveDataManager.Save(new SaveData(0, 0, 100, 80, 100, 0, WorldManager.Weather.sunny, _storyManager._storyData.Select(x => x.actived).ToList()));
+                    SaveDataManager.Save(new SaveData(0, 0, 100, 80, 100, 0, WorldManager.Weather.sunny, Enumerable.Repeat(false, _storyManager._storyData.Count).ToList()));
                     StartCoroutine(SceneChange(SceneChanger.SceneKind.Title));
                     yield break;
                 }
