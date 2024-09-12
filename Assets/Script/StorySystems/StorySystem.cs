@@ -51,7 +51,7 @@ public class StorySystem : SystemBase
         _mainUI = FindAnyObjectByType<StoryUI>();
         _mainUI.UIAwake(this);
         WorldManager _worldManager = FindAnyObjectByType<WorldManager>();
-        _worldManager.Initialize();
+        _worldManager.Initialize(WorldManager.Weather.snowy);
         //最初が0番目のテキストになるように初期値を設定
         _currentTextNumber = -1;
         mainSystem.SoundPlay(MainSystem.AudioPlayKind.BGM, 2);

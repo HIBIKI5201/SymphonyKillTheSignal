@@ -15,6 +15,8 @@ public class WorldManager : MonoBehaviour
     Light2D worldLight;
     [SerializeField]
     AnimationCurve lightCurve;
+    [SerializeField]
+    ParticleSystem blizzardEffect;
     public enum Weather
     {
         sunny,
@@ -23,12 +25,24 @@ public class WorldManager : MonoBehaviour
         stormy
     }
 
-    public void Initialize()
+    public void Initialize(Weather weather)
     {
-        int time = (SaveDataManager._mainSaveData.time + timeDifference)  % 24;
+        int time = (SaveDataManager._mainSaveData.time + timeDifference) % 24;
         BlueSkyBehaviour(time);
         RedSkyBehaviour(time);
         LightBehaviour(time);
+        switch (weather)
+        {
+            case Weather.snowy:
+            case Weather.stormy:
+                blizzardEffect.Play();
+                break;
+
+            case Weather.sunny:
+            case Weather.cloudy:
+                blizzardEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear); ;
+                break;
+        }
     }
 
     void BlueSkyBehaviour(float time)

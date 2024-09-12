@@ -6196,6 +6196,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  blizzardEffect: {fileID: 193150437}
 --- !u!4 &2055433284
 Transform:
   m_ObjectHideFlags: 0
