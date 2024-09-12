@@ -596,11 +596,12 @@ MonoBehaviour:
   - storyTextData: {fileID: 11400000, guid: f966f6c2393644a4bbabd0b90588a1a9, type: 2}
     distance: 0
     actived: 0
-  - storyTextData: {fileID: 11400000, guid: f966f6c2393644a4bbabd0b90588a1a9, type: 2}
-    distance: 30
+  - storyTextData: {fileID: 11400000, guid: be6a03ff477d1424483db89f49efe7c1, type: 2}
+    distance: 50
     actived: 0
   _movementEventData:
   - {fileID: 11400000, guid: 68a0879c49556c143bb40f7b60d3e8ab, type: 2}
+  - {fileID: 11400000, guid: 401a6e9d45a54a643bff8a61a6a0b67b, type: 2}
   _collectStoryData:
   - {fileID: 11400000, guid: 8a63aff7dc906bc4188a2b2d6f2880d6, type: 2}
   - {fileID: 11400000, guid: 56a45757d0f18b346b6a9ffacbf4bd74, type: 2}

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a3e082307a73d44ab98ab5ccfc9036e, type: 3}
-  m_Name: Movement1
+  m_Name: chapter2
   m_EditorClassIdentifier: 
   _characterList:
   - gameObject: {fileID: 8705964420986871938, guid: 01ca81b39e5ea4340a44572151d098c1, type: 3}
@@ -30,15 +30,33 @@ MonoBehaviour:
     voiceData: {fileID: 0}
   - characterType: 1
     kind: 0
-    text: "\u7D50\u69CB\u6B69\u3044\u3066\u304D\u305F\u3051\u3069..."
+    text: "\u7D50\u69CB\u6B69\u3044\u305F\u306A"
     voiceData: {fileID: 0}
   - characterType: 1
     kind: 0
-    text: "\u3082\u3063\u3068\u9811\u5F35\u3089\u306A\u304D\u3083"
+    text: "...\u306F\u3041\n\u306A\u3093\u306E\u305F\u3081\u306B\u6B69\u3044\u3066\u308B\u3093\u3060\u3063\u3051"
+    voiceData: {fileID: 0}
+  - characterType: 0
+    kind: 0
+    text: "\u30AC\u30B5\u30AC\u30B5"
     voiceData: {fileID: 0}
   - characterType: 1
-    kind: 1
-    text: 'Move
-
-      0'
+    kind: 0
+    text: "\u3093\uFF1F"
+    voiceData: {fileID: 0}
+  - characterType: 1
+    kind: 0
+    text: "\u3042\u3001\u514E\u3060\n\u521D\u3081\u3066\u898B\u305F"
+    voiceData: {fileID: 0}
+  - characterType: 0
+    kind: 0
+    text: "\u30C0\u30C3"
+    voiceData: {fileID: 0}
+  - characterType: 1
+    kind: 0
+    text: "\u9003\u3052\u305F..."
+    voiceData: {fileID: 0}
+  - characterType: 1
+    kind: 0
+    text: "...\u3075\u3075\n\u3053\u306E\u305F\u3081\u306B\u6B69\u3044\u3066\u308B\u306E\u304B\u3082"
     voiceData: {fileID: 0}
