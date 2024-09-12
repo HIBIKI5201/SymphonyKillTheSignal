@@ -47,6 +47,7 @@ public class MainSystem : MonoBehaviour
         //セーブデータを確認
         SaveDataManager._mainSaveData = SaveDataManager.Load();
         _userDataManager.saveData = SaveDataManager._mainSaveData;
+        _storyManager.Initialized(this);
         //シーンのシステムを起動
         FindAnyObjectByType<SystemBase>().SystemAwake(this);
     }
@@ -71,7 +72,6 @@ public class MainSystem : MonoBehaviour
             SaveDataManager.Save(new SaveData(0, 0, 100, 80, 100, 0, WorldManager.Weather.sunny, _storyManager._storyData.Select(x => x.actived).ToList()));
             StartCoroutine(SceneChange(SceneChanger.SceneKind.Story));
         }
-        _storyManager.Initialized(this);
         _userDataManager.saveData = SaveDataManager._mainSaveData;
 
     }

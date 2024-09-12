@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static SaveDataManager;
-using static StoryManager;
 using static UserDataManager;
 
 public class SaveDataManager : MonoBehaviour

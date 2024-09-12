@@ -596,6 +596,9 @@ MonoBehaviour:
   - storyTextData: {fileID: 11400000, guid: f966f6c2393644a4bbabd0b90588a1a9, type: 2}
     distance: 0
     actived: 0
+  - storyTextData: {fileID: 11400000, guid: f966f6c2393644a4bbabd0b90588a1a9, type: 2}
+    distance: 30
+    actived: 0
   _movementEventData:
   - {fileID: 11400000, guid: 68a0879c49556c143bb40f7b60d3e8ab, type: 2}
   _collectStoryData:
@@ -654,6 +657,7 @@ MonoBehaviour:
     thirst: 0
     campLevel: 0
     weather: 0
+    storyProgress: 
     itemList: 
 --- !u!1 &9111755237554207075
 GameObject:
