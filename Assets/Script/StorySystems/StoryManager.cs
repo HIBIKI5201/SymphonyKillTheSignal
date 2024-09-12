@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class StoryManager : MonoBehaviour
 {
@@ -24,11 +25,9 @@ public class StoryManager : MonoBehaviour
             actived = true;
         }
     }
-
+    MainSystem mainSystem;
     StorySystem _storySystem;
-    [SerializeField]
-    List<StoryTextData> _storyData = new();
-    public List<bool> _activedList = new();
+    public List<StoryTextData> _storyData = new();
     [SerializeField]
     List<StoryTextDataBase> _movementEventData = new();
     [SerializeField]
@@ -37,7 +36,12 @@ public class StoryManager : MonoBehaviour
     private void Start()
     {
         _storyData.Sort((x, y) => x.distance.CompareTo(y.distance));
-        if (SaveDataManager._mainSaveData.storyProgress != null)
+    }
+
+    public void Initialized(MainSystem mainSystem)
+    {
+        this.mainSystem = mainSystem;
+        if (SaveDataManager._mainSaveData.storyProgress != null && _storyData.Count <= SaveDataManager._mainSaveData.storyProgress.Count)
         {
             for (int i = 0; i < _storyData.Count; i++)
             {
@@ -60,6 +64,7 @@ public class StoryManager : MonoBehaviour
                     if (SaveDataManager._mainSaveData.distance >= _storyData[i].distance && !_storyData[i].actived)
                     {
                         _storyData[i].Actived();
+                        mainSystem._userDataManager.saveData.storyProgress = _storyData.Select(x => x.actived).ToList();
                         storyActive = true;
                         _storySystem.TextDataLoad(_storyData[i].storyTextData);
                         break;
@@ -78,7 +83,6 @@ public class StoryManager : MonoBehaviour
                 _storySystem.TextDataLoad(_collectStoryData[indexC]);
                 break;
         }
-        _activedList = _storyData.Select(x => x.actived).ToList();
         //最初のテキストを呼び出す
         StartCoroutine(_storySystem.NextText());
     }
