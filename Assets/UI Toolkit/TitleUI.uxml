@@ -1,7 +1,9 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheet/MainUI.uss?fileID=7433441132597879392&amp;guid=030672bf8791f77439b2e02cd045061b&amp;type=3#MainUI" />
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheet/TitleUI.uss?fileID=7433441132597879392&amp;guid=2fd435c00491bc34cbb5e65e94baed3d&amp;type=3#TitleUI" />
-    <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprite/718_20240911031358.png?fileID=2800000&amp;guid=583c59d52d19fb64b957922040c5dfdf&amp;type=3#718_20240911031358&quot;);" />
+    <engine:VisualElement style="width: 100%; height: 100%; background-color: rgb(128, 128, 128);">
+        <engine:VisualElement style="background-image: url(&quot;project://database/Assets/Sprite/724_20240912102736.png?fileID=2800000&amp;guid=616677a65076a0e49b741620ec912246&amp;type=3#724_20240912102736&quot;); width: 100%; height: 100%; left: 1%;" />
+    </engine:VisualElement>
     <engine:VisualElement style="position: absolute; bottom: 5%; right: 3%; width: 45%; height: 80%; align-items: center; align-self: center;">
         <engine:VisualElement style="width: 100%; font-size: 100px; margin-top: 45px; margin-right: 45px; margin-bottom: 45px; margin-left: 45px;">
             <engine:Label text="Symphony Kill" name="Label" class="textBox" style="color: rgb(0, 0, 0); -unity-text-align: middle-left;" />
