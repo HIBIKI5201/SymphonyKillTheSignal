@@ -17,6 +17,8 @@ public class WorldManager : MonoBehaviour
     AnimationCurve lightCurve;
     [SerializeField]
     ParticleSystem blizzardEffect;
+    Weather _nowWeather;
+    public Weather NowWeather {get => _nowWeather;}
     public enum Weather
     {
         sunny,
@@ -25,13 +27,13 @@ public class WorldManager : MonoBehaviour
         stormy
     }
 
-    public void Initialize(Weather weather)
+    public void Initialize()
     {
         int time = (SaveDataManager._mainSaveData.time + timeDifference) % 24;
         BlueSkyBehaviour(time);
         RedSkyBehaviour(time);
         LightBehaviour(time);
-        switch (weather)
+        switch (_nowWeather)
         {
             case Weather.snowy:
             case Weather.stormy:
@@ -43,6 +45,11 @@ public class WorldManager : MonoBehaviour
                 blizzardEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear); ;
                 break;
         }
+    }
+
+    public void WeatherSet(Weather weather)
+    {
+        _nowWeather = weather;
     }
 
     void BlueSkyBehaviour(float time)

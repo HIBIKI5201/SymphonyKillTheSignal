@@ -50,8 +50,6 @@ public class StorySystem : SystemBase
         //UIのPresenterを取得
         _mainUI = FindAnyObjectByType<StoryUI>();
         _mainUI.UIAwake(this);
-        WorldManager _worldManager = FindAnyObjectByType<WorldManager>();
-        _worldManager.Initialize(WorldManager.Weather.snowy);
         //最初が0番目のテキストになるように初期値を設定
         _currentTextNumber = -1;
         mainSystem.SoundPlay(MainSystem.AudioPlayKind.BGM, 2);
@@ -59,6 +57,7 @@ public class StorySystem : SystemBase
 
     public void TextDataLoad(StoryTextDataBase storyTextData)
     {
+        mainSystem._worldManager.Initialize();
         //Characterをデータベースから値渡し
         _characterList = new();
         foreach (StoryCharacterList character in storyTextData._characterList)
@@ -208,7 +207,7 @@ public class StorySystem : SystemBase
                         x += _textSpeed * Time.deltaTime;
                         _mainUI.TextBoxUpdate(
                             _characterPropaties[_textList[_currentTextNumber].characterType].name,
-                            _textList[_currentTextNumber].text.Substring(0, Mathf.Min((int)x, _textList[_currentTextNumber].text.Length)));
+                            _textList[_currentTextNumber].text[..Mathf.Min((int)x, _textList[_currentTextNumber].text.Length)]);
                         //もしCanselTriggerがあれば途中で更新を止める
                         if (_textUpdatingCanselTrigger)
                         {
@@ -226,7 +225,7 @@ public class StorySystem : SystemBase
 
             case StoryTextList.TextKind.sound:
                 //文字列を数値化してSoundPlayメソッドを送る
-                if (int.TryParse(texts[0], out int num) && int.TryParse(texts[1], out int soundNum))
+                if (int.TryParse(texts[0], out _) && int.TryParse(texts[1], out int soundNum))
                 {
                     mainSystem.SoundPlay(MainSystem.AudioPlayKind.SE, soundNum);
                 }

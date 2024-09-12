@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class StoryManager : MonoBehaviour
 {
@@ -52,14 +51,14 @@ public class StoryManager : MonoBehaviour
 
     public void SetStoryData(StoryKind storyKind)
     {
-
+        mainSystem._worldManager.WeatherSet(WorldManager.Weather.snowy);
         _storySystem = FindAnyObjectByType<StorySystem>();
         switch (storyKind)
         {
             case StoryKind.Story:
             case StoryKind.Movement:
                 bool storyActive = false;
-                for (int i = 0;  i < _storyData.Count; i++)
+                for (int i = 0; i < _storyData.Count; i++)
                 {
                     if (SaveDataManager._mainSaveData.distance >= _storyData[i].distance && !_storyData[i].actived)
                     {

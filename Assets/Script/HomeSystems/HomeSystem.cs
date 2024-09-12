@@ -14,9 +14,9 @@ public class HomeSystem : SystemBase
         _userDataManager = mainSystem._userDataManager;
         _homeUI = GetComponentInChildren<HomeUI>();
         _adventureSystem = GetComponentInChildren<AdventureSystem>();
-        _worldManager = FindAnyObjectByType<WorldManager>();
         _homeUI.UIAwake(this);
-        _worldManager.Initialize(WorldManager.Weather.sunny);
+        mainSystem._worldManager.WeatherSet(WorldManager.Weather.sunny);
+        mainSystem._worldManager.Initialize();
         mainSystem.DataSave();
         mainSystem.SoundPlay(MainSystem.AudioPlayKind.BGM, 1);
     }

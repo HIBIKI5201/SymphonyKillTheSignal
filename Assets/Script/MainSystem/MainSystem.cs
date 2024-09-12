@@ -7,7 +7,7 @@ public class MainSystem : MonoBehaviour
 {
     StoryManager _storyManager;
     public UserDataManager _userDataManager;
-
+    public WorldManager _worldManager;
     ScreenEffectUI _screenEffect;
     PauseUI _pauseUI;
 
@@ -149,6 +149,10 @@ public class MainSystem : MonoBehaviour
         yield return new WaitForSeconds(1);
         //シーンをロードしてロード終了まで待つ
         yield return SceneChanger.ChangeScene(sceneKind);
+        if (_worldManager == null)
+        {
+            _worldManager = FindAnyObjectByType<WorldManager>();
+        }
         //システム系を初期化
         FindAnyObjectByType<SystemBase>()?.SystemAwake(this);
         //ロードしたシーンに応じて動きを変える
