@@ -1,6 +1,9 @@
 using AdventureSystems;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 using static UserDataManager;
 public class HomeSystem : SystemBase
@@ -9,6 +12,12 @@ public class HomeSystem : SystemBase
     WorldManager _worldManager;
     public UserDataManager _userDataManager;
     public AdventureSystem _adventureSystem;
+
+    bool _onSymphonyClicked;
+    public bool OnSymphonyClicked { get => _onSymphonyClicked; set => _onSymphonyClicked = value; }
+    [SerializeField]
+    List<AudioClip> _symphonyHomeVocies;
+
     public override void Initialize()
     {
         _userDataManager = mainSystem._userDataManager;
@@ -19,6 +28,50 @@ public class HomeSystem : SystemBase
         mainSystem._worldManager.Initialize();
         mainSystem.DataSave();
         mainSystem.SoundPlay(MainSystem.AudioPlayKind.BGM, 1);
+        StartCoroutine(HomeVoice());
+    }
+
+    IEnumerator HomeVoice()
+    {
+        while (true)
+        {
+            float time = Time.time;
+            if (Time.time - time >= 10 || _onSymphonyClicked)
+            {
+                _onSymphonyClicked = false;
+                PlayHomeVoice();
+            }
+        }
+    }
+
+    void PlayHomeVoice()
+    {
+        List<AudioClip> audioClips = new()
+        {
+            _symphonyHomeVocies[0],
+            _symphonyHomeVocies[1],
+            _symphonyHomeVocies[2]
+        };
+        SaveData saveData = mainSystem._userDataManager.saveData;
+        if (saveData.hunger <= 60)
+        {
+            if (saveData.hunger > 30) audioClips.Add(_symphonyHomeVocies[3]);
+            else if (saveData.hunger > 10) audioClips.Add(_symphonyHomeVocies[4]);
+            else audioClips.Add(_symphonyHomeVocies[5]);
+        }
+        if (saveData.thirst <= 50) audioClips.Add(audioClips[6]);
+        if (saveData.health <= 80)
+        {
+            if (saveData.health > 50) audioClips.Add(audioClips[7]);
+            else audioClips.Add(audioClips[8]);
+        }
+        int time = saveData.time + WorldManager.timeDifference;
+        if (5 <= time && time <= 7) audioClips.Add(audioClips[9]);
+        if (18 <= time && time <= 21 && saveData.campLevel < 1) audioClips.Add(audioClips[10]);
+        if (22 <= time && time <= 4 && saveData.campLevel < 1) audioClips.Add(audioClips[11]);
+
+        int index = UnityEngine.Random.Range(0, audioClips.Count);
+        mainSystem.VoicePlay(audioClips[index]);
     }
 
     public void Movement(int value)
@@ -27,12 +80,12 @@ public class HomeSystem : SystemBase
         _userDataManager.ChangeTime(value);
         _userDataManager.ChangeHunger(-AdventureSystem.MovementTimeToHunger(value));
         _userDataManager.ChangeHealth(-AdventureSystem.MovementTimeToHealth(value));
-        mainSystem.StoryAction(StoryManager.StoryKind.Movement);
+        mainSystem.StoryAction(StoryManager.StoryKindEnum.Movement);
     }
 
     public void Collect(ItemKind collectWindowKind)
     {
-        mainSystem.StoryAction(StoryManager.StoryKind.Collect);
+        mainSystem.StoryAction(StoryManager.StoryKindEnum.Collect);
         ItemDataBase.ItemCollectData data = _adventureSystem.itemData
             .itemDataList[Array.IndexOf(Enum.GetValues(typeof(ItemKind)), collectWindowKind)].collectData;
         switch (collectWindowKind)

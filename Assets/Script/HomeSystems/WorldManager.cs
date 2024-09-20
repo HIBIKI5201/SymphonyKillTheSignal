@@ -3,7 +3,7 @@ using UnityEngine.Rendering.Universal;
 
 public class WorldManager : MonoBehaviour
 {
-    const int timeDifference = 6;
+    public const int timeDifference = 6;
 
     [SerializeField]
     SpriteRenderer blueSky;

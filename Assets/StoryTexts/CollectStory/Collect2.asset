@@ -20,7 +20,7 @@ MonoBehaviour:
     characterName: Symphony
     pos: {x: -3, y: -8}
   _textList:
-  - characterType: 0
+  - characterType: 1
     kind: 1
     text: Move
     voiceData: {fileID: 0}

@@ -92,7 +92,7 @@ public class MainSystem : MonoBehaviour
         StartCoroutine(SceneChange(SceneChanger.SceneKind.Title));
     }
 
-    public void StoryAction(StoryManager.StoryKind storyKind)
+    public void StoryAction(StoryManager.StoryKindEnum storyKind)
     {
         StartCoroutine(SceneChange(SceneChanger.SceneKind.Story, storyKind));
     }
@@ -137,10 +137,10 @@ public class MainSystem : MonoBehaviour
     }
     IEnumerator SceneChange(SceneChanger.SceneKind sceneKind)
     {
-        StartCoroutine(SceneChange(sceneKind, StoryManager.StoryKind.Story));
+        StartCoroutine(SceneChange(sceneKind, StoryManager.StoryKindEnum.Story));
         yield break;
     }
-    IEnumerator SceneChange(SceneChanger.SceneKind sceneKind, StoryManager.StoryKind storyKind)
+    IEnumerator SceneChange(SceneChanger.SceneKind sceneKind, StoryManager.StoryKindEnum storyKind)
     {
         //ボタンロックを起動
         _screenEffect.ButtonUnactiveElement(true);

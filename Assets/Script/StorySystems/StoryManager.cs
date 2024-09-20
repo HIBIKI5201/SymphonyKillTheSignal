@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class StoryManager : MonoBehaviour
 {
-    public enum StoryKind
+    public enum StoryKindEnum
     {
         Story,
         Movement,
@@ -49,14 +49,14 @@ public class StoryManager : MonoBehaviour
         }
     }
 
-    public void SetStoryData(StoryKind storyKind)
+    public void SetStoryData(StoryKindEnum storyKind)
     {
         mainSystem._worldManager.WeatherSet(WorldManager.Weather.snowy);
         _storySystem = FindAnyObjectByType<StorySystem>();
         switch (storyKind)
         {
-            case StoryKind.Story:
-            case StoryKind.Movement:
+            case StoryKindEnum.Story:
+            case StoryKindEnum.Movement:
                 bool storyActive = false;
                 for (int i = 0; i < _storyData.Count; i++)
                 {
@@ -70,14 +70,14 @@ public class StoryManager : MonoBehaviour
                     }
                 }
                 if (storyActive) break;
-                if (storyKind == StoryKind.Movement)
+                if (storyKind == StoryKindEnum.Movement)
                 {
                     int indexM = UnityEngine.Random.Range(0, _movementEventData.Count);
                     _storySystem.TextDataLoad(_movementEventData[indexM]);
                 }
                 break;
 
-            case StoryKind.Collect:
+            case StoryKindEnum.Collect:
                 int indexC = UnityEngine.Random.Range(0, _collectStoryData.Count);
                 _storySystem.TextDataLoad(_collectStoryData[indexC]);
                 break;
