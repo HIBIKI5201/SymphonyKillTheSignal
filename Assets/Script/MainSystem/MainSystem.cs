@@ -135,6 +135,8 @@ public class MainSystem : MonoBehaviour
         _voiceSource.clip = audio;
         _voiceSource.Play();
     }
+    public bool IsVoicePlaying() => _voiceSource.isPlaying;
+
     IEnumerator SceneChange(SceneChanger.SceneKind sceneKind)
     {
         StartCoroutine(SceneChange(sceneKind, StoryManager.StoryKindEnum.Story));

@@ -2,8 +2,6 @@ using AdventureSystems;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using UnityEditor;
 using UnityEngine;
 using static UserDataManager;
 public class HomeSystem : SystemBase
@@ -33,19 +31,21 @@ public class HomeSystem : SystemBase
 
     IEnumerator HomeVoice()
     {
+        float time = Time.time;
         while (true)
         {
-            float time = Time.time;
             if (Time.time - time >= 10 || _onSymphonyClicked)
             {
                 _onSymphonyClicked = false;
-                PlayHomeVoice();
+                yield return PlayHomeVoice();
+                time = Time.time;
+                Debug.Log("home voice played");
             }
             yield return null;
         }
     }
 
-    void PlayHomeVoice()
+    IEnumerator PlayHomeVoice()
     {
         List<AudioClip> audioClips = new()
         {
@@ -60,19 +60,20 @@ public class HomeSystem : SystemBase
             else if (saveData.hunger > 10) audioClips.Add(_symphonyHomeVocies[4]);
             else audioClips.Add(_symphonyHomeVocies[5]);
         }
-        if (saveData.thirst <= 50) audioClips.Add(audioClips[6]);
+        if (saveData.thirst <= 50) audioClips.Add(_symphonyHomeVocies[6]);
         if (saveData.health <= 80)
         {
-            if (saveData.health > 50) audioClips.Add(audioClips[7]);
-            else audioClips.Add(audioClips[8]);
+            if (saveData.health > 50) audioClips.Add(_symphonyHomeVocies[7]);
+            else audioClips.Add(_symphonyHomeVocies[8]);
         }
         int time = saveData.time + WorldManager.timeDifference;
-        if (5 <= time && time <= 7) audioClips.Add(audioClips[9]);
-        if (18 <= time && time <= 21 && saveData.campLevel < 1) audioClips.Add(audioClips[10]);
-        if (22 <= time && time <= 4 && saveData.campLevel < 1) audioClips.Add(audioClips[11]);
+        if (5 <= time && time <= 7) audioClips.Add(_symphonyHomeVocies[9]);
+        if (18 <= time && time <= 21 && saveData.campLevel < 1) audioClips.Add(_symphonyHomeVocies[10]);
+        if (22 <= time && time <= 4 && saveData.campLevel < 1) audioClips.Add(_symphonyHomeVocies[11]);
 
         int index = UnityEngine.Random.Range(0, audioClips.Count);
         mainSystem.VoicePlay(audioClips[index]);
+        yield return new WaitUntil(() => !mainSystem.IsVoicePlaying());
     }
 
     public void Movement(int value)
