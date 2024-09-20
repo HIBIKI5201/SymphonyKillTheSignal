@@ -41,6 +41,7 @@ public class HomeSystem : SystemBase
                 _onSymphonyClicked = false;
                 PlayHomeVoice();
             }
+            yield return null;
         }
     }
 
