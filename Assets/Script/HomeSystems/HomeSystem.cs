@@ -2,6 +2,7 @@ using AdventureSystems;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using UnityEngine;
 using static UserDataManager;
 public class HomeSystem : SystemBase
@@ -15,6 +16,7 @@ public class HomeSystem : SystemBase
     public bool OnSymphonyClicked { get => _onSymphonyClicked; set => _onSymphonyClicked = value; }
     [SerializeField]
     List<AudioClip> _symphonyHomeVocies;
+    AudioClip _lastVoice;
 
     public override void Initialize()
     {
@@ -71,8 +73,11 @@ public class HomeSystem : SystemBase
         if (18 <= time && time <= 21 && saveData.campLevel < 1) audioClips.Add(_symphonyHomeVocies[10]);
         if (22 <= time && time <= 4 && saveData.campLevel < 1) audioClips.Add(_symphonyHomeVocies[11]);
 
+        ShuffleAgain:
         int index = UnityEngine.Random.Range(0, audioClips.Count);
+        if (audioClips[index] == _lastVoice) goto ShuffleAgain;
         mainSystem.VoicePlay(audioClips[index]);
+        _lastVoice = audioClips[index];
         yield return new WaitUntil(() => !mainSystem.IsVoicePlaying());
     }
 
