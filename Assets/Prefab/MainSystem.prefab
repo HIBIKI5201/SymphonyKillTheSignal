@@ -508,6 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _userDataManager: {fileID: 0}
+  _worldManager: {fileID: 0}
   soundEffects: {fileID: 11400000, guid: 884747cdc0f1f6f47befb1dd3b1f5374, type: 2}
   BGMs: {fileID: 11400000, guid: a105febb680f6144b8f1f566dbff4f84, type: 2}
 --- !u!81 &-3513791823515146946
@@ -721,3 +722,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54922c4936a07f24a867d0c83fcb8d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioMixer: {fileID: 24100000, guid: cd1cac517c49c02479fe2400b2e525b0, type: 2}
