@@ -72,8 +72,8 @@ public class SaveData
     public int campLevel;
     public WorldManager.Weather weather;
     public List<bool> storyProgress;
-
     public List<int> itemList;
+
     public SaveData(int time, int distance, int health, int hunger, int thirst, int campLevel, WorldManager.Weather weather, List<bool> storyTextDatas)
     {
         saveDate = new RealTime(DateTime.Now).time;

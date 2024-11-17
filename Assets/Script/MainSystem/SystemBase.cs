@@ -2,7 +2,8 @@ using UnityEngine;
 
 public abstract class SystemBase : MonoBehaviour
 {
-    public MainSystem mainSystem;
+    protected MainSystem mainSystem;
+    public MainSystem MainSystemPropaty { get => mainSystem; }
 
     public void SystemAwake(MainSystem mainSystem)
     {
